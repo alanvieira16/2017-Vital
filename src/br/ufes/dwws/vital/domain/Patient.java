@@ -8,13 +8,25 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 
 @Entity
-public class Patient extends User {
+public class Patient {
 	
 	@Id @GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
 	
+	@ManyToOne
+	private User user;
+	
+	public User getUser() {
+		return user;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
+	}
+
 	@ElementCollection
 	@CollectionTable(name = "allergies")
 	private Set<String> allergies;

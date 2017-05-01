@@ -8,7 +8,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 
 @Entity
-public class Doctor extends User {
+public class Doctor {
 	
 	@Id @GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
@@ -19,6 +19,17 @@ public class Doctor extends User {
 	@OneToOne(mappedBy = "doctor")
 	private Receptionist receptionist;
 	
+	@ManyToOne
+	private User user;
+	
+	public User getUser() {
+		return user;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
+	}
+
 	@ManyToOne
 	private Hospital hospital;
 

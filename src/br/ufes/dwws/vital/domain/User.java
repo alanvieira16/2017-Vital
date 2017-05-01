@@ -2,14 +2,22 @@ package br.ufes.dwws.vital.domain;
 
 import java.util.Date;
 
-import javax.persistence.MappedSuperclass;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 import br.ufes.inf.nemo.jbutler.ejb.persistence.PersistentObjectSupport;
 
-@MappedSuperclass
+@Entity
 public class User extends PersistentObjectSupport {
+
+	private static final long serialVersionUID = 1L;
+
+	@Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long id;
 	
 	private String name;
 	
@@ -60,18 +68,7 @@ public class User extends PersistentObjectSupport {
 	public void setPassword(String password) {
 		this.password = password;
 	}
-	
-	public User convertTo(String role){
-		User u;
-		if(role.equals("Receptionist")){
-			u = new Receptionist();
-		} else if (role.equals("Doctor")){
-			u = new Doctor();
-		} else {
-			u = new Patient();
-		}
-		return u;
-	}
+
 	
 	
 }

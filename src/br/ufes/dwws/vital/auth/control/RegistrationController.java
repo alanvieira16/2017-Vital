@@ -75,8 +75,8 @@ public class RegistrationController implements Serializable {
 	
 	public String register() {
 		try {
-			String md5pwd = TextUtils.produceMd5Hash(doctor.getPassword());
-			doctor.setPassword(md5pwd);
+			String md5pwd = TextUtils.produceMd5Hash(doctor.getUser().getPassword());
+			doctor.getUser().setPassword(md5pwd);
 			registrationService.register(doctor);
 		} catch (NoSuchAlgorithmException e) {
 			request.setAttribute("alertType", "danger");
