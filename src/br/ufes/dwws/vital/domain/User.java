@@ -6,8 +6,10 @@ import javax.persistence.MappedSuperclass;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import br.ufes.inf.nemo.jbutler.ejb.persistence.PersistentObjectSupport;
+
 @MappedSuperclass
-public class User {
+public class User extends PersistentObjectSupport {
 	
 	private String name;
 	
