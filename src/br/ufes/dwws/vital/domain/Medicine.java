@@ -16,7 +16,7 @@ public class Medicine {
 	
 	private String name;
 	private String activeCompound;
-	private String use;
+	private String utilization;
 	
 	@OneToMany(mappedBy = "medicine")
 	private Set<Prescription> prescriptions;
@@ -45,12 +45,12 @@ public class Medicine {
 		this.activeCompound = activeCompound;
 	}
 
-	public String getUse() {
-		return use;
+	public String getUtilization() {
+		return utilization;
 	}
 
-	public void setUse(String use) {
-		this.use = use;
+	public void setUtuilization(String utilization) {
+		this.utilization = utilization;
 	}
 
 	public Set<Prescription> getPrescriptions() {

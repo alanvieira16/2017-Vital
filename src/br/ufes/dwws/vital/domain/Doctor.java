@@ -22,6 +22,7 @@ public class Doctor extends User {
 	@ManyToOne
 	private Hospital hospital;
 
+
 	public Long getId() {
 		return id;
 	}

@@ -7,7 +7,7 @@
 	xmlns:c="http://java.sun.com/jsp/jstl/core"
 	template="/resources/decorator.xhtml">
 
-	<ui:define name="title">Home</ui:define>
+	<ui:define name="title">Sign up</ui:define>
 
 	<ui:define name="menu">
 
@@ -18,16 +18,24 @@
 	</ui:define>
 
 	<ui:define name="content">
-	
+
 		<h1 class="page-title">Create an account</h1>
 		<h:form id="regForm" styleClass="col-xs-12 col-md-8 col-md-offset-2">
 
 			<h:panelGroup layout="block" styleClass="row">
+
+
+				<h:panelGroup layout="block" styleClass="col-xs-12">
+					<h:panelGroup layout="block" styleClass="alert alert-#{alertType}"
+						rendered="#{message != null}">#{message}</h:panelGroup>
+				</h:panelGroup>
+
 				<h:panelGroup layout="block" styleClass="col-xs-12 col-md-6">
 					<h:panelGroup layout="block" styleClass="form-group">
 						<h:outputLabel for="name" value="Name" />
-						<h:inputText id="name" value="#{registrationController.user.name}"
-							size="20" styleClass="form-control" required="true"
+						<h:inputText id="name"
+							value="#{registrationController.doctor.name}" size="20"
+							styleClass="form-control" required="true"
 							requiredMessage="You can't leave this field empty.">
 							<f:ajax event="blur" render="nameMessage" />
 						</h:inputText>
@@ -40,7 +48,7 @@
 					<h:panelGroup layout="block" styleClass="form-group">
 						<h:outputLabel for="email" value="Email" />
 						<h:inputText id="email"
-							value="#{registrationController.user.email}" size="20"
+							value="#{registrationController.doctor.email}" size="20"
 							styleClass="form-control" binding="#{passwordComponent}"
 							required="true" validatorMessage="Invalid email format"
 							requiredMessage="You can't leave this field empty.">
@@ -48,7 +56,8 @@
 								pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$" />
 							<f:ajax event="blur" render="emailMessage" />
 						</h:inputText>
-						<h:message styleClass="error-message" for="email" id="emailMessage">
+						<h:message styleClass="error-message" for="email"
+							id="emailMessage">
 						</h:message>
 					</h:panelGroup>
 				</h:panelGroup>
@@ -57,7 +66,7 @@
 					<h:panelGroup layout="block" styleClass="form-group">
 						<h:outputLabel for="password" value="Password" />
 						<h:inputSecret id="password"
-							value="#{registrationController.user.password}" size="20"
+							value="#{registrationController.doctor.password}" size="20"
 							styleClass="form-control" required="true"
 							requiredMessage="You can't leave this field empty.">
 							<f:validator validatorId="confirmPasswordValidator" />
@@ -66,7 +75,8 @@
 							<f:ajax event="blur" execute="password confirm"
 								render="passwordMessage" />
 						</h:inputSecret>
-						<h:message styleClass="error-message" for="password" id="passwordMessage" />
+						<h:message styleClass="error-message" for="password"
+							id="passwordMessage" />
 					</h:panelGroup>
 				</h:panelGroup>
 
@@ -75,14 +85,15 @@
 						<h:outputLabel for="confirm-password"
 							value="Confirm your password" />
 						<h:inputSecret id="confirm-password"
-							value="#{registrationController.user.password}" size="20"
+							value="#{registrationController.doctor.password}" size="20"
 							styleClass="form-control" required="true"
 							requiredMessage="You can't leave this field empty."
 							binding="#{confirmPassword}">
 							<f:ajax event="blur" execute="password confirm"
 								render="passwordMessage confirmPasswordMessage" />
 						</h:inputSecret>
-						<h:message styleClass="error-message" for="confirm-password" id="confirmPasswordMessage" />
+						<h:message styleClass="error-message" for="confirm-password"
+							id="confirmPasswordMessage" />
 					</h:panelGroup>
 				</h:panelGroup>
 
@@ -90,14 +101,15 @@
 					<h:panelGroup layout="block" styleClass="form-group">
 						<h:outputLabel for="gender" value="Gender" />
 						<h:selectOneMenu id="gender" styleClass="form-control"
-							value="#{registrationController.user.gender}" required="true"
+							value="#{registrationController.doctor.gender}" required="true"
 							requiredMessage="You can't leave this field empty.">
-							<f:selectItem itemValue="" itemLabel=""/>
+							<f:selectItem itemValue="" itemLabel="" />
 							<f:selectItem itemValue="M" itemLabel="Masculino" />
 							<f:selectItem itemValue="F" itemLabel="Feminino" />
 							<f:ajax event="blur" render="genderMessage" />
 						</h:selectOneMenu>
-						<h:message styleClass="error-message" for="gender" id="genderMessage" />
+						<h:message styleClass="error-message" for="gender"
+							id="genderMessage" />
 					</h:panelGroup>
 				</h:panelGroup>
 
@@ -105,12 +117,13 @@
 					<h:panelGroup layout="block" styleClass="form-group">
 						<h:outputLabel for="phone" value="Phone" />
 						<h:inputText id="phone"
-							value="#{registrationController.user.phone}" size="30"
+							value="#{registrationController.doctor.phone}" size="30"
 							required="true" styleClass="form-control field-phone"
 							requiredMessage="You can't leave this field empty.">
 							<f:ajax event="blur" render="phoneMessage" />
-							</h:inputText>
-						<h:message styleClass="error-message" for="phone" id="phoneMessage" />
+						</h:inputText>
+						<h:message styleClass="error-message" for="phone"
+							id="phoneMessage" />
 					</h:panelGroup>
 				</h:panelGroup>
 
@@ -118,16 +131,44 @@
 					<h:panelGroup layout="block" styleClass="form-group">
 						<h:outputLabel for="birthday" value="Birthday" />
 						<h:inputText id="birthday"
-							value="#{registrationController.user.birthday}" size="10"
+							value="#{registrationController.doctor.birthday}" size="10"
 							required="true" styleClass="form-control field-birthday"
 							requiredMessage="You can't leave this field empty."
 							converterMessage="Invalid date.">
 							<f:convertDateTime pattern="dd/MM/yyyy" />
 							<f:ajax event="blur" render="birthdayMessage" />
 						</h:inputText>
-						<h:message styleClass="error-message" for="birthday" id="birthdayMessage" />
+						<h:message styleClass="error-message" for="birthday"
+							id="birthdayMessage" />
 					</h:panelGroup>
 				</h:panelGroup>
+				
+				<h:panelGroup layout="block" styleClass="col-xs-12 col-md-6">
+					<h:panelGroup layout="block" styleClass="form-group">
+						<h:outputLabel for="specialization" value="Specialization" />
+						<h:inputText id="specialization"
+							value="#{registrationController.doctor.specialization}"
+							styleClass="form-control" required="true"
+							requiredMessage="You can't leave this field empty.">
+							<f:ajax event="blur" render="specializationMessage" />
+						</h:inputText>
+						<h:message styleClass="error-message" for="specialization" id="specializationMessage" />
+					</h:panelGroup>
+				</h:panelGroup>
+				
+				<h:panelGroup layout="block" styleClass="col-xs-12 col-md-6">
+					<h:panelGroup layout="block" styleClass="form-group">
+						<h:outputLabel for="crm" value="CRM" />
+						<h:inputText id="crm"
+							value="#{registrationController.doctor.crm}"
+							styleClass="form-control" required="true"
+							requiredMessage="You can't leave this field empty.">
+							<f:ajax event="blur" render="crmMessage" />
+						</h:inputText>
+						<h:message styleClass="error-message" for="crm" id="crmMessage" />
+					</h:panelGroup>
+				</h:panelGroup>
+				
 
 				<h:panelGroup layout="block" styleClass="col-xs-12 text-right">
 					<h:panelGroup layout="block" styleClass="form-group">

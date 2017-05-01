@@ -21,7 +21,7 @@ public class User {
 	private String email;
 	
 	private String password;
-	
+
 	public String getName() {
 		return name;
 	}
@@ -57,6 +57,18 @@ public class User {
 	}
 	public void setPassword(String password) {
 		this.password = password;
+	}
+	
+	public User convertTo(String role){
+		User u;
+		if(role.equals("Receptionist")){
+			u = new Receptionist();
+		} else if (role.equals("Doctor")){
+			u = new Doctor();
+		} else {
+			u = new Patient();
+		}
+		return u;
 	}
 	
 	

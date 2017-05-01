@@ -5,7 +5,7 @@
 	<artifactId>Vital</artifactId>
 	<packaging>war</packaging>
 	<name>Vital</name>
-	<description>Vital Medical Solutions</description>
+	<description>Vital Medical Solutions </description>
 	<repositories>
 		<repository>
 			<id>prime-repo</id>

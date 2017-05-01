@@ -8,7 +8,8 @@ import javax.persistence.Id;
 @Entity
 public class Hospital {
 	
-	@Id @GeneratedValue(strategy = GenerationType.AUTO)
+	//Used IDENTITY to set AUTO-INCREMENT as true
+	@Id @GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
 	private String name;
