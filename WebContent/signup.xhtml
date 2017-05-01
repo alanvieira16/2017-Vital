@@ -142,7 +142,21 @@
 							id="birthdayMessage" />
 					</h:panelGroup>
 				</h:panelGroup>
-				
+
+				<h:panelGroup layout="block" styleClass="col-xs-12">
+					<h:panelGroup layout="block" styleClass="form-group">
+						<h:outputLabel for="hospital" value="Hospital" />
+						<h:selectOneMenu value="#{registrationController.doctor.hospital}"
+							converter="#{registrationController.hospitalConverter}" styleClass="form-control">
+							<f:selectItems value="#{registrationController.hospitals}"
+								var="hospital" itemValue="#{hospital}"
+								itemLabel="#{hospital.name}" />
+						</h:selectOneMenu>
+						<h:message styleClass="error-message" for="hospital"
+							id="hospitalMessage" />
+					</h:panelGroup>
+				</h:panelGroup>
+
 				<h:panelGroup layout="block" styleClass="col-xs-12 col-md-6">
 					<h:panelGroup layout="block" styleClass="form-group">
 						<h:outputLabel for="specialization" value="Specialization" />
@@ -152,15 +166,15 @@
 							requiredMessage="You can't leave this field empty.">
 							<f:ajax event="blur" render="specializationMessage" />
 						</h:inputText>
-						<h:message styleClass="error-message" for="specialization" id="specializationMessage" />
+						<h:message styleClass="error-message" for="specialization"
+							id="specializationMessage" />
 					</h:panelGroup>
 				</h:panelGroup>
-				
+
 				<h:panelGroup layout="block" styleClass="col-xs-12 col-md-6">
 					<h:panelGroup layout="block" styleClass="form-group">
 						<h:outputLabel for="crm" value="CRM" />
-						<h:inputText id="crm"
-							value="#{registrationController.doctor.crm}"
+						<h:inputText id="crm" value="#{registrationController.doctor.crm}"
 							styleClass="form-control" required="true"
 							requiredMessage="You can't leave this field empty.">
 							<f:ajax event="blur" render="crmMessage" />
@@ -168,7 +182,7 @@
 						<h:message styleClass="error-message" for="crm" id="crmMessage" />
 					</h:panelGroup>
 				</h:panelGroup>
-				
+
 
 				<h:panelGroup layout="block" styleClass="col-xs-12 text-right">
 					<h:panelGroup layout="block" styleClass="form-group">

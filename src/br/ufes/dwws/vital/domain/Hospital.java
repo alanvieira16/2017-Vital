@@ -5,9 +5,13 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
+import br.ufes.inf.nemo.jbutler.ejb.persistence.PersistentObjectSupport;
+
 @Entity
-public class Hospital {
+public class Hospital extends PersistentObjectSupport{
 	
+	private static final long serialVersionUID = 1L;
+
 	//Used IDENTITY to set AUTO-INCREMENT as true
 	@Id @GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
