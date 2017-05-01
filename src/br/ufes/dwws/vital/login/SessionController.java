@@ -1,32 +1,32 @@
 package br.ufes.dwws.vital.login;
 
 import java.io.Serializable;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javax.ejb.EJB;
 import javax.enterprise.context.SessionScoped;
-import javax.inject.Inject;
 import javax.inject.Named;
-import javax.servlet.http.HttpServletRequest;
 
 import br.ufes.dwws.vital.domain.User;
 
 @Named
 @SessionScoped
-public class LoginController implements Serializable {
+public class SessionController implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
+	private static final Logger logger = Logger.getLogger(SessionController.class.getCanonicalName());
+
 	@EJB
 	private LoginService loginService;
-
-	@Inject
-	private HttpServletRequest request;
 
 	private User currentUser;
 	private String email;
 	private String password;
 
 	public User getCurrentUser() {
+		logger.log(Level.INFO, "getCurrentUser -> current user: " + currentUser);
 		return currentUser;
 	}
 
@@ -49,29 +49,37 @@ public class LoginController implements Serializable {
 	public void setPassword(String password) {
 		this.password = password;
 	}
+	
+	public Boolean hasLoggedUser() {
+		return currentUser != null;
+	}
 
 	public String login() {
 
 		try {
 
-			loginService.login(email, password);
+			currentUser = loginService.login(email, password);
 
 		} catch (LoginFailedException e) {
 
 			switch (e.getReason()) {
 
 			case INCORRECT_PASSWORD:
+				logger.log(Level.INFO, "Incorrect password");
 			case UNKNOWN_USERNAME:
+				logger.log(Level.INFO, "unknown username");
 				return null;
 			default:
+				logger.log(Level.INFO, "unknown error");
 				return null;
 
 			}
 
 		}
 
-		currentUser = loginService.getCurrentUser();
-		return "/index.xhtml";
+		logger.log(Level.INFO, "login current user: " + currentUser);
+
+		return "/index.xhtml?faces-redirect=true";
 	}
 
 }

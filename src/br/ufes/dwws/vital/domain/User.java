@@ -68,6 +68,13 @@ public class User extends PersistentObjectSupport {
 	public void setPassword(String password) {
 		this.password = password;
 	}
+	@Override
+	public String toString() {
+		return "User [id=" + id + ", name=" + name + ", phone=" + phone + ", birthday=" + birthday + ", gender="
+				+ gender + ", email=" + email + ", password=" + password + "]";
+	}
+	
+	
 
 	
 	

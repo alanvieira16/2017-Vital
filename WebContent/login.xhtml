@@ -33,7 +33,7 @@
 					<h:panelGroup layout="block" styleClass="form-group">
 						<h:outputLabel for="email" value="Email" />
 						<h:inputText id="email"
-							value="#{loginController.email}" size="20"
+							value="#{sessionController.email}" size="20"
 							styleClass="form-control"
 							required="true" validatorMessage="Invalid email format"
 							requiredMessage="You can't leave this field empty.">
@@ -51,7 +51,7 @@
 					<h:panelGroup layout="block" styleClass="form-group">
 						<h:outputLabel for="password" value="Password" />
 						<h:inputSecret id="password"
-							value="#{loginController.password}" size="20"
+							value="#{sessionController.password}" size="20"
 							styleClass="form-control" required="true"
 							requiredMessage="You can't leave this field empty.">
 							<f:validator validatorId="confirmPasswordValidator" />
@@ -67,7 +67,7 @@
 
 				<h:panelGroup layout="block" styleClass="col-xs-12 text-right">
 					<h:panelGroup layout="block" styleClass="form-group">
-						<h:commandButton action="#{loginController.login}"
+						<h:commandButton action="#{sessionController.login}"
 							value="Login" styleClass="btn btn-vital" />
 					</h:panelGroup>
 				</h:panelGroup>
