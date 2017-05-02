@@ -5,34 +5,24 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
-import javax.enterprise.context.RequestScoped;
-import javax.faces.context.FacesContext;
+import javax.enterprise.context.SessionScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
-import javax.servlet.http.HttpServletRequest;
 
 import br.ufes.dwws.util.MenuItem;
 import br.ufes.dwws.vital.domain.User;
 import br.ufes.dwws.vital.login.SessionController;
 
 @Named
-@RequestScoped
-public class HomeController implements Serializable {
+@SessionScoped
+public class MenuController implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
 	@Inject
 	private SessionController sessionController;
 
-	private Boolean hasLoggedUser;
-
-	public Boolean getHasLoggedUser() {
-		return hasLoggedUser;
-	}
-
-	public void setHasLoggedUser(Boolean hasLoggedUser) {
-		this.hasLoggedUser = hasLoggedUser;
-	}
+	
 
 	private String mensagem;
 
@@ -46,7 +36,7 @@ public class HomeController implements Serializable {
 
 	private List<MenuItem> menuItems;
 
-	public HomeController() {
+	public MenuController() {
 		menuItems = new ArrayList<>();
 		menuItems.add(new MenuItem("Item 1", "fa fa-envelope-open", "#"));
 		menuItems.add(new MenuItem("Item N", "fa fa-fire", "#"));
@@ -58,11 +48,9 @@ public class HomeController implements Serializable {
 	@PostConstruct
 	void init() {
 
-		hasLoggedUser = sessionController.hasLoggedUser();
-
-		if (hasLoggedUser) {
+		if (sessionController.hasLoggedUser()) {
 			User user = sessionController.getCurrentUser();
-			mensagem = "tá logado\n" + user + "\n\\o/";
+			mensagem = "tá logado\n" + user.getDoctor().getSpecialization() + "\n\\o/";
 		} else {
 			mensagem = "Não tem usuario logado :(";
 		}
@@ -72,13 +60,7 @@ public class HomeController implements Serializable {
 		return menuItems;
 	}
 
-	public String logout() {
-		getRequest().getSession().invalidate();
-		return "logout";
-	}
 
-	private HttpServletRequest getRequest() {
-		return (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest();
-	}
+	
 
 }

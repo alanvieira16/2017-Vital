@@ -26,11 +26,13 @@
       	</div><!--
       	--><div class="menu">
       		<ul>
-      			<li><a href="#">Item A</a></li>
-      			<li><a href="#">Item B</a></li>
-      			<li><a href="#">Item C</a></li>
-      			<li><a href="#">Item D</a></li>
-      			<li><a href="#">Item E</a></li>
+      			<h:panelGroup rendered="#{sessionController.hasLoggedUser() == false}">
+      			<li><h:button value="Sign up" outcome="signup" styleClass="btn"/></li>
+      			<li><h:button value="Login" outcome="login" styleClass="btn btn-vital" /></li>
+      			</h:panelGroup>
+      			<h:panelGroup rendered="#{sessionController.hasLoggedUser()}">
+      			<li><h:form><h:commandButton action="#{sessionController.logout}" value="Logout" styleClass="btn btn-vital" /></h:form></li>
+      			</h:panelGroup>
       		</ul>
       	</div>
       	<div class="clearfix"></div>
@@ -44,6 +46,7 @@
       			</ul>
       		</div>
       		<div class="content col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2">
+      			
       			<ui:insert name="content" />
       		</div>
       	</div>

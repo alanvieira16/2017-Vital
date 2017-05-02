@@ -19,7 +19,7 @@ public class Doctor {
 	@OneToOne(mappedBy = "doctor")
 	private Receptionist receptionist;
 	
-	@ManyToOne
+	@OneToOne
 	private User user;
 	
 	public User getUser() {

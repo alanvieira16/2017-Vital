@@ -4,9 +4,12 @@ import java.io.Serializable;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.enterprise.context.SessionScoped;
+import javax.faces.context.FacesContext;
 import javax.inject.Named;
+import javax.servlet.http.HttpServletRequest;
 
 import br.ufes.dwws.vital.domain.User;
 
@@ -24,6 +27,16 @@ public class SessionController implements Serializable {
 	private User currentUser;
 	private String email;
 	private String password;
+	
+	private Boolean hasLoggedUser;
+
+	public Boolean getHasLoggedUser() {
+		return hasLoggedUser;
+	}
+
+	public void setHasLoggedUser(Boolean hasLoggedUser) {
+		this.hasLoggedUser = hasLoggedUser;
+	}
 
 	public User getCurrentUser() {
 		logger.log(Level.INFO, "getCurrentUser -> current user: " + currentUser);
@@ -80,6 +93,16 @@ public class SessionController implements Serializable {
 		logger.log(Level.INFO, "login current user: " + currentUser);
 
 		return "/index.xhtml?faces-redirect=true";
+	}
+
+	
+	public String logout() {
+		getRequest().getSession().invalidate();
+		return "index?faces-redirect=true";
+	}
+	
+	private HttpServletRequest getRequest() {
+		return (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest();
 	}
 
 }

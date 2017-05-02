@@ -14,6 +14,7 @@ import br.ufes.dwws.vital.auth.application.RegistrationService;
 import br.ufes.dwws.vital.auth.persistence.HospitalDAO;
 import br.ufes.dwws.vital.domain.Doctor;
 import br.ufes.dwws.vital.domain.Hospital;
+import br.ufes.dwws.vital.domain.User;
 import br.ufes.inf.nemo.jbutler.TextUtils;
 import br.ufes.inf.nemo.jbutler.ejb.controller.PersistentObjectConverterFromId;
 
@@ -30,6 +31,15 @@ public class RegistrationController implements Serializable {
 	private HttpServletRequest request;
 
 	private Doctor doctor = new Doctor();
+	private User user = new User();
+	public User getUser() {
+		return user;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
+	}
+
 	private String role;
 
 	private PersistentObjectConverterFromId<Hospital> hospitalConverter;
@@ -75,9 +85,10 @@ public class RegistrationController implements Serializable {
 	
 	public String register() {
 		try {
-			String md5pwd = TextUtils.produceMd5Hash(doctor.getUser().getPassword());
-			doctor.getUser().setPassword(md5pwd);
-			registrationService.register(doctor);
+			String md5pwd = TextUtils.produceMd5Hash(user.getPassword());
+			user.setPassword(md5pwd);
+			doctor.setUser(user);
+			registrationService.register(user, doctor);
 		} catch (NoSuchAlgorithmException e) {
 			request.setAttribute("alertType", "danger");
 			request.setAttribute("message", "Oops! Something wrong happened. Try again.");

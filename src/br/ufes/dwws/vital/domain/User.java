@@ -6,6 +6,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
@@ -31,7 +32,33 @@ public class User extends PersistentObjectSupport {
 	private String email;
 	
 	private String password;
+	
+	@OneToOne(mappedBy = "user")
+	private Doctor doctor;
+	@OneToOne(mappedBy = "user")
+	private Receptionist receptionist;
+	@OneToOne(mappedBy = "user")
+	private Patient patient;
+	
 
+	public Doctor getDoctor() {
+		return doctor;
+	}
+	public void setDoctor(Doctor doctor) {
+		this.doctor = doctor;
+	}
+	public Receptionist getReceptionist() {
+		return receptionist;
+	}
+	public void setReceptionist(Receptionist receptionist) {
+		this.receptionist = receptionist;
+	}
+	public Patient getPatient() {
+		return patient;
+	}
+	public void setPatient(Patient patient) {
+		this.patient = patient;
+	}
 	public String getName() {
 		return name;
 	}

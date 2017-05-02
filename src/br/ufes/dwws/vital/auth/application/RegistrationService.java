@@ -12,6 +12,7 @@ import javax.persistence.PersistenceContext;
 import br.ufes.dwws.vital.auth.persistence.HospitalDAO;
 import br.ufes.dwws.vital.domain.Doctor;
 import br.ufes.dwws.vital.domain.Hospital;
+import br.ufes.dwws.vital.domain.User;
 
 @Stateless @LocalBean
 public class RegistrationService implements Serializable {
@@ -24,7 +25,8 @@ public class RegistrationService implements Serializable {
 	@PersistenceContext
 	private EntityManager entityManager;
 	
-	public void register(Doctor doctor) {
+	public void register(User user, Doctor doctor) {
+		entityManager.persist(user);
 		entityManager.persist(doctor);
 	}
 

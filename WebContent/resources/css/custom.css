@@ -3,52 +3,6 @@
 	outline: none;
 }
 
-/********** FORMS **********/
-.btn{
-	border-radius: 0;
-	border: 0;
-	padding: 8px 26px;
-	text-transform: uppercase;
-	font-family: "Raleway", sans-serif;
-	font-weight: 500;
-}
-.btn-vital {
-    color: #fff;
-    background-color: #63C9BE;
-}
-.btn-vital:hover {
-    color: #fff;
-    background-color: #60BFB2;
-}
-
-.error-message{
-	font-size: 11px;
-    color: #ff0000;
-    position: absolute;
-    bottom: 8px;
-}
-
-form label{
-	width: 100%;
-	background-color: #63c9be;
-	border: solid 1px #63c9be;
-	color: #ffffff;
-	padding: 6px;
-	line-height: 1;
-	text-transform: uppercase;
-	font-family: "Raleway", sans-serif;
-	font-weight: 500;
-	font-size: 12px;
-	margin-bottom: 0;
-}
-
-.form-group{
-	margin-bottom: 25px;
-}
-.form-control{
-	border-radius: 0;
-	border: solid 1px #63c9be;
-}
 /********** HEADER **********/
 .header{
 	padding: 15px 30px;
@@ -137,6 +91,59 @@ form label{
 	text-transform: uppercase;
 	position: relative;
 	top: -4px;
+}
+
+/********** FORMS **********/
+.btn{
+	border-radius: 0;
+	border: 0;
+	padding: 8px 0;
+	font-family: "Raleway", sans-serif;
+	font-weight: 500;
+	background-color: transparent;
+	color: #888888;
+}
+.btn:hover{
+	color: #60BFB2;
+}
+.btn-vital {
+	text-transform: uppercase;
+	padding: 8px 26px;
+    color: #fff !important;
+    background-color: #63C9BE;
+}
+.btn-vital:hover {
+    color: #fff !important;
+    background-color: #60BFB2;
+}
+
+.error-message{
+	font-size: 11px;
+    color: #ff0000;
+    position: absolute;
+    bottom: 8px;
+}
+
+form label{
+	width: 100%;
+	background-color: #63c9be;
+	border: solid 1px #63c9be;
+	color: #ffffff;
+	padding: 6px;
+	line-height: 1;
+	text-transform: uppercase;
+	font-family: "Raleway", sans-serif;
+	font-weight: 500;
+	font-size: 12px;
+	margin-bottom: 0;
+}
+
+.form-group{
+	margin-bottom: 25px;
+}
+.form-control{
+	border-radius: 0;
+	border: solid 1px #63c9be;
 }
 
 /********** CONTENT **********/
