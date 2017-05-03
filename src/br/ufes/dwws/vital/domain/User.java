@@ -33,14 +33,21 @@ public class User extends PersistentObjectSupport {
 	
 	private String password;
 	
+	private String role;
+	
 	@OneToOne(mappedBy = "user")
 	private Doctor doctor;
 	@OneToOne(mappedBy = "user")
 	private Receptionist receptionist;
 	@OneToOne(mappedBy = "user")
 	private Patient patient;
-	
 
+	public String getRole() {
+		return role;
+	}
+	public void setRole(String role) {
+		this.role = role;
+	}
 	public Doctor getDoctor() {
 		return doctor;
 	}

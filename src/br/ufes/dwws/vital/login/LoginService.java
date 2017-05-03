@@ -2,9 +2,11 @@ package br.ufes.dwws.vital.login;
 
 import java.io.Serializable;
 
+import javax.annotation.Resource;
 import javax.ejb.EJB;
 import javax.ejb.EJBTransactionRolledbackException;
 import javax.ejb.LocalBean;
+import javax.ejb.SessionContext;
 import javax.ejb.Stateless;
 
 import br.ufes.dwws.vital.domain.User;
@@ -17,15 +19,18 @@ import br.ufes.inf.nemo.jbutler.ejb.persistence.exceptions.PersistentObjectNotFo
 public class LoginService implements Serializable {
 
 	private static final long serialVersionUID = 1L;
+	
+	@Resource
+	private SessionContext sessionContext;
 
 	@EJB
 	private UserDAO userDAO;
 
-	public User login(String email, String password) throws LoginFailedException {
+	public void login(String email, String password) throws LoginFailedException {
 
 		try {
 
-			return userDAO.retrieveByEmail(email);
+			User user = userDAO.retrieveByEmail(email);
 
 			// String md5pwd = TextUtils.produceBase64EncodedMd5Hash(password);
 			// String pwd = user.getPassword();
@@ -51,5 +56,14 @@ public class LoginService implements Serializable {
 		 * ); }
 		 */
 
+	}
+	
+	public User getCurrentUser() {
+		try {
+			return userDAO.retrieveByEmail(sessionContext.getCallerPrincipal().getName());
+		}
+		catch (PersistentObjectNotFoundException | MultiplePersistentObjectsFoundException e) {
+			return null;
+		}
 	}
 }

@@ -4,14 +4,17 @@ import java.io.Serializable;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.enterprise.context.SessionScoped;
+import javax.enterprise.event.Event;
+import javax.enterprise.inject.Any;
 import javax.faces.context.FacesContext;
+import javax.inject.Inject;
 import javax.inject.Named;
 import javax.servlet.http.HttpServletRequest;
 
 import br.ufes.dwws.vital.domain.User;
+import br.ufes.dwws.vital.login.LoginFailedException.LoginFailedReason;
 
 @Named
 @SessionScoped
@@ -23,6 +26,10 @@ public class SessionController implements Serializable {
 
 	@EJB
 	private LoginService loginService;
+	
+	@Inject
+	@Any
+	private Event<LoginEvent> loginEvent;
 
 	private User currentUser;
 	private String email;
@@ -70,8 +77,19 @@ public class SessionController implements Serializable {
 	public String login() {
 
 		try {
-
-			currentUser = loginService.login(email, password);
+			
+			loginService.login(email, password);
+			
+			try {
+				HttpServletRequest request = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest();
+				request.login(email, password);
+				logger.log(Level.INFO, "login done by JAAS");							
+			}
+			catch (Exception e) {
+				e.printStackTrace();
+				logger.log(Level.INFO, "http error when login by JAAS");
+				throw new LoginFailedException(e, LoginFailedReason.NO_HTTP_REQUEST);
+			}
 
 		} catch (LoginFailedException e) {
 
@@ -90,6 +108,11 @@ public class SessionController implements Serializable {
 
 		}
 
+		currentUser = loginService.getCurrentUser();
+		
+		if(currentUser != null)
+			loginEvent.fire(new LoginEvent(currentUser));
+		
 		logger.log(Level.INFO, "login current user: " + currentUser);
 
 		return "/index.xhtml?faces-redirect=true";
