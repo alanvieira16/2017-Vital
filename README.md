@@ -3,7 +3,7 @@ Assignment for the 2017 edition of the "Web Development and the Semantic Web" co
 
 Para adicionar JAAS (configurações do WildFly):
 
-1 - Colocar no standalone dentro de <security-domains>
+1 - Colocar no standalone dentro de `<security-domains>`
 
 ```XML
 
