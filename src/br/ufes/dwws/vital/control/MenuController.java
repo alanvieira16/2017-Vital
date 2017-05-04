@@ -6,17 +6,13 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import javax.annotation.PostConstruct;
 import javax.enterprise.context.SessionScoped;
-import javax.enterprise.event.Event;
 import javax.enterprise.event.Observes;
-import javax.inject.Inject;
 import javax.inject.Named;
 
 import br.ufes.dwws.util.MenuItem;
 import br.ufes.dwws.vital.domain.User;
 import br.ufes.dwws.vital.login.LoginEvent;
-import br.ufes.dwws.vital.login.SessionController;
 
 @Named
 @SessionScoped
@@ -26,8 +22,6 @@ public class MenuController implements Serializable {
 	
 	private static final Logger logger = Logger.getLogger(MenuController.class.getCanonicalName());
 
-	@Inject
-	private SessionController sessionController;
 
 	private String mensagem;
 

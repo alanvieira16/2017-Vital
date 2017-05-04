@@ -34,7 +34,7 @@
 					<h:panelGroup layout="block" styleClass="form-group">
 						<h:outputLabel for="name" value="Name" />
 						<h:inputText id="name"
-							value="#{registrationController.user.name}" size="20"
+							value="#{registrationController.doctor.name}" size="20"
 							styleClass="form-control" required="true"
 							requiredMessage="You can't leave this field empty.">
 							<f:ajax event="blur" render="nameMessage" />
@@ -48,7 +48,7 @@
 					<h:panelGroup layout="block" styleClass="form-group">
 						<h:outputLabel for="email" value="Email" />
 						<h:inputText id="email"
-							value="#{registrationController.user.email}" size="20"
+							value="#{registrationController.doctor.email}" size="20"
 							styleClass="form-control" binding="#{passwordComponent}"
 							required="true" validatorMessage="Invalid email format"
 							requiredMessage="You can't leave this field empty.">
@@ -66,7 +66,7 @@
 					<h:panelGroup layout="block" styleClass="form-group">
 						<h:outputLabel for="password" value="Password" />
 						<h:inputSecret id="password"
-							value="#{registrationController.user.password}" size="20"
+							value="#{registrationController.doctor.password}" size="20"
 							styleClass="form-control" required="true"
 							requiredMessage="You can't leave this field empty.">
 							<f:validator validatorId="confirmPasswordValidator" />
@@ -85,7 +85,7 @@
 						<h:outputLabel for="confirm-password"
 							value="Confirm your password" />
 						<h:inputSecret id="confirm-password"
-							value="#{registrationController.user.password}" size="20"
+							value="#{registrationController.doctor.password}" size="20"
 							styleClass="form-control" required="true"
 							requiredMessage="You can't leave this field empty."
 							binding="#{confirmPassword}">
@@ -101,7 +101,7 @@
 					<h:panelGroup layout="block" styleClass="form-group">
 						<h:outputLabel for="gender" value="Gender" />
 						<h:selectOneMenu id="gender" styleClass="form-control"
-							value="#{registrationController.user.gender}" required="true"
+							value="#{registrationController.doctor.gender}" required="true"
 							requiredMessage="You can't leave this field empty.">
 							<f:selectItem itemValue="" itemLabel="" />
 							<f:selectItem itemValue="M" itemLabel="Masculino" />
@@ -117,7 +117,7 @@
 					<h:panelGroup layout="block" styleClass="form-group">
 						<h:outputLabel for="phone" value="Phone" />
 						<h:inputText id="phone"
-							value="#{registrationController.user.phone}" size="30"
+							value="#{registrationController.doctor.phone}" size="30"
 							required="true" styleClass="form-control field-phone"
 							requiredMessage="You can't leave this field empty.">
 							<f:ajax event="blur" render="phoneMessage" />
@@ -131,7 +131,7 @@
 					<h:panelGroup layout="block" styleClass="form-group">
 						<h:outputLabel for="birthday" value="Birthday" />
 						<h:inputText id="birthday"
-							value="#{registrationController.user.birthday}" size="10"
+							value="#{registrationController.doctor.birthday}" size="10"
 							required="true" styleClass="form-control field-birthday"
 							requiredMessage="You can't leave this field empty."
 							converterMessage="Invalid date.">

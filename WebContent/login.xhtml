@@ -24,9 +24,7 @@
 
 			<h:panelGroup layout="block" styleClass="row">
 
-				<h:panelGroup layout="block" styleClass="col-xs-12">
-					<h:panelGroup layout="block" styleClass="alert alert-#{alertType}" rendered="#{message != null}">#{message}</h:panelGroup>
-				</h:panelGroup>
+				
 
 
 				<h:panelGroup layout="block" styleClass="col-xs-12">
@@ -54,10 +52,7 @@
 							value="#{sessionController.password}" size="20"
 							styleClass="form-control" required="true"
 							requiredMessage="You can't leave this field empty.">
-							<f:validator validatorId="confirmPasswordValidator" />
-							<f:attribute name="confirm"
-								value="#{confirmPassword.submittedValue}" />
-							<f:ajax event="blur" execute="password confirm"
+							<f:ajax event="blur"
 								render="passwordMessage" />
 						</h:inputSecret>
 						<h:message styleClass="error-message" for="password"

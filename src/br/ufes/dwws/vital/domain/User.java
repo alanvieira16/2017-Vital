@@ -3,22 +3,18 @@ package br.ufes.dwws.vital.domain;
 import java.util.Date;
 
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.OneToOne;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 import br.ufes.inf.nemo.jbutler.ejb.persistence.PersistentObjectSupport;
 
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @Entity
 public class User extends PersistentObjectSupport {
 
 	private static final long serialVersionUID = 1L;
-
-	@Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id;
 	
 	private String name;
 	
@@ -34,13 +30,6 @@ public class User extends PersistentObjectSupport {
 	private String password;
 	
 	private String role;
-	
-	@OneToOne(mappedBy = "user")
-	private Doctor doctor;
-	@OneToOne(mappedBy = "user")
-	private Receptionist receptionist;
-	@OneToOne(mappedBy = "user")
-	private Patient patient;
 
 	public String getRole() {
 		return role;
@@ -48,24 +37,7 @@ public class User extends PersistentObjectSupport {
 	public void setRole(String role) {
 		this.role = role;
 	}
-	public Doctor getDoctor() {
-		return doctor;
-	}
-	public void setDoctor(Doctor doctor) {
-		this.doctor = doctor;
-	}
-	public Receptionist getReceptionist() {
-		return receptionist;
-	}
-	public void setReceptionist(Receptionist receptionist) {
-		this.receptionist = receptionist;
-	}
-	public Patient getPatient() {
-		return patient;
-	}
-	public void setPatient(Patient patient) {
-		this.patient = patient;
-	}
+	
 	public String getName() {
 		return name;
 	}
@@ -104,7 +76,7 @@ public class User extends PersistentObjectSupport {
 	}
 	@Override
 	public String toString() {
-		return "User [id=" + id + ", name=" + name + ", phone=" + phone + ", birthday=" + birthday + ", gender="
+		return "User [id=" + super.getId() + ", name=" + name + ", phone=" + phone + ", birthday=" + birthday + ", gender="
 				+ gender + ", email=" + email + ", password=" + password + "]";
 	}
 	

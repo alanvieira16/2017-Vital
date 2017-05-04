@@ -5,27 +5,11 @@ import java.util.Set;
 import javax.persistence.CollectionTable;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.OneToOne;
 
 @Entity
-public class Patient {
+public class Patient extends User{
 	
-	@Id @GeneratedValue(strategy = GenerationType.AUTO)
-	private Long id;
-	
-	@OneToOne
-	private User user;
-	
-	public User getUser() {
-		return user;
-	}
-
-	public void setUser(User user) {
-		this.user = user;
-	}
+	private static final long serialVersionUID = 1L;
 
 	@ElementCollection
 	@CollectionTable(name = "allergies")
@@ -42,14 +26,6 @@ public class Patient {
 	private String healthInsurance;
 	
 	private String healthInsuranceNumber;
-
-	public Long getId() {
-		return id;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
-	}
 
 	public Set<String> getAllergies() {
 		return allergies;

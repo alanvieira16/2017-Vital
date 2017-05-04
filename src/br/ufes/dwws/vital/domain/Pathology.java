@@ -3,16 +3,15 @@ package br.ufes.dwws.vital.domain;
 import java.util.Set;
 
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 
+import br.ufes.inf.nemo.jbutler.ejb.persistence.PersistentObjectSupport;
+
 @Entity
-public class Pathology {
-	@Id @GeneratedValue(strategy = GenerationType.AUTO)
-	private Long id;
-	
+public class Pathology extends PersistentObjectSupport{
+
+	private static final long serialVersionUID = 1L;
+
 	private String name;
 	
 	private String description;
@@ -20,13 +19,6 @@ public class Pathology {
 	@ManyToMany
 	private Set<Diagnosis> diagnostics;
 
-	public Long getId() {
-		return id;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
-	}
 
 	public String getName() {
 		return name;
