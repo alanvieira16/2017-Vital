@@ -13,11 +13,12 @@ public class Treatment extends PersistentObjectSupport{
 
 	private static final long serialVersionUID = 1L;
 
-	@ManyToOne
-	private Diagnosis diagnosis;
 	
 	private String title;
 	private String description;
+
+	@ManyToOne
+	private Diagnosis diagnosis;
 	
 	@OneToMany(mappedBy = "treatment")
 	private Set<Prescription> prescriptions;

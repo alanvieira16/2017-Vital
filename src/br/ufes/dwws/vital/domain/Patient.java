@@ -10,14 +10,6 @@ import javax.persistence.Entity;
 public class Patient extends User{
 	
 	private static final long serialVersionUID = 1L;
-
-	@ElementCollection
-	@CollectionTable(name = "allergies")
-	private Set<String> allergies;
-	
-	@ElementCollection
-	@CollectionTable(name = "specialNeeds")
-	private Set<String> specialNeeds;
 	
 	private String bloodType;
 	
@@ -27,6 +19,14 @@ public class Patient extends User{
 	
 	private String healthInsuranceNumber;
 
+	@ElementCollection
+	@CollectionTable(name = "allergies")
+	private Set<String> allergies;
+	
+	@ElementCollection
+	@CollectionTable(name = "specialNeeds")
+	private Set<String> specialNeeds;
+	
 	public Set<String> getAllergies() {
 		return allergies;
 	}

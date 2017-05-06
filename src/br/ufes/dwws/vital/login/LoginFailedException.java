@@ -15,9 +15,6 @@ public class LoginFailedException extends Exception {
 		this.reason = reason;
 	}
 
-	public LoginFailedReason getReason() {
-		return reason;
-	}
 
 	public enum LoginFailedReason {
 
@@ -38,5 +35,10 @@ public class LoginFailedException extends Exception {
 		public String toString() {
 			return id;
 		}
+	}
+	
+
+	public LoginFailedReason getReason() {
+		return reason;
 	}
 }

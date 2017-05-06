@@ -1,20 +1,21 @@
-package br.ufes.dwws.vital.auth.persistence;
+package br.ufes.dwws.vital.persistence;
+
 
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
-import br.ufes.dwws.vital.domain.Hospital;
+import br.ufes.dwws.vital.domain.Appointment;
 import br.ufes.inf.nemo.jbutler.ejb.persistence.BaseJPADAO;
 
 @Stateless
-public class HospitalJPADAO extends BaseJPADAO<Hospital> implements HospitalDAO{
+public class AppointmentJPADAO extends BaseJPADAO<Appointment> implements AppointmentDAO {
 
-	private static final long serialVersionUID = 1L;
+private static final long serialVersionUID = 1L;
 
 	@PersistenceContext
 	private EntityManager entityManager;
-	
+
 	@Override
 	protected EntityManager getEntityManager() {
 		return entityManager;

@@ -17,19 +17,24 @@ public class User extends PersistentObjectSupport {
 	private static final long serialVersionUID = 1L;
 	
 	private String name;
-	
 	private String phone;
 	
 	@Temporal(TemporalType.DATE)
 	private Date birthday;
 	
 	private String gender;
-	
 	private String email;
-	
 	private String password;
-	
 	private String role;
+	
+
+	@Override
+	public String toString() {
+		return "User [id=" + super.getId() + ", name=" + name + ", phone=" + phone + ", birthday=" + birthday + ", gender="
+				+ gender + ", email=" + email + ", password=" + password + "]";
+	}
+	
+	
 
 	public String getRole() {
 		return role;
@@ -73,11 +78,6 @@ public class User extends PersistentObjectSupport {
 	}
 	public void setPassword(String password) {
 		this.password = password;
-	}
-	@Override
-	public String toString() {
-		return "User [id=" + super.getId() + ", name=" + name + ", phone=" + phone + ", birthday=" + birthday + ", gender="
-				+ gender + ", email=" + email + ", password=" + password + "]";
 	}
 	
 	

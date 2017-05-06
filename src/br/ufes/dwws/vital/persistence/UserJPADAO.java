@@ -1,5 +1,6 @@
 package br.ufes.dwws.vital.persistence;
 
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -26,11 +27,6 @@ public class UserJPADAO extends BaseJPADAO<User> implements UserDAO {
 	private EntityManager entityManager;
 
 	@Override
-	protected EntityManager getEntityManager() {
-		return entityManager;
-	}
-
-	@Override
 	public User retrieveByEmail(String email)
 			throws PersistentObjectNotFoundException, MultiplePersistentObjectsFoundException {
 
@@ -44,7 +40,27 @@ public class UserJPADAO extends BaseJPADAO<User> implements UserDAO {
 		logger.log(Level.INFO, "User by the email \"{0}\" returned \"{1}\"", new Object[] { email, result });
 		
 		return result;
+	}
+	
+	
+	public List<User> retrieveByRole(String role)
+			throws PersistentObjectNotFoundException, MultiplePersistentObjectsFoundException {
+
+		CriteriaBuilder cb = entityManager.getCriteriaBuilder();
+		CriteriaQuery<User> cq = cb.createQuery(User.class);
+		Root<User> root = cq.from(User.class);
+
+		cq.where(cb.equal(root.get("role"), role));
+		List<User> result = entityManager.createQuery(cq).getResultList();
 		
+		return result;
+		
+	}
+	
+
+	@Override
+	protected EntityManager getEntityManager() {
+		return entityManager;
 	}
 
 }

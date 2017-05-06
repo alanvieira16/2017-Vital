@@ -1,4 +1,4 @@
-package br.ufes.dwws.vital.auth.control;
+package br.ufes.dwws.vital.signup.control;
 
 import java.io.Serializable;
 import java.security.NoSuchAlgorithmException;
@@ -11,13 +11,12 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import javax.servlet.http.HttpServletRequest;
 
-import br.ufes.dwws.vital.auth.application.RegistrationService;
-import br.ufes.dwws.vital.auth.persistence.HospitalDAO;
 import br.ufes.dwws.vital.domain.Doctor;
 import br.ufes.dwws.vital.domain.Hospital;
-import br.ufes.dwws.vital.domain.User;
 import br.ufes.dwws.vital.login.LoginFailedException;
 import br.ufes.dwws.vital.login.LoginService;
+import br.ufes.dwws.vital.persistence.HospitalDAO;
+import br.ufes.dwws.vital.signup.application.RegistrationService;
 import br.ufes.inf.nemo.jbutler.TextUtils;
 import br.ufes.inf.nemo.jbutler.ejb.controller.PersistentObjectConverterFromId;
 
@@ -37,14 +36,6 @@ public class RegistrationController implements Serializable {
 	private LoginService loginService;
 
 	private Doctor doctor = new Doctor();
-	private User user = new User();
-	public User getUser() {
-		return user;
-	}
-
-	public void setUser(User user) {
-		this.user = user;
-	}
 
 	private String role;
 

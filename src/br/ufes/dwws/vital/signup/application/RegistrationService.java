@@ -1,4 +1,4 @@
-package br.ufes.dwws.vital.auth.application;
+package br.ufes.dwws.vital.signup.application;
 
 import java.io.Serializable;
 import java.util.List;
@@ -9,9 +9,9 @@ import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
-import br.ufes.dwws.vital.auth.persistence.HospitalDAO;
 import br.ufes.dwws.vital.domain.Doctor;
 import br.ufes.dwws.vital.domain.Hospital;
+import br.ufes.dwws.vital.persistence.HospitalDAO;
 
 @Stateless @LocalBean
 public class RegistrationService implements Serializable {

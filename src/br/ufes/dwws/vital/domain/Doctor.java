@@ -49,9 +49,5 @@ public class Doctor extends User {
 	public void setHospital(Hospital hospital) {
 		this.hospital = hospital;
 	}
-	
-	
-	
-	
-	
+		
 }

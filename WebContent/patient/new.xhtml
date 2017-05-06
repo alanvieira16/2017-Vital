@@ -1,0 +1,238 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	template="/resources/decorator.xhtml">
+
+	<ui:define name="title">New Patient</ui:define>
+
+	<ui:define name="menu">
+
+		<ui:repeat var="item" value="#{menuController.menuItems}">
+			<li><a href="#{item.url}"><i class="#{item.icon}"></i><span>#{item.title}</span></a></li>
+		</ui:repeat>
+
+	</ui:define>
+
+	<ui:define name="content">
+
+		<h1 class="page-title">Register a patient</h1>
+		<h:form id="regForm" styleClass="col-xs-12 col-md-8 col-md-offset-2">
+
+			<h:panelGroup layout="block" styleClass="row">
+
+
+				<h:panelGroup layout="block" styleClass="col-xs-12">
+					<h:panelGroup layout="block" styleClass="alert alert-#{alertType}"
+						rendered="#{message != null}">#{message}</h:panelGroup>
+				</h:panelGroup>
+
+				<h:panelGroup layout="block" styleClass="col-xs-12 col-md-6">
+					<h:panelGroup layout="block" styleClass="form-group">
+						<h:outputLabel for="name" value="Name" />
+						<h:inputText id="name" value="#{patientController.patient.name}"
+							size="20" styleClass="form-control" required="true"
+							requiredMessage="You can't leave this field empty.">
+							<f:ajax event="blur" render="nameMessage" />
+						</h:inputText>
+						<h:message styleClass="error-message" for="name" id="nameMessage" />
+					</h:panelGroup>
+				</h:panelGroup>
+
+
+				<h:panelGroup layout="block" styleClass="col-xs-12 col-md-6">
+					<h:panelGroup layout="block" styleClass="form-group">
+						<h:outputLabel for="email" value="Email" />
+						<h:inputText id="email" value="#{patientController.patient.email}"
+							size="20" styleClass="form-control"
+							binding="#{passwordComponent}" required="true"
+							validatorMessage="Invalid email format"
+							requiredMessage="You can't leave this field empty.">
+							<f:validateRegex
+								pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$" />
+							<f:ajax event="blur" render="emailMessage" />
+						</h:inputText>
+						<h:message styleClass="error-message" for="email"
+							id="emailMessage">
+						</h:message>
+					</h:panelGroup>
+				</h:panelGroup>
+
+				<h:panelGroup layout="block" styleClass="col-xs-12 col-md-6">
+					<h:panelGroup layout="block" styleClass="form-group">
+						<h:outputLabel for="password" value="Password" />
+						<h:inputSecret id="password"
+							value="#{patientController.patient.password}" size="20"
+							styleClass="form-control" required="true"
+							requiredMessage="You can't leave this field empty.">
+							<f:validator validatorId="confirmPasswordValidator" />
+							<f:attribute name="confirm"
+								value="#{confirmPassword.submittedValue}" />
+							<f:ajax event="blur" execute="password confirm"
+								render="passwordMessage" />
+						</h:inputSecret>
+						<h:message styleClass="error-message" for="password"
+							id="passwordMessage" />
+					</h:panelGroup>
+				</h:panelGroup>
+
+				<h:panelGroup layout="block" styleClass="col-xs-12 col-md-6">
+					<h:panelGroup layout="block" styleClass="form-group">
+						<h:outputLabel for="confirm-password"
+							value="Confirm your password" />
+						<h:inputSecret id="confirm-password"
+							value="#{patientController.patient.password}" size="20"
+							styleClass="form-control" required="true"
+							requiredMessage="You can't leave this field empty."
+							binding="#{confirmPassword}">
+							<f:ajax event="blur" execute="password confirm"
+								render="passwordMessage confirmPasswordMessage" />
+						</h:inputSecret>
+						<h:message styleClass="error-message" for="confirm-password"
+							id="confirmPasswordMessage" />
+					</h:panelGroup>
+				</h:panelGroup>
+
+				<h:panelGroup layout="block" styleClass="col-xs-12 col-md-4">
+					<h:panelGroup layout="block" styleClass="form-group">
+						<h:outputLabel for="gender" value="Gender" />
+						<h:selectOneMenu id="gender" styleClass="form-control"
+							value="#{patientController.patient.gender}" required="true"
+							requiredMessage="You can't leave this field empty.">
+							<f:selectItem itemValue="" itemLabel="" />
+							<f:selectItem itemValue="M" itemLabel="Masculino" />
+							<f:selectItem itemValue="F" itemLabel="Feminino" />
+							<f:ajax event="blur" render="genderMessage" />
+						</h:selectOneMenu>
+						<h:message styleClass="error-message" for="gender"
+							id="genderMessage" />
+					</h:panelGroup>
+				</h:panelGroup>
+
+				<h:panelGroup layout="block" styleClass="col-xs-12 col-md-4">
+					<h:panelGroup layout="block" styleClass="form-group">
+						<h:outputLabel for="phone" value="Phone" />
+						<h:inputText id="phone" value="#{patientController.patient.phone}"
+							size="30" required="true" styleClass="form-control field-phone"
+							requiredMessage="You can't leave this field empty.">
+							<f:ajax event="blur" render="phoneMessage" />
+						</h:inputText>
+						<h:message styleClass="error-message" for="phone"
+							id="phoneMessage" />
+					</h:panelGroup>
+				</h:panelGroup>
+
+				<h:panelGroup layout="block" styleClass="col-xs-12 col-md-4">
+					<h:panelGroup layout="block" styleClass="form-group">
+						<h:outputLabel for="birthday" value="Birthday" />
+						<h:inputText id="birthday"
+							value="#{patientController.patient.birthday}" size="10"
+							required="true" styleClass="form-control field-birthday"
+							requiredMessage="You can't leave this field empty."
+							converterMessage="Invalid date.">
+							<f:convertDateTime pattern="dd/MM/yyyy" />
+							<f:ajax event="blur" render="birthdayMessage" />
+						</h:inputText>
+						<h:message styleClass="error-message" for="birthday"
+							id="birthdayMessage" />
+					</h:panelGroup>
+				</h:panelGroup>
+
+				<h:panelGroup layout="block" styleClass="col-xs-12 col-md-4">
+					<h:panelGroup layout="block" styleClass="form-group">
+						<h:outputLabel for="bloodtype" value="Blood Type" />
+						<h:selectOneMenu id="bloodtype" styleClass="form-control"
+							value="#{patientController.patient.bloodType}" required="true"
+							requiredMessage="You can't leave this field empty.">
+							<f:selectItem itemValue="" itemLabel="" />
+							<f:selectItem itemValue="A+" itemLabel="A+" />
+							<f:selectItem itemValue="A-" itemLabel="A-" />
+							<f:selectItem itemValue="B+" itemLabel="B+" />
+							<f:selectItem itemValue="B-" itemLabel="B-" />
+							<f:selectItem itemValue="AB+" itemLabel="AB+" />
+							<f:selectItem itemValue="AB-" itemLabel="AB-" />
+							<f:selectItem itemValue="O+" itemLabel="O+" />
+							<f:selectItem itemValue="O-" itemLabel="O-" />
+							<f:ajax event="blur" render="bloodTypeMessage" />
+						</h:selectOneMenu>
+						<h:message styleClass="error-message" for="bloodType"
+							id="bloodTypeMessage" />
+					</h:panelGroup>
+				</h:panelGroup>
+
+				<h:panelGroup layout="block" styleClass="col-xs-12 col-md-4">
+					<h:panelGroup layout="block" styleClass="form-group">
+						<h:outputLabel for="healthInsurance" value="Health Insurance" />
+						<h:inputText id="healthInsurance"
+							value="#{patientController.patient.healthInsurance}" size="30"
+							required="true" styleClass="form-control"
+							requiredMessage="You can't leave this field empty.">
+							<f:ajax event="blur" render="healthInsuranceMessage" />
+						</h:inputText>
+						<h:message styleClass="error-message" for="healthInsurance"
+							id="healthInsuranceMessage" />
+					</h:panelGroup>
+				</h:panelGroup>
+
+				<h:panelGroup layout="block" styleClass="col-xs-12 col-md-4">
+					<h:panelGroup layout="block" styleClass="form-group">
+						<h:outputLabel for="healthInsuranceNumber"
+							value="Health Insurance Number" />
+						<h:inputText id="healthInsuranceNumber"
+							value="#{patientController.patient.healthInsuranceNumber}"
+							size="30" required="true" styleClass="form-control"
+							requiredMessage="You can't leave this field empty.">
+							<f:ajax event="blur" render="healthInsuranceNumberMessage" />
+						</h:inputText>
+						<h:message styleClass="error-message" for="healthInsuranceNumber"
+							id="healthInsuranceNumberMessage" />
+					</h:panelGroup>
+				</h:panelGroup>
+
+				<h:panelGroup layout="block" styleClass="col-xs-12 col-md-6">
+					<h:panelGroup layout="block" styleClass="form-group">
+						<h:outputLabel for="allergies" value="Allergies" />
+						<h:panelGroup styleClass="sublabel">
+							<h:outputText>Insira uma lista de alergias separadas por vírgula.</h:outputText>
+						</h:panelGroup>
+						<h:inputText id="allergies"
+							value="#{patientController.patient.allergies}"
+							styleClass="form-control">
+						</h:inputText>
+						<h:message styleClass="error-message" for="allergies"
+							id="allergiesMessage" />
+					</h:panelGroup>
+				</h:panelGroup>
+				
+				<h:panelGroup layout="block" styleClass="col-xs-12 col-md-6">
+					<h:panelGroup layout="block" styleClass="form-group">
+						<h:outputLabel for="allergies" value="Allergies" />
+						<h:panelGroup styleClass="sublabel">
+							<h:outputText>Insira uma lista de alergias separadas por vírgula.</h:outputText>
+						</h:panelGroup>
+						<h:inputText id="allergies"
+							value="#{patientController.patient.allergies}"
+							styleClass="form-control">
+						</h:inputText>
+						<h:message styleClass="error-message" for="allergies"
+							id="allergiesMessage" />
+					</h:panelGroup>
+				</h:panelGroup>
+
+				<h:panelGroup layout="block" styleClass="col-xs-12 text-right">
+					<h:panelGroup layout="block" styleClass="form-group">
+						<h:commandButton action="#{registrationController.register}"
+							value="Register" styleClass="btn btn-vital" />
+					</h:panelGroup>
+				</h:panelGroup>
+			</h:panelGroup>
+
+		</h:form>
+	</ui:define>
+
+
+
+</ui:composition>

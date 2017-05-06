@@ -6,9 +6,6 @@ public class LoginEvent {
 	
 	private User user;
 
-	public User getUser() {
-		return user;
-	}
 
 	public LoginEvent(User user) {
 		super();
@@ -16,4 +13,7 @@ public class LoginEvent {
 	}
 	
 
+	public User getUser() {
+		return user;
+	}
 }

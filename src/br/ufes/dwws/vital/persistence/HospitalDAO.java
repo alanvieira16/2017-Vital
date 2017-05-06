@@ -1,4 +1,4 @@
-package br.ufes.dwws.vital.auth.persistence;
+package br.ufes.dwws.vital.persistence;
 
 import javax.ejb.Local;
 

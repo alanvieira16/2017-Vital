@@ -11,7 +11,6 @@ import javax.enterprise.event.Observes;
 import javax.inject.Named;
 
 import br.ufes.dwws.util.MenuItem;
-import br.ufes.dwws.vital.domain.User;
 import br.ufes.dwws.vital.login.LoginEvent;
 
 @Named
@@ -19,20 +18,7 @@ import br.ufes.dwws.vital.login.LoginEvent;
 public class MenuController implements Serializable {
 
 	private static final long serialVersionUID = 1L;
-	
 	private static final Logger logger = Logger.getLogger(MenuController.class.getCanonicalName());
-
-
-	private String mensagem;
-
-	public String getMensagem() {
-		return mensagem;
-	}
-
-	public void setMensagem(String mensagem) {
-		this.mensagem = mensagem;
-	}
-
 	private List<MenuItem> menuItems;
 
 	public MenuController() {
@@ -44,14 +30,11 @@ public class MenuController implements Serializable {
 		menuItems.add(new MenuItem("Item N", "fa fa-fire", "#"));
 		menuItems.add(new MenuItem("Item O", "fa fa-heart", "#"));
 		menuItems.add(new MenuItem("Item P", "fa fa-user", "#"));
-		mensagem = "Não tem usuario logado :(";
 	}
 	
 	public void LoginEventHappens(@Observes LoginEvent event)
 	{
 		logger.log(Level.INFO, "loginEventHappens");
-		User user = event.getUser();
-		mensagem = "tá logado\n" + user + "\n\\o/";
 	}
 
 	public List<MenuItem> getMenuItems() {
