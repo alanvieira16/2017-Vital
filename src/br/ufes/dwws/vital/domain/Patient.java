@@ -1,6 +1,6 @@
 package br.ufes.dwws.vital.domain;
 
-import java.util.Set;
+import java.util.List;
 
 import javax.persistence.CollectionTable;
 import javax.persistence.ElementCollection;
@@ -21,25 +21,25 @@ public class Patient extends User{
 
 	@ElementCollection
 	@CollectionTable(name = "allergies")
-	private Set<String> allergies;
+	private List<String> allergies;
 	
 	@ElementCollection
 	@CollectionTable(name = "specialNeeds")
-	private Set<String> specialNeeds;
+	private List<String> specialNeeds;
 	
-	public Set<String> getAllergies() {
+	public List<String> getAllergies() {
 		return allergies;
 	}
 
-	public void setAllergies(Set<String> allergies) {
+	public void setAllergies(List<String> allergies) {
 		this.allergies = allergies;
 	}
 
-	public Set<String> getSpecialNeeds() {
+	public List<String> getSpecialNeeds() {
 		return specialNeeds;
 	}
 
-	public void setSpecialNeeds(Set<String> specialNeeds) {
+	public void setSpecialNeeds(List<String> specialNeeds) {
 		this.specialNeeds = specialNeeds;
 	}
 

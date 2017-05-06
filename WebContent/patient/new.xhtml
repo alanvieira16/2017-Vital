@@ -20,7 +20,7 @@
 	<ui:define name="content">
 
 		<h1 class="page-title">Register a patient</h1>
-		<h:form id="regForm" styleClass="col-xs-12 col-md-8 col-md-offset-2">
+		<h:form id="regPatientForm" styleClass="col-xs-12 col-md-8 col-md-offset-2">
 
 			<h:panelGroup layout="block" styleClass="row">
 
@@ -194,37 +194,52 @@
 
 				<h:panelGroup layout="block" styleClass="col-xs-12 col-md-6">
 					<h:panelGroup layout="block" styleClass="form-group">
-						<h:outputLabel for="allergies" value="Allergies" />
-						<h:panelGroup styleClass="sublabel">
-							<h:outputText>Insira uma lista de alergias separadas por vírgula.</h:outputText>
-						</h:panelGroup>
+						<h:outputLabel for="allergies" value="Allergies">
+							<h:panelGroup styleClass="sublabel">
+								<h:outputText value="Insert a comma-separated list." />
+							</h:panelGroup>
+						</h:outputLabel>
 						<h:inputText id="allergies"
 							value="#{patientController.patient.allergies}"
-							styleClass="form-control">
-						</h:inputText>
-						<h:message styleClass="error-message" for="allergies"
-							id="allergiesMessage" />
-					</h:panelGroup>
-				</h:panelGroup>
-				
-				<h:panelGroup layout="block" styleClass="col-xs-12 col-md-6">
-					<h:panelGroup layout="block" styleClass="form-group">
-						<h:outputLabel for="allergies" value="Allergies" />
-						<h:panelGroup styleClass="sublabel">
-							<h:outputText>Insira uma lista de alergias separadas por vírgula.</h:outputText>
-						</h:panelGroup>
-						<h:inputText id="allergies"
-							value="#{patientController.patient.allergies}"
-							styleClass="form-control">
+							styleClass="form-control"
+							converter="#{patientController.str2listConverter}">
 						</h:inputText>
 						<h:message styleClass="error-message" for="allergies"
 							id="allergiesMessage" />
 					</h:panelGroup>
 				</h:panelGroup>
 
+				<h:panelGroup layout="block" styleClass="col-xs-12 col-md-6">
+					<h:panelGroup layout="block" styleClass="form-group">
+						<h:outputLabel for="specialNeeds" value="Special Needs">
+							<h:panelGroup styleClass="sublabel">
+								<h:outputText value="Insert a comma-separated list." />
+							</h:panelGroup>
+						</h:outputLabel>
+						<h:inputText id="specialNeeds"
+							value="#{patientController.patient.specialNeeds}"
+							styleClass="form-control"
+							converter="#{patientController.str2listConverter}">
+						</h:inputText>
+						<h:message styleClass="
+							error-message" for="specialNeeds" id="specialNeedsMessage" />
+					</h:panelGroup>
+				</h:panelGroup>
+
+				<h:panelGroup layout="block" styleClass="col-xs-12 col-md-12">
+					<h:panelGroup layout="block" styleClass="form-group">
+						<h:outputLabel for="notes" value="Notes" />
+						<h:inputTextarea id="notes"
+							value="#{patientController.patient.notes}"
+							styleClass="form-control" />
+						<h:message styleClass="error-message" for="notes"
+							id="notesMessage" />
+					</h:panelGroup>
+				</h:panelGroup>
+
 				<h:panelGroup layout="block" styleClass="col-xs-12 text-right">
 					<h:panelGroup layout="block" styleClass="form-group">
-						<h:commandButton action="#{registrationController.register}"
+						<h:commandButton action="#{patientController.register}"
 							value="Register" styleClass="btn btn-vital" />
 					</h:panelGroup>
 				</h:panelGroup>

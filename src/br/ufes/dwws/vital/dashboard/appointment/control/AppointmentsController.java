@@ -9,7 +9,7 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import javax.servlet.http.HttpServletRequest;
 
-import br.ufes.dwws.vital.dashboard.appointment.application.AppointmentsService;
+import br.ufes.dwws.vital.dashboard.appointment.application.CreateAppointmentService;
 import br.ufes.dwws.vital.domain.Appointment;
 import br.ufes.dwws.vital.persistence.AppointmentDAO;
 
@@ -20,7 +20,7 @@ public class AppointmentsController implements Serializable{
 	private static final long serialVersionUID = 1L;
 	
 	@EJB
-	private AppointmentsService appointmentsService;
+	private CreateAppointmentService createAppointmentService;
 	
 	@Inject
 	private HttpServletRequest request;
@@ -29,15 +29,15 @@ public class AppointmentsController implements Serializable{
 	
 	@Inject
 	public void init(AppointmentDAO appointmentDAO) {
-		appointments = appointmentsService.listAppointments();
+		appointments = createAppointmentService.listAppointments();
 	}
 
-	public AppointmentsService getAppointmentsService() {
-		return appointmentsService;
+	public CreateAppointmentService getAppointmentsService() {
+		return createAppointmentService;
 	}
 
-	public void setAppointmentsService(AppointmentsService appointmentsService) {
-		this.appointmentsService = appointmentsService;
+	public void setAppointmentsService(CreateAppointmentService createAppointmentService) {
+		this.createAppointmentService = createAppointmentService;
 	}
 
 	public HttpServletRequest getRequest() {

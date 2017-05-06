@@ -14,7 +14,7 @@ import br.ufes.dwws.vital.persistence.AppointmentDAO;
 
 @Stateless
 @LocalBean
-public class AppointmentsService implements Serializable {
+public class CreateAppointmentService implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 

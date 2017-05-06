@@ -153,6 +153,14 @@ form label{
 	font-weight: 500;
 	font-size: 12px;
 	margin-bottom: 0;
+	position: relative;
+}
+
+form label .sublabel{
+	font-size: 9px;
+	position: absolute;
+	right: 5px;
+	top: 8px;
 }
 
 .form-group{
