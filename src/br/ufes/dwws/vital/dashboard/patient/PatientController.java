@@ -1,4 +1,4 @@
-package br.ufes.dwws.vital.dashboard.patient.control;
+package br.ufes.dwws.vital.dashboard.patient;
 
 import java.io.Serializable;
 import java.security.NoSuchAlgorithmException;
@@ -11,9 +11,7 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import javax.servlet.http.HttpServletRequest;
 
-import br.ufes.dwws.vital.dashboard.patient.application.RegisterPatientService;
 import br.ufes.dwws.vital.converters.StringToListConverter;
-import br.ufes.dwws.vital.dashboard.patient.application.ListPatientsService;
 import br.ufes.dwws.vital.domain.Patient;
 import br.ufes.dwws.vital.persistence.AppointmentDAO;
 import br.ufes.inf.nemo.jbutler.TextUtils;

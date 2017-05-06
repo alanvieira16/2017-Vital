@@ -1,4 +1,4 @@
-package br.ufes.dwws.vital.dashboard.patient.application;
+package br.ufes.dwws.vital.dashboard.patient;
 
 import java.io.Serializable;
 import java.util.List;

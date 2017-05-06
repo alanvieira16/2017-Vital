@@ -1,4 +1,4 @@
-package br.ufes.dwws.vital.signup.control;
+package br.ufes.dwws.vital.signup;
 
 import java.io.Serializable;
 import java.security.NoSuchAlgorithmException;
@@ -16,7 +16,7 @@ import br.ufes.dwws.vital.domain.Hospital;
 import br.ufes.dwws.vital.login.LoginFailedException;
 import br.ufes.dwws.vital.login.LoginService;
 import br.ufes.dwws.vital.persistence.HospitalDAO;
-import br.ufes.dwws.vital.signup.application.RegistrationService;
+import br.ufes.dwws.vital.signup.RegistrationService;
 import br.ufes.inf.nemo.jbutler.TextUtils;
 import br.ufes.inf.nemo.jbutler.ejb.controller.PersistentObjectConverterFromId;
 

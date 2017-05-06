@@ -1,4 +1,4 @@
-package br.ufes.dwws.vital.dashboard.appointment.application;
+package br.ufes.dwws.vital.dashboard.appointment;
 
 import java.io.Serializable;
 import java.util.List;

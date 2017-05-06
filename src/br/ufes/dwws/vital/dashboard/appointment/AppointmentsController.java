@@ -1,4 +1,4 @@
-package br.ufes.dwws.vital.dashboard.appointment.control;
+package br.ufes.dwws.vital.dashboard.appointment;
 
 import java.io.Serializable;
 import java.util.List;
@@ -9,7 +9,6 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import javax.servlet.http.HttpServletRequest;
 
-import br.ufes.dwws.vital.dashboard.appointment.application.CreateAppointmentService;
 import br.ufes.dwws.vital.domain.Appointment;
 import br.ufes.dwws.vital.persistence.AppointmentDAO;
 
