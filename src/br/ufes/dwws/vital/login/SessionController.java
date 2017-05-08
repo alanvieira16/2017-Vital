@@ -1,6 +1,8 @@
 package br.ufes.dwws.vital.login;
 
 import java.io.Serializable;
+import java.io.UnsupportedEncodingException;
+import java.security.NoSuchAlgorithmException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -15,6 +17,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import br.ufes.dwws.vital.domain.User;
 import br.ufes.dwws.vital.login.LoginFailedException.LoginFailedReason;
+import br.ufes.inf.nemo.jbutler.TextUtils;
 
 @Named
 @SessionScoped
@@ -26,7 +29,7 @@ public class SessionController implements Serializable {
 
 	@EJB
 	private LoginService loginService;
-	
+
 	@Inject
 	@Any
 	private Event<LoginEvent> loginEvent;
@@ -36,20 +39,27 @@ public class SessionController implements Serializable {
 	private String password;
 	private Boolean hasLoggedUser;
 
-	
-
 	public String login() {
+		return login(email, password);
+	}
+
+	public String login(String username, String pwd) {
 
 		try {
-			
-			loginService.login(email, password);
-			
+
 			try {
-				HttpServletRequest request = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest();
-				request.login(email, password);
-				logger.log(Level.INFO, "login done by JAAS");							
+				loginService.login(username, TextUtils.produceBase64EncodedMd5Hash(pwd));
+			} catch (NoSuchAlgorithmException | UnsupportedEncodingException e) {
+				e.printStackTrace();
+				throw new LoginFailedException(e, LoginFailedReason.MD5_ERROR);
 			}
-			catch (Exception e) {
+
+			try {
+				HttpServletRequest request = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext()
+						.getRequest();
+				request.login(username, pwd);
+				logger.log(Level.INFO, "login done by JAAS");
+			} catch (Exception e) {
 				e.printStackTrace();
 				logger.log(Level.INFO, "http error when login by JAAS");
 				throw new LoginFailedException(e, LoginFailedReason.NO_HTTP_REQUEST);
@@ -61,6 +71,7 @@ public class SessionController implements Serializable {
 
 			case INCORRECT_PASSWORD:
 				logger.log(Level.INFO, "Incorrect password");
+				return null;
 			case UNKNOWN_USERNAME:
 				logger.log(Level.INFO, "unknown username");
 				return null;
@@ -73,21 +84,20 @@ public class SessionController implements Serializable {
 		}
 
 		currentUser = loginService.getCurrentUser();
-		
-		if(currentUser != null)
+
+		if (currentUser != null)
 			loginEvent.fire(new LoginEvent(currentUser));
-		
+
 		logger.log(Level.INFO, "login current user: " + currentUser);
 
 		return "/index.xhtml?faces-redirect=true";
 	}
 
-	
 	public String logout() {
 		getRequest().getSession().invalidate();
 		return "index?faces-redirect=true";
 	}
-	
+
 	private HttpServletRequest getRequest() {
 		return (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest();
 	}
@@ -124,7 +134,7 @@ public class SessionController implements Serializable {
 	public void setPassword(String password) {
 		this.password = password;
 	}
-	
+
 	public Boolean hasLoggedUser() {
 		return currentUser != null;
 	}

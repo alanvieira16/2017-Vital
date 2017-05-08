@@ -3,6 +3,8 @@ package br.ufes.dwws.vital.login;
 import java.io.Serializable;
 import java.io.UnsupportedEncodingException;
 import java.security.NoSuchAlgorithmException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javax.annotation.Resource;
 import javax.ejb.EJB;
@@ -22,6 +24,8 @@ import br.ufes.inf.nemo.jbutler.ejb.persistence.exceptions.PersistentObjectNotFo
 public class LoginService implements Serializable {
 
 	private static final long serialVersionUID = 1L;
+	
+	private static final Logger logger = Logger.getLogger(LoginService.class.getCanonicalName());
 
 	@Resource
 	private SessionContext sessionContext;
@@ -34,11 +38,11 @@ public class LoginService implements Serializable {
 		try {
 
 			User user = userDAO.retrieveByEmail(email);
+			String passwordFromBD = user.getPassword();
 			
-			String md5pwd = TextUtils.produceBase64EncodedMd5Hash(password);
-			String pwd = user.getPassword();
+			logger.log(Level.INFO, "pwd from bd: " + passwordFromBD + " pwd from field: " + password );
 
-			if (pwd == null || !pwd.equals(md5pwd))
+			if (passwordFromBD == null || !passwordFromBD.equals(password))
 				throw new LoginFailedException(LoginFailedException.LoginFailedReason.INCORRECT_PASSWORD);
 
 		} catch (PersistentObjectNotFoundException e) {
@@ -47,8 +51,6 @@ public class LoginService implements Serializable {
 			throw new LoginFailedException(e, LoginFailedException.LoginFailedReason.MULTIPLE_USERS);
 		} catch (EJBTransactionRolledbackException e) {
 			throw e;
-		} catch (NoSuchAlgorithmException | UnsupportedEncodingException e) {
-			throw new LoginFailedException(LoginFailedException.LoginFailedReason.MD5_ERROR);
 		}
 
 	}

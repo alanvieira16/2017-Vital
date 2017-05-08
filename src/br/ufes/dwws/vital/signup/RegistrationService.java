@@ -1,4 +1,4 @@
-package br.ufes.dwws.vital.signup.application;
+package br.ufes.dwws.vital.signup;
 
 import java.io.Serializable;
 import java.util.List;
