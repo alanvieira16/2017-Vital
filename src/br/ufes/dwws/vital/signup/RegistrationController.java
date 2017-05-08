@@ -4,7 +4,6 @@ import java.io.Serializable;
 import java.io.UnsupportedEncodingException;
 import java.security.NoSuchAlgorithmException;
 import java.util.List;
-import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import javax.ejb.EJB;
@@ -17,14 +16,9 @@ import javax.servlet.http.HttpServletRequest;
 
 import br.ufes.dwws.vital.domain.Doctor;
 import br.ufes.dwws.vital.domain.Hospital;
-import br.ufes.dwws.vital.login.LoginFailedException;
 import br.ufes.dwws.vital.login.LoginService;
 import br.ufes.dwws.vital.login.SessionController;
 import br.ufes.dwws.vital.persistence.HospitalDAO;
-<<<<<<< HEAD
-=======
-import br.ufes.dwws.vital.signup.RegistrationService;
->>>>>>> 87480ec84506f289b5a0f10c0f19b273845f2148
 import br.ufes.inf.nemo.jbutler.TextUtils;
 import br.ufes.inf.nemo.jbutler.ejb.controller.PersistentObjectConverterFromId;
 
