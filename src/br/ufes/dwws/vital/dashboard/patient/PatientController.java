@@ -13,7 +13,6 @@ import javax.servlet.http.HttpServletRequest;
 
 import br.ufes.dwws.vital.converters.StringToListConverter;
 import br.ufes.dwws.vital.domain.Patient;
-import br.ufes.dwws.vital.persistence.AppointmentDAO;
 import br.ufes.inf.nemo.jbutler.TextUtils;
 
 @Named
@@ -31,14 +30,15 @@ public class PatientController implements Serializable {
 	@Inject
 	private HttpServletRequest request;
 	
+	
 	private List<Patient> patients;
 	private Patient patient = new Patient();
 	
 	private StringToListConverter str2listConverter = new StringToListConverter();
 	
 	@Inject
-	public void init(AppointmentDAO appointmentDAO) {
-		patients = listPatientsService.listAppointments();
+	public void init() {
+		patients = listPatientsService.listPatients();
 	}
 	
 	public String register() {
@@ -49,11 +49,11 @@ public class PatientController implements Serializable {
 		} catch (NoSuchAlgorithmException e) {
 			FacesContext.getCurrentInstance().getExternalContext().getFlash().put("alertType", "danger");
 			FacesContext.getCurrentInstance().getExternalContext().getFlash().put("alertMessage", "Something wrong happened. Try again.");
-			return "/patient/new";
+			return "/appointment/new";
 		}
 		FacesContext.getCurrentInstance().getExternalContext().getFlash().put("alertType", "success");
 		FacesContext.getCurrentInstance().getExternalContext().getFlash().put("alertMessage", "The patient has been registered successfully");
-		return "index?faces-redirect=true";
+		return "/index?faces-redirect=true";
 	}
 
 	public RegisterPatientService getRegisterPatientService() {
@@ -95,6 +95,5 @@ public class PatientController implements Serializable {
 	public void setStr2listConverter(StringToListConverter str2listConverter) {
 		this.str2listConverter = str2listConverter;
 	}
-	
 	
 }

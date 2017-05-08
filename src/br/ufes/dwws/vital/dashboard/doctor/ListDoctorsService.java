@@ -1,4 +1,4 @@
-package br.ufes.dwws.vital.dashboard.patient;
+package br.ufes.dwws.vital.dashboard.doctor;
 
 import java.io.Serializable;
 import java.util.List;
@@ -9,24 +9,23 @@ import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
-import br.ufes.dwws.vital.domain.Patient;
-import br.ufes.dwws.vital.persistence.PatientDAO;
+import br.ufes.dwws.vital.domain.Doctor;
+import br.ufes.dwws.vital.persistence.DoctorDAO;
 
 @Stateless
 @LocalBean
-public class ListPatientsService implements Serializable {
-
+public class ListDoctorsService implements Serializable {
+	
 	private static final long serialVersionUID = 1L;
 
 	@EJB
-	private PatientDAO patientDAO;
+	private DoctorDAO doctorDAO;
 
 	@PersistenceContext
 	private EntityManager entityManager;
 
-	public List<Patient> listPatients() {
-		List<Patient> patients = patientDAO.retrieveAll();
-		return patients;
+	public List<Doctor> listDoctors() {
+		List<Doctor> doctors = doctorDAO.retrieveAll();
+		return doctors;
 	}
-
 }

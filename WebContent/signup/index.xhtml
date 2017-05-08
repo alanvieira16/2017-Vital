@@ -19,15 +19,13 @@
 
 	<ui:define name="content">
 
-		<h1 class="page-title">Create an account</h1>
+		
+					
 		<h:form id="regForm" styleClass="col-xs-12 col-md-8 col-md-offset-2">
 
 			<h:panelGroup layout="block" styleClass="row">
 
-
 				<h:panelGroup layout="block" styleClass="col-xs-12">
-					<h:panelGroup layout="block" styleClass="alert alert-#{alertType}"
-						rendered="#{message != null}">#{message}</h:panelGroup>
 				</h:panelGroup>
 
 				<h:panelGroup layout="block" styleClass="col-xs-12 col-md-6">
@@ -132,7 +130,7 @@
 						<h:outputLabel for="birthday" value="Birthday" />
 						<h:inputText id="birthday"
 							value="#{registrationController.doctor.birthday}" size="10"
-							required="true" styleClass="form-control field-birthday"
+							required="true" styleClass="form-control field-date"
 							requiredMessage="You can't leave this field empty."
 							converterMessage="Invalid date.">
 							<f:convertDateTime pattern="dd/MM/yyyy" />

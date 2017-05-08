@@ -12,7 +12,13 @@ $(document).ready(function(){
 		    }
 		}).trigger('focusout');
 	}
-	if($(".field-birthday").length){
-		$(".field-birthday").mask("99/99/9999");
+	if($(".field-date").length){
+		$(".field-date").mask("99/99/9999");
+	}
+	if($(".field-datetime").length){
+		$(".field-datetime").mask("99/99/9999 99:99");
+	}
+	if($('[data-toggle="tooltip"]').length){
+		$('[data-toggle="tooltip"]').tooltip(); 
 	}
 });

@@ -14,7 +14,7 @@ import br.ufes.dwws.vital.persistence.AppointmentDAO;
 
 @Stateless
 @LocalBean
-public class CreateAppointmentService implements Serializable {
+public class ScheduleAppointmentService implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
@@ -27,5 +27,9 @@ public class CreateAppointmentService implements Serializable {
 	public List<Appointment> listAppointments() {
 		List<Appointment> appointments = appointmentDAO.retrieveAll();
 		return appointments;
+	}
+	
+	public void schedule(Appointment appointment) {
+		entityManager.persist(appointment);
 	}
 }

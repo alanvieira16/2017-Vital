@@ -1,62 +1,88 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:ui="http://java.sun.com/jsf/facelets"
-      xmlns:h="http://java.sun.com/jsf/html"
-      xmlns:c="http://java.sun.com/jsp/jstl/core">
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:components="http://java.sun.com/jsf/composite/components">
 <h:head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-<link rel="shortcut icon" type="image/ico" href="#{facesContext.externalContext.requestContextPath}/resources/images/favicon.ico"/>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<link rel="shortcut icon" type="image/ico"
+		href="#{facesContext.externalContext.requestContextPath}/resources/images/favicon.ico" />
 
-<link rel='stylesheet' href='#{facesContext.externalContext.requestContextPath}/webjars/bootstrap/3.2.0/css/bootstrap.min.css'/>
-<link rel='stylesheet' href='#{facesContext.externalContext.requestContextPath}/webjars/bootstrap/3.2.0/css/bootstrap-theme.min.css'/>
-<link href="#{facesContext.externalContext.requestContextPath}/resources/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
-<link href="https://fonts.googleapis.com/css?family=Raleway:300,400,500,600,700,800,900" rel="stylesheet"/>
+	<link rel='stylesheet'
+		href='#{facesContext.externalContext.requestContextPath}/webjars/bootstrap/3.2.0/css/bootstrap.min.css' />
+	<link rel='stylesheet'
+		href='#{facesContext.externalContext.requestContextPath}/webjars/bootstrap/3.2.0/css/bootstrap-theme.min.css' />
+	<link
+		href="#{facesContext.externalContext.requestContextPath}/resources/css/font-awesome.min.css"
+		rel="stylesheet" type="text/css" />
+	<link
+		href="https://fonts.googleapis.com/css?family=Raleway:300,400,500,600,700,800,900"
+		rel="stylesheet" />
 
-<link href="#{facesContext.externalContext.requestContextPath}/resources/css/custom.css" rel="stylesheet" type="text/css" />
-<title><h:outputText value="Vital | " /><ui:insert name="title" /></title>
+	<link
+		href="#{facesContext.externalContext.requestContextPath}/resources/css/custom.css"
+		rel="stylesheet" type="text/css" />
+	<title><h:outputText value="Vital | " /><ui:insert
+			name="title" /></title>
 </h:head>
 <h:body>
 
-      <div class="header">
-      	<div class="logo">
-      		<a href="#{facesContext.externalContext.requestContextPath}">
-				<h:graphicImage value="/resources/images/logo_header.png"/>
+	<div class="header">
+		<div class="logo">
+			<a href="#{facesContext.externalContext.requestContextPath}"> <h:graphicImage
+					value="/resources/images/logo_header.png" />
 			</a>
-      	</div><!--
+		</div><!--
       	--><div class="menu">
-      		<ul>
-      			<h:panelGroup rendered="#{sessionController.hasLoggedUser() == false}">
-      			<li><h:button value="Sign up" outcome="/signup/index.html" styleClass="btn"/></li>
-      			<li><h:button value="Login" outcome="/login/index.html" styleClass="btn btn-vital" /></li>
-      			</h:panelGroup>
-      			<h:panelGroup rendered="#{sessionController.hasLoggedUser()}">
-      			<li><h:form><h:commandButton action="#{sessionController.logout}" value="Logout" styleClass="btn btn-vital" /></h:form></li>
-      			</h:panelGroup>
-      		</ul>
-      	</div>
-      	<div class="clearfix"></div>
-      </div>
-      
-      <div class="container-fluid">
-      	<div class="row">
-      		<div class="sidebar col-sm-3 col-md-2">
-      			<ul>
-      				<ui:insert name="menu" />
-      			</ul>
-      		</div>
-      		<div class="content col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2">
-      			
-      			<ui:insert name="content" />
-      		</div>
-      	</div>
-      </div>
- 
- <script type="text/javascript" src="#{facesContext.externalContext.requestContextPath}/webjars/jquery/1.11.1/jquery.min.js"></script>
- <script type="text/javascript" src="#{facesContext.externalContext.requestContextPath}/webjars/bootstrap/3.2.0/js/bootstrap.min.js"></script>
- <script type="text/javascript" src="#{facesContext.externalContext.requestContextPath}/webjars/jquery-maskedinput/1.4.0/jquery.maskedinput.min.js"></script>
- 
- <script type="text/javascript" src="#{facesContext.externalContext.requestContextPath}/resources/js/custom.js"></script>
- 
+			<ul>
+				<h:panelGroup
+					rendered="#{sessionController.hasLoggedUser() == false}">
+					<li><h:button value="Sign up" outcome="/signup/index.html"
+							styleClass="btn" /></li>
+					<li><h:button value="Login" outcome="/login/index.html"
+							styleClass="btn btn-vital" /></li>
+				</h:panelGroup>
+				<h:panelGroup rendered="#{sessionController.hasLoggedUser()}">
+					<li><h:form>
+							<h:commandButton action="#{sessionController.logout}"
+								value="Logout" styleClass="btn btn-vital" />
+						</h:form></li>
+				</h:panelGroup>
+			</ul>
+		</div>
+		<div class="clearfix"></div>
+	</div>
+
+	<div class="container-fluid">
+		<div class="row">
+			<div class="sidebar col-sm-3 col-md-2">
+				<ul>
+					<ui:insert name="menu" />
+				</ul>
+			</div>
+			<div
+				class="content col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2">
+				<h1 class="page-title">
+					<ui:insert name="title" />
+				</h1>
+				<components:alert type='#{flash.alertType}'
+					message='#{flash.alertMessage}' />
+				<ui:insert name="content" />
+			</div>
+		</div>
+	</div>
+
+	<script type="text/javascript"
+		src="#{facesContext.externalContext.requestContextPath}/webjars/jquery/1.11.1/jquery.min.js"></script>
+	<script type="text/javascript"
+		src="#{facesContext.externalContext.requestContextPath}/webjars/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+	<script type="text/javascript"
+		src="#{facesContext.externalContext.requestContextPath}/webjars/jquery-maskedinput/1.4.0/jquery.maskedinput.min.js"></script>
+
+	<script type="text/javascript"
+		src="#{facesContext.externalContext.requestContextPath}/resources/js/custom.js"></script>
+
 </h:body>
 </html>

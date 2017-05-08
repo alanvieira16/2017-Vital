@@ -19,14 +19,33 @@
 
 	<ui:define name="content">
 
-		<h1 class="page-title">Appointments</h1>
-		<h:dataTable value="#{apppointmentsContoller.appointments}" var="appointment"
+		<h:dataTable value="#{appointmentController.appointments}" var="appointment" 
 			styleClass="table table-stripped table-bordered">
 
 			<h:column>
 				<f:facet name="header">Patient</f:facet>    				
 		   		#{appointment.patient.name}
 		   </h:column>
+
+			<h:column>
+				<f:facet name="header">Doctor</f:facet>    				
+		   		#{appointment.doctor.name}
+		   </h:column>
+
+			<h:column>
+				<f:facet name="header">Date</f:facet>    				
+		   		#{appointment.datetime}
+		   </h:column>
+
+			<h:column>
+				<f:facet name="header">Action</f:facet>
+				<h:panelGroup layout="block" styleClass="text-center crud-actions">
+					<a href="" data-toggle="tooltip" title="Details"><i class="fa fa-info-circle" /></a>
+					<a href="" data-toggle="tooltip" title="Edit"><i class="fa fa-edit" /></a>
+					<a href="" data-toggle="tooltip" title="Delete"><i class="fa fa-remove" /></a>
+				</h:panelGroup>
+
+			</h:column>
 
 
 		</h:dataTable>
