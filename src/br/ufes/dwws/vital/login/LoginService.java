@@ -34,7 +34,6 @@ public class LoginService implements Serializable {
 		try {
 
 			User user = userDAO.retrieveByEmail(email);
-			
 			String md5pwd = TextUtils.produceBase64EncodedMd5Hash(password);
 			String pwd = user.getPassword();
 

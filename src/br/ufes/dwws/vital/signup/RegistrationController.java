@@ -1,6 +1,7 @@
 package br.ufes.dwws.vital.signup;
 
 import java.io.Serializable;
+import java.io.UnsupportedEncodingException;
 import java.security.NoSuchAlgorithmException;
 import java.util.List;
 
@@ -82,10 +83,14 @@ public class RegistrationController implements Serializable {
 	
 	public String register() {
 		try {
-			String md5pwd = TextUtils.produceMd5Hash(doctor.getPassword());
+			String md5pwd = TextUtils.produceBase64EncodedMd5Hash(doctor.getPassword());
 			doctor.setPassword(md5pwd);
 			registrationService.register(doctor);
 		} catch (NoSuchAlgorithmException e) {
+			request.setAttribute("alertType", "danger");
+			request.setAttribute("message", "Oops! Something wrong happened. Try again.");
+			return "/signup/index.xhtml";
+		} catch (UnsupportedEncodingException e) {
 			request.setAttribute("alertType", "danger");
 			request.setAttribute("message", "Oops! Something wrong happened. Try again.");
 			return "/signup/index.xhtml";

@@ -55,7 +55,6 @@ public class AppointmentController implements Serializable{
 			FacesContext.getCurrentInstance().getExternalContext().getFlash().put("alertMessage", "Something wrong happened. Try again.");
 			return "/appointment/new";
 		}
-				
 	}
 
 	public ScheduleAppointmentService getAppointmentsService() {

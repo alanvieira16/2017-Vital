@@ -2,7 +2,6 @@ package br.ufes.dwws.vital.domain;
 
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToOne;
 
 @Entity
 public class Doctor extends User {
@@ -11,9 +10,6 @@ public class Doctor extends User {
 	
 	private String specialization;
 	private String crm;
-	
-	@OneToOne(mappedBy = "doctor")
-	private Receptionist receptionist;
 
 	@ManyToOne
 	private Hospital hospital;
@@ -32,14 +28,6 @@ public class Doctor extends User {
 
 	public void setCrm(String crm) {
 		this.crm = crm;
-	}
-
-	public Receptionist getReceptionist() {
-		return receptionist;
-	}
-
-	public void setReceptionist(Receptionist receptionist) {
-		this.receptionist = receptionist;
 	}
 
 	public Hospital getHospital() {
