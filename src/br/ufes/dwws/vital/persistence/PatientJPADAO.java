@@ -4,12 +4,13 @@ import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
-import br.ufes.dwws.vital.domain.Appointment;
+import br.ufes.dwws.vital.domain.Patient;
 import br.ufes.inf.nemo.jbutler.ejb.persistence.BaseJPADAO;
 
-@Stateless
-public class AppointmentJPADAO extends BaseJPADAO<Appointment> implements AppointmentDAO {
 
+@Stateless
+public class PatientJPADAO extends BaseJPADAO<Patient> implements PatientDAO {
+	
 	private static final long serialVersionUID = 1L;
 
 	@PersistenceContext
@@ -19,5 +20,5 @@ public class AppointmentJPADAO extends BaseJPADAO<Appointment> implements Appoin
 	protected EntityManager getEntityManager() {
 		return entityManager;
 	}
-
+	
 }

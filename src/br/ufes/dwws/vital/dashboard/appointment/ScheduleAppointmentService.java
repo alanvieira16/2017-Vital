@@ -1,4 +1,4 @@
-package br.ufes.dwws.vital.dashboard.appointment.application;
+package br.ufes.dwws.vital.dashboard.appointment;
 
 import java.io.Serializable;
 import java.util.List;
@@ -14,7 +14,7 @@ import br.ufes.dwws.vital.persistence.AppointmentDAO;
 
 @Stateless
 @LocalBean
-public class AppointmentsService implements Serializable {
+public class ScheduleAppointmentService implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
@@ -27,5 +27,9 @@ public class AppointmentsService implements Serializable {
 	public List<Appointment> listAppointments() {
 		List<Appointment> appointments = appointmentDAO.retrieveAll();
 		return appointments;
+	}
+	
+	public void schedule(Appointment appointment) {
+		entityManager.persist(appointment);
 	}
 }

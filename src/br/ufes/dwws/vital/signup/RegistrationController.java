@@ -21,6 +21,10 @@ import br.ufes.dwws.vital.login.LoginFailedException;
 import br.ufes.dwws.vital.login.LoginService;
 import br.ufes.dwws.vital.login.SessionController;
 import br.ufes.dwws.vital.persistence.HospitalDAO;
+<<<<<<< HEAD
+=======
+import br.ufes.dwws.vital.signup.RegistrationService;
+>>>>>>> 87480ec84506f289b5a0f10c0f19b273845f2148
 import br.ufes.inf.nemo.jbutler.TextUtils;
 import br.ufes.inf.nemo.jbutler.ejb.controller.PersistentObjectConverterFromId;
 
