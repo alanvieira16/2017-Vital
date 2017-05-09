@@ -27,13 +27,6 @@ public class User extends PersistentObjectSupport {
 	private String password;
 	private String role;
 	
-
-	@Override
-	public String toString() {
-		return "User [id=" + super.getId() + ", name=" + name + ", phone=" + phone + ", birthday=" + birthday + ", gender="
-				+ gender + ", email=" + email + ", password=" + password + "]";
-	}
-	
 	
 
 	public String getRole() {
@@ -78,6 +71,11 @@ public class User extends PersistentObjectSupport {
 	}
 	public void setPassword(String password) {
 		this.password = password;
+	}
+	@Override
+	public String toString() {
+		return "User [name=" + name + ", phone=" + phone + ", birthday=" + birthday + ", gender=" + gender + ", email="
+				+ email + ", password=" + password + ", role=" + role + "]";
 	}
 	
 	

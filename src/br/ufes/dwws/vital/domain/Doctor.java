@@ -16,7 +16,9 @@ public class Doctor extends User {
 	@ManyToOne
 	private Hospital hospital;
 	
-	private String role = Role.DOCTOR;
+	public Doctor(){
+		this.setRole(Role.DOCTOR);
+	}
 
 	public String getSpecialization() {
 		return specialization;
