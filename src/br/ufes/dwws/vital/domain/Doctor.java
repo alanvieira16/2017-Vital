@@ -3,6 +3,8 @@ package br.ufes.dwws.vital.domain;
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
 
+import br.ufes.dwws.util.Role;
+
 @Entity
 public class Doctor extends User {
 	
@@ -13,6 +15,8 @@ public class Doctor extends User {
 
 	@ManyToOne
 	private Hospital hospital;
+	
+	private String role = Role.DOCTOR;
 
 	public String getSpecialization() {
 		return specialization;
