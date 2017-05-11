@@ -19,7 +19,7 @@
 
 	<ui:define name="content">
 
-		<h:dataTable value="#{patientController.patients}" var="patient" 
+		<h:dataTable value="#{patientController.patients}" var="patient"
 			styleClass="table table-stripped table-bordered">
 
 			<h:column>
@@ -40,15 +40,22 @@
 			<h:column>
 				<f:facet name="header">Action</f:facet>
 				<h:panelGroup layout="block" styleClass="text-center crud-actions">
-					<a href="" data-toggle="tooltip" title="Details"><i class="fa fa-info-circle" /></a>
-					<a href="" data-toggle="tooltip" title="Edit"><i class="fa fa-edit" /></a>
-					<a href="" data-toggle="tooltip" title="Delete"><i class="fa fa-remove" /></a>
+					<a href="" data-toggle="tooltip" title="Details"><i
+						class="fa fa-info-circle" /></a>
+					<a href="" data-toggle="tooltip" title="Edit"><i
+						class="fa fa-edit" /></a>
+					<a href="" data-toggle="tooltip" title="Delete"><i
+						class="fa fa-remove" /></a>
 				</h:panelGroup>
 
 			</h:column>
 
 
 		</h:dataTable>
+		<h:panelGroup layout="block" styleClass="text-right">
+			<h:button value="Add Patient" outcome="/patient/new.html"
+				styleClass="btn btn-vital" />
+		</h:panelGroup>
 	</ui:define>
 
 

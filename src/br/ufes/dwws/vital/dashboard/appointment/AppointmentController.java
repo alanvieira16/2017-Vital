@@ -11,22 +11,32 @@ import javax.inject.Named;
 import javax.servlet.http.HttpServletRequest;
 
 import br.ufes.dwws.vital.dashboard.doctor.ListDoctorsService;
+import br.ufes.dwws.vital.dashboard.patient.ManagePatientsService;
 import br.ufes.dwws.vital.domain.Appointment;
 import br.ufes.dwws.vital.domain.Doctor;
+import br.ufes.dwws.vital.login.SessionController;
 import br.ufes.dwws.vital.persistence.DoctorDAO;
+import br.ufes.inf.nemo.jbutler.ejb.application.CrudService;
+import br.ufes.inf.nemo.jbutler.ejb.controller.CrudController;
 import br.ufes.inf.nemo.jbutler.ejb.controller.PersistentObjectConverterFromId;
 
 @Named
 @RequestScoped
-public class AppointmentController implements Serializable{
+public class AppointmentController extends CrudController<Appointment> implements Serializable{
 
 	private static final long serialVersionUID = 1L;
 	
 	@EJB
-	private ScheduleAppointmentService scheduleAppointmentService;
+	private ManageAppointmentsService manageAppointmentsService;
 	
 	@EJB
 	private ListDoctorsService listDoctorsService;
+	
+	@EJB
+	private ManagePatientsService managePatientsService;
+	
+	@Inject
+	private SessionController sessionController;
 	
 	@Inject
 	private HttpServletRequest request;
@@ -40,13 +50,14 @@ public class AppointmentController implements Serializable{
 	@Inject
 	public void init(DoctorDAO doctorDAO) {
 		doctorConverter = new PersistentObjectConverterFromId<>(doctorDAO);
-		appointments = scheduleAppointmentService.listAppointments();
+		appointments = manageAppointmentsService.getDAO().retrieveAll();
 		doctors = listDoctorsService.listDoctors();
 	}
 	
 	public String schedule() {
 		try {
-			scheduleAppointmentService.schedule(appointment);
+			appointment.setPatient(managePatientsService.getDAO().retrieveById(sessionController.getCurrentUser().getId()));
+			manageAppointmentsService.create(appointment);
 			FacesContext.getCurrentInstance().getExternalContext().getFlash().put("alertType", "success");
 			FacesContext.getCurrentInstance().getExternalContext().getFlash().put("alertMessage", "Your appointment has been scheduled successfully");
 			return "/index?faces-redirect=true";
@@ -57,12 +68,12 @@ public class AppointmentController implements Serializable{
 		}
 	}
 
-	public ScheduleAppointmentService getAppointmentsService() {
-		return scheduleAppointmentService;
+	public ManageAppointmentsService getAppointmentsService() {
+		return manageAppointmentsService;
 	}
 
-	public void setAppointmentsService(ScheduleAppointmentService scheduleAppointmentService) {
-		this.scheduleAppointmentService = scheduleAppointmentService;
+	public void setAppointmentsService(ManageAppointmentsService manageAppointmentsService) {
+		this.manageAppointmentsService = manageAppointmentsService;
 	}
 
 	public HttpServletRequest getRequest() {
@@ -103,6 +114,25 @@ public class AppointmentController implements Serializable{
 
 	public void setDoctors(List<Doctor> doctors) {
 		this.doctors = doctors;
+	}
+
+	@Override
+	protected CrudService<Appointment> getCrudService() {
+		return manageAppointmentsService;
+	}
+
+	@Override
+	protected void initFilters() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public SessionController getSessionController() {
+		return sessionController;
+	}
+
+	public void setSessionController(SessionController sessionController) {
+		this.sessionController = sessionController;
 	}
 	
 }

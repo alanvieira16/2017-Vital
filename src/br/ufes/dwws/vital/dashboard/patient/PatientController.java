@@ -1,6 +1,7 @@
 package br.ufes.dwws.vital.dashboard.patient;
 
 import java.io.Serializable;
+import java.io.UnsupportedEncodingException;
 import java.security.NoSuchAlgorithmException;
 import java.util.List;
 
@@ -14,18 +15,17 @@ import javax.servlet.http.HttpServletRequest;
 import br.ufes.dwws.vital.converters.StringToListConverter;
 import br.ufes.dwws.vital.domain.Patient;
 import br.ufes.inf.nemo.jbutler.TextUtils;
+import br.ufes.inf.nemo.jbutler.ejb.application.CrudService;
+import br.ufes.inf.nemo.jbutler.ejb.controller.CrudController;
 
 @Named
 @RequestScoped
-public class PatientController implements Serializable {
+public class PatientController extends CrudController<Patient> implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
 	@EJB
-	private RegisterPatientService registerPatientService;
-
-	@EJB
-	private ListPatientsService listPatientsService;
+	private ManagePatientsService managePatientsService;
 	
 	@Inject
 	private HttpServletRequest request;
@@ -38,15 +38,19 @@ public class PatientController implements Serializable {
 	
 	@Inject
 	public void init() {
-		patients = listPatientsService.listPatients();
+		patients = managePatientsService.getDAO().retrieveAll();
 	}
 	
 	public String register() {
 		try {
-			String md5pwd = TextUtils.produceMd5Hash(patient.getPassword());
+			String md5pwd = TextUtils.produceBase64EncodedMd5Hash(patient.getPassword());
 			patient.setPassword(md5pwd);
-			registerPatientService.register(patient);
+			managePatientsService.create(patient);
 		} catch (NoSuchAlgorithmException e) {
+			FacesContext.getCurrentInstance().getExternalContext().getFlash().put("alertType", "danger");
+			FacesContext.getCurrentInstance().getExternalContext().getFlash().put("alertMessage", "Something wrong happened. Try again.");
+			return "/appointment/new";
+		} catch (UnsupportedEncodingException e) {
 			FacesContext.getCurrentInstance().getExternalContext().getFlash().put("alertType", "danger");
 			FacesContext.getCurrentInstance().getExternalContext().getFlash().put("alertMessage", "Something wrong happened. Try again.");
 			return "/appointment/new";
@@ -54,14 +58,6 @@ public class PatientController implements Serializable {
 		FacesContext.getCurrentInstance().getExternalContext().getFlash().put("alertType", "success");
 		FacesContext.getCurrentInstance().getExternalContext().getFlash().put("alertMessage", "The patient has been registered successfully");
 		return "/index?faces-redirect=true";
-	}
-
-	public RegisterPatientService getRegisterPatientService() {
-		return registerPatientService;
-	}
-
-	public void setRegisterPatientService(RegisterPatientService registerPatientService) {
-		this.registerPatientService = registerPatientService;
 	}
 
 	public HttpServletRequest getRequest() {
@@ -94,6 +90,16 @@ public class PatientController implements Serializable {
 
 	public void setStr2listConverter(StringToListConverter str2listConverter) {
 		this.str2listConverter = str2listConverter;
+	}
+
+	@Override
+	protected CrudService<Patient> getCrudService() {
+		return managePatientsService;
+	}
+
+	@Override
+	protected void initFilters() {
+		// TODO Auto-generated method stub
 	}
 	
 }

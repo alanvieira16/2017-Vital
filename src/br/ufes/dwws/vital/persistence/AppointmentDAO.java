@@ -1,10 +1,9 @@
 package br.ufes.dwws.vital.persistence;
 
+import javax.ejb.Local;
+
 import br.ufes.dwws.vital.domain.Appointment;
 import br.ufes.inf.nemo.jbutler.ejb.persistence.BaseDAO;
 
-public interface AppointmentDAO extends BaseDAO<Appointment> {
-
-
-	
-}
+@Local
+public interface AppointmentDAO extends BaseDAO<Appointment> {}
