@@ -39,14 +39,18 @@
 
 			<h:column>
 				<f:facet name="header">Action</f:facet>
-				<h:panelGroup layout="block" styleClass="text-center crud-actions">
-					<a href="" data-toggle="tooltip" title="Details"><i
-						class="fa fa-info-circle" /></a>
-					<a href="" data-toggle="tooltip" title="Edit"><i
-						class="fa fa-edit" /></a>
-					<a href="" data-toggle="tooltip" title="Delete"><i
-						class="fa fa-remove" /></a>
-				</h:panelGroup>
+				<h:form>
+					<h:panelGroup layout="block" styleClass="text-center crud-actions">
+						<h:commandButton action="#{patientController.details(patient.id)}"
+							value="Details" />
+						<a href="" data-toggle="tooltip" title="Details"><i
+							class="fa fa-info-circle" /></a>
+						<a href="" data-toggle="tooltip" title="Edit"><i
+							class="fa fa-edit" /></a>
+						<a href="" data-toggle="tooltip" title="Delete"><i
+							class="fa fa-remove" /></a>
+					</h:panelGroup>
+				</h:form>
 
 			</h:column>
 

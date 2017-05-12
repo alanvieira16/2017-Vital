@@ -95,7 +95,7 @@ public class SessionController implements Serializable {
 
 	public String logout() {
 		getRequest().getSession().invalidate();
-		return "index?faces-redirect=true";
+		return "/index?faces-redirect=true";
 	}
 
 	private HttpServletRequest getRequest() {

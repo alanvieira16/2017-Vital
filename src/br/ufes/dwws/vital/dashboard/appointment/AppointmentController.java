@@ -17,6 +17,10 @@ import br.ufes.dwws.vital.domain.Doctor;
 import br.ufes.dwws.vital.login.SessionController;
 import br.ufes.dwws.vital.persistence.DoctorDAO;
 import br.ufes.inf.nemo.jbutler.ejb.application.CrudService;
+import br.ufes.inf.nemo.jbutler.ejb.application.filters.Criterion;
+import br.ufes.inf.nemo.jbutler.ejb.application.filters.CriterionType;
+import br.ufes.inf.nemo.jbutler.ejb.application.filters.Filter;
+import br.ufes.inf.nemo.jbutler.ejb.application.filters.SimpleFilter;
 import br.ufes.inf.nemo.jbutler.ejb.controller.CrudController;
 import br.ufes.inf.nemo.jbutler.ejb.controller.PersistentObjectConverterFromId;
 
@@ -50,8 +54,9 @@ public class AppointmentController extends CrudController<Appointment> implement
 	@Inject
 	public void init(DoctorDAO doctorDAO) {
 		doctorConverter = new PersistentObjectConverterFromId<>(doctorDAO);
-		appointments = manageAppointmentsService.getDAO().retrieveAll();
 		doctors = listDoctorsService.listDoctors();
+		appointments = manageAppointmentsService.list(sessionController.getCurrentUser());
+		
 	}
 	
 	public String schedule() {
@@ -122,10 +127,7 @@ public class AppointmentController extends CrudController<Appointment> implement
 	}
 
 	@Override
-	protected void initFilters() {
-		// TODO Auto-generated method stub
-		
-	}
+	protected void initFilters() {}
 
 	public SessionController getSessionController() {
 		return sessionController;

@@ -1,10 +1,13 @@
 package br.ufes.dwws.vital.dashboard.appointment;
 
+import java.util.List;
+
 import javax.annotation.security.PermitAll;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 
 import br.ufes.dwws.vital.domain.Appointment;
+import br.ufes.dwws.vital.domain.User;
 import br.ufes.dwws.vital.persistence.AppointmentDAO;
 import br.ufes.inf.nemo.jbutler.ejb.application.CrudServiceBean;
 import br.ufes.inf.nemo.jbutler.ejb.persistence.BaseDAO;
@@ -21,5 +24,10 @@ public class ManageAppointmentsServiceBean extends CrudServiceBean<Appointment> 
 	@Override
 	public BaseDAO<Appointment> getDAO() {
 		return appointmentDAO;
+	}
+
+	@Override
+	public List<Appointment> list(User currentUser) {
+		return appointmentDAO.retrieveByCurrentUser(currentUser);
 	}
 }
