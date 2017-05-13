@@ -7,7 +7,7 @@
 	xmlns:c="http://java.sun.com/jsp/jstl/core"
 	template="/resources/decorator.xhtml">
 
-	<ui:define name="title">Login</ui:define>
+	<ui:define name="title">#{loginMsgs['login.title']}</ui:define>
 
 	<ui:define name="menu">
 
@@ -25,12 +25,12 @@
 
 				<h:panelGroup layout="block" styleClass="col-xs-12">
 					<h:panelGroup layout="block" styleClass="form-group">
-						<h:outputLabel for="email" value="Email" />
+						<h:outputLabel for="email" value="#{loginMsgs['login.email']}" />
 						<h:inputText id="email"
 							value="#{sessionController.email}" size="20"
 							styleClass="form-control"
-							required="true" validatorMessage="Invalid email format"
-							requiredMessage="You can't leave this field empty.">
+							required="true" validatorMessage="#{msgs['form.invalidEmail']}"
+							requiredMessage="#{msgs['form.required']}">
 							<f:validateRegex
 								pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$" />
 							<f:ajax event="blur" render="emailMessage" />
@@ -43,11 +43,11 @@
 
 				<h:panelGroup layout="block" styleClass="col-xs-12">
 					<h:panelGroup layout="block" styleClass="form-group">
-						<h:outputLabel for="password" value="Password" />
+						<h:outputLabel for="password" value="#{loginMsgs['login.password']}" />
 						<h:inputSecret id="password"
 							value="#{sessionController.password}" size="20"
 							styleClass="form-control" required="true"
-							requiredMessage="You can't leave this field empty.">
+							requiredMessage="#{msgs['form.required']}">
 							<f:ajax event="blur"
 								render="passwordMessage" />
 						</h:inputSecret>
@@ -59,7 +59,7 @@
 				<h:panelGroup layout="block" styleClass="col-xs-12 text-right">
 					<h:panelGroup layout="block" styleClass="form-group">
 						<h:commandButton action="#{sessionController.login}"
-							value="Login" styleClass="btn btn-vital" />
+							value="#{loginMsgs['login.login']}" styleClass="btn btn-vital" />
 					</h:panelGroup>
 				</h:panelGroup>
 			</h:panelGroup>

@@ -8,29 +8,21 @@
 	xmlns:components="http://java.sun.com/jsf/composite/components"
 	template="/resources/decorator.xhtml">
 
-	<ui:define name="title">Welcome to Vital</ui:define>
-
-	<ui:define name="menu">
-
-		<ui:repeat var="item" value="#{menuController.menuItems}">
-			<li><a href="#{item.url}"><i class="#{item.icon}"></i><span>#{item.title}</span></a></li>
-		</ui:repeat>
-
-	</ui:define>
+	<ui:define name="title">#{msgs['index.title']}</ui:define>
 
 	<ui:define name="content">
 
-			<h:panelGroup layout="block" styleClass="fullheight row">
-				<h:panelGroup layout="block" styleClass="fullheight col-xs-12 col-md-4">
-					<h:graphicImage value="/resources/images/health_phone.png"
-						styleClass="healthphone" />
-				</h:panelGroup>
-				<h:panelGroup layout="block" styleClass="col-xs-12 col-md-8">
-					<p>Lorem ipsum dolor sit amet, consectetur <strong>adipiscing elit</strong>. Nulla vel ante non turpis fringilla elementum a nec risus. Nullam rhoncus sapien ipsum, ac viverra ex iaculis sit amet. Sed tristique congue mi vel efficitur. Fusce euismod <strong>ante lorem</strong>, eu tincidunt est posuere varius. Praesent mattis diam non semper facilisis. Fusce pretium vehicula neque, a accumsan tortor gravida et. Morbi scelerisque elit quis nisi aliquet pulvinar. Pellentesque aliquam nulla sit amet tortor pretium molestie. Cras pellentesque feugiat mauris, cursus dictum metus feugiat in. Aliquam ac tortor aliquet, tincidunt nunc sit amet, placerat ante. Nunc accumsan pharetra sapien a luctus.</p>
-					<p>Phasellus convallis nec ante sed sollicitudin. Ut eu justo varius, lobortis orci a, <strong>tristique odio</strong>. Praesent egestas viverra mollis. Ut eget diam vitae nisl iaculis suscipit a nec libero. Quisque malesuada facilisis dui, id blandit lacus imperdiet at. Donec ac pharetra justo, non aliquet odio. In hac habitasse platea dictumst. Suspendisse potenti. Phasellus vel lectus facilisis, maximus sem et, commodo erat. Nulla facilisi. Praesent commodo nisi metus, id rhoncus nisl porttitor a. Mauris vel fermentum justo. Nunc pellentesque elit turpis, feugiat porttitor erat facilisis et. Nam efficitur vitae neque ac cursus. Duis lobortis nunc blandit blandit rhoncus. Quisque viverra arcu eu enim semper pharetra.</p>
-					<p>Nam ut ipsum est. Nunc tincidunt dui a sapien tincidunt, et <strong>tempus dui consectetur</strong>. Quisque magna felis, tristique ut sem quis, auctor bibendum lorem. Sed sollicitudin, purus eu congue faucibus, massa lectus dictum sapien, et rhoncus arcu nibh tincidunt sem. Ut id sem enim. Quisque vitae maximus nulla. Sed et lorem vehicula, fringilla quam ac, imperdiet libero. <strong>Etiam</strong> varius lacus quam, in iaculis odio hendrerit nec.</p>
-				</h:panelGroup>
+		<h:panelGroup layout="block" styleClass="fullheight row">
+			<h:panelGroup layout="block"
+				styleClass="fullheight col-xs-12 col-md-4">
+				<h:graphicImage value="/resources/images/health_phone.png"
+					styleClass="healthphone" />
 			</h:panelGroup>
+			<h:panelGroup layout="block" styleClass="col-xs-12 col-md-8">
+				<p>#{msgs['index.text1']}</p>
+				<p>#{msgs['index.text2']}</p>
+			</h:panelGroup>
+		</h:panelGroup>
 
 	</ui:define>
 

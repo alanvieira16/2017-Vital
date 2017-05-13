@@ -3,8 +3,10 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:c="http://java.sun.com/jsp/jstl/core"
 	xmlns:components="http://java.sun.com/jsf/composite/components">
+<f:view locale="#{sessionController.language}" />  
 <h:head>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 	<link rel="shortcut icon" type="image/ico"
@@ -36,18 +38,22 @@
 			</a>
 		</div><!--
       	--><div class="menu">
+      		<h:form>
+      		<h:commandButton action="#{sessionController.changeLanguage('pt-BR')}" styleClass="btn-lang pt-br" />
+      		<h:commandButton action="#{sessionController.changeLanguage('en-US')}" styleClass="btn-lang en-us" />
+      		</h:form>
 			<ul>
 				<h:panelGroup
 					rendered="#{sessionController.hasLoggedUser() == false}">
-					<li><h:button value="Sign up" outcome="/signup/index.html"
+					<li><h:button value="#{msgs['menu.main.signup']}" outcome="/signup/index.html"
 							styleClass="btn" /></li>
-					<li><h:button value="Login" outcome="/login/index.html"
+					<li><h:button value="#{msgs['menu.main.login']}" outcome="/login/index.html"
 							styleClass="btn btn-vital" /></li>
 				</h:panelGroup>
 				<h:panelGroup rendered="#{sessionController.hasLoggedUser()}">
 					<li><h:form>
 							<h:commandButton action="#{sessionController.logout}"
-								value="Logout" styleClass="btn btn-vital" />
+								value="#{msgs['menu.main.logout']}" styleClass="btn btn-vital" />
 						</h:form></li>
 				</h:panelGroup>
 			</ul>
@@ -59,7 +65,25 @@
 		<div class="row">
 			<div class="sidebar col-sm-3 col-md-2">
 				<ul>
-					<ui:insert name="menu" />
+					<h:panelGroup rendered="#{sessionController.currentUser.role == 'doctor'}">
+						<li>
+							<a href="#"><i class="fa fa-user"></i><span>#{msgs['menu.sidebar.patients']}</span></a>
+						</li>
+						<li>
+							<a href="#"><i class="fa fa-calendar-check-o"></i><span>#{msgs['menu.sidebar.appointments']}</span></a>
+						</li>
+						<li>
+							<a href="#"><i class="fa fa-envelope-open"></i><span>#{msgs['menu.sidebar.message']}</span></a>
+						</li>
+					</h:panelGroup>
+					<h:panelGroup rendered="#{sessionController.currentUser.role == 'patient'}">
+						<li>
+							<a href="#"><i class="fa fa-calendar-check-o"></i><span>#{msgs['menu.sidebar.appointments']}</span></a>
+						</li>
+						<li>
+							<a href="#"><i class="fa fa-thermometer"></i><span>#{msgs['menu.sidebar.treatments']}</span></a>
+						</li>
+					</h:panelGroup>
 				</ul>
 			</div>
 			<div

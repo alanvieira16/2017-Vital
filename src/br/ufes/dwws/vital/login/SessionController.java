@@ -38,6 +38,11 @@ public class SessionController implements Serializable {
 	private String email;
 	private String password;
 	private Boolean hasLoggedUser;
+	private String language = "en-US";
+
+    public void changeLanguage(String language) {
+    	this.setLanguage(language);
+    }
 
 	public String login() {
 		return login(email, password);
@@ -137,5 +142,13 @@ public class SessionController implements Serializable {
 
 	public Boolean hasLoggedUser() {
 		return currentUser != null;
+	}
+
+	public String getLanguage() {
+		return language;
+	}
+
+	public void setLanguage(String language) {
+		this.language = language;
 	}
 }

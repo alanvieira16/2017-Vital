@@ -8,15 +8,7 @@
 	xmlns:components="http://java.sun.com/jsf/composite/components"
 	template="/resources/decorator.xhtml">
 
-	<ui:define name="title">New Patient</ui:define>
-
-	<ui:define name="menu">
-
-		<ui:repeat var="item" value="#{menuController.menuItems}">
-			<li><a href="#{item.url}"><i class="#{item.icon}"></i><span>#{item.title}</span></a></li>
-		</ui:repeat>
-
-	</ui:define>
+	<ui:define name="title">#{dashboardMsgs['patient.register']}</ui:define>
 
 	<ui:define name="content">
 
@@ -28,10 +20,10 @@
 
 				<h:panelGroup layout="block" styleClass="col-xs-12 col-md-6">
 					<h:panelGroup layout="block" styleClass="form-group">
-						<h:outputLabel for="name" value="Name" />
+						<h:outputLabel for="name" value="#{dashboardMsgs['user.name']}" />
 						<h:inputText id="name" value="#{patientController.patient.name}"
 							size="20" styleClass="form-control" required="true"
-							requiredMessage="You can't leave this field empty.">
+							requiredMessage="#{msgs['form.required']}">
 							<f:ajax event="blur" render="nameMessage" />
 						</h:inputText>
 						<h:message styleClass="error-message" for="name" id="nameMessage" />
@@ -41,12 +33,12 @@
 
 				<h:panelGroup layout="block" styleClass="col-xs-12 col-md-6">
 					<h:panelGroup layout="block" styleClass="form-group">
-						<h:outputLabel for="email" value="Email" />
+						<h:outputLabel for="email" value="#{dashboardMsgs['user.email']}" />
 						<h:inputText id="email" value="#{patientController.patient.email}"
 							size="20" styleClass="form-control"
 							binding="#{passwordComponent}" required="true"
-							validatorMessage="Invalid email format"
-							requiredMessage="You can't leave this field empty.">
+							validatorMessage="#{msgs['form.invalidEmail']}"
+							requiredMessage="#{msgs['form.required']}">
 							<f:validateRegex
 								pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$" />
 							<f:ajax event="blur" render="emailMessage" />
@@ -59,11 +51,11 @@
 
 				<h:panelGroup layout="block" styleClass="col-xs-12 col-md-6">
 					<h:panelGroup layout="block" styleClass="form-group">
-						<h:outputLabel for="password" value="Password" />
+						<h:outputLabel for="password" value="#{dashboardMsgs['user.password']}" />
 						<h:inputSecret id="password"
 							value="#{patientController.patient.password}" size="20"
 							styleClass="form-control" required="true"
-							requiredMessage="You can't leave this field empty.">
+							requiredMessage="#{msgs['form.required']}">
 							<f:validator validatorId="confirmPasswordValidator" />
 							<f:attribute name="confirm"
 								value="#{confirmPassword.submittedValue}" />
@@ -78,11 +70,11 @@
 				<h:panelGroup layout="block" styleClass="col-xs-12 col-md-6">
 					<h:panelGroup layout="block" styleClass="form-group">
 						<h:outputLabel for="confirm-password"
-							value="Confirm your password" />
+							value="#{dashboardMsgs['user.confirmPassword']}" />
 						<h:inputSecret id="confirm-password"
 							value="#{patientController.patient.password}" size="20"
 							styleClass="form-control" required="true"
-							requiredMessage="You can't leave this field empty."
+							requiredMessage="#{msgs['form.required']}"
 							binding="#{confirmPassword}">
 							<f:ajax event="blur" execute="password confirm"
 								render="passwordMessage confirmPasswordMessage" />
@@ -94,10 +86,10 @@
 
 				<h:panelGroup layout="block" styleClass="col-xs-12 col-md-4">
 					<h:panelGroup layout="block" styleClass="form-group">
-						<h:outputLabel for="gender" value="Gender" />
+						<h:outputLabel for="gender" value="#{dashboardMsgs['user.gender']}" />
 						<h:selectOneMenu id="gender" styleClass="form-control"
 							value="#{patientController.patient.gender}" required="true"
-							requiredMessage="You can't leave this field empty.">
+							requiredMessage="#{msgs['form.required']}">
 							<f:selectItem itemValue="" itemLabel="" />
 							<f:selectItem itemValue="M" itemLabel="Male" />
 							<f:selectItem itemValue="F" itemLabel="Female" />
@@ -110,10 +102,10 @@
 
 				<h:panelGroup layout="block" styleClass="col-xs-12 col-md-4">
 					<h:panelGroup layout="block" styleClass="form-group">
-						<h:outputLabel for="phone" value="Phone" />
+						<h:outputLabel for="phone" value="#{dashboardMsgs['user.phone']}" />
 						<h:inputText id="phone" value="#{patientController.patient.phone}"
 							size="30" required="true" styleClass="form-control field-phone"
-							requiredMessage="You can't leave this field empty.">
+							requiredMessage="#{msgs['form.required']}">
 							<f:ajax event="blur" render="phoneMessage" />
 						</h:inputText>
 						<h:message styleClass="error-message" for="phone"
@@ -123,12 +115,12 @@
 
 				<h:panelGroup layout="block" styleClass="col-xs-12 col-md-4">
 					<h:panelGroup layout="block" styleClass="form-group">
-						<h:outputLabel for="birthday" value="Birthday" />
+						<h:outputLabel for="birthday" value="#{dashboardMsgs['user.birthday']}" />
 						<h:inputText id="birthday"
 							value="#{patientController.patient.birthday}" size="10"
 							required="true" styleClass="form-control field-date"
-							requiredMessage="You can't leave this field empty."
-							converterMessage="Invalid date.">
+							requiredMessage="#{msgs['form.required']}"
+							converterMessage="#{msgs['form.invalidDate']}">
 							<f:convertDateTime pattern="dd/MM/yyyy" />
 							<f:ajax event="blur" render="birthdayMessage" />
 						</h:inputText>
@@ -139,10 +131,10 @@
 
 				<h:panelGroup layout="block" styleClass="col-xs-12 col-md-4">
 					<h:panelGroup layout="block" styleClass="form-group">
-						<h:outputLabel for="bloodtype" value="Blood Type" />
+						<h:outputLabel for="bloodtype" value="#{dashboardMsgs['patient.bloodType']}" />
 						<h:selectOneMenu id="bloodtype" styleClass="form-control"
 							value="#{patientController.patient.bloodType}" required="true"
-							requiredMessage="You can't leave this field empty.">
+							requiredMessage="#{msgs['form.required']}">
 							<f:selectItem itemValue="" itemLabel="" />
 							<f:selectItem itemValue="A+" itemLabel="A+" />
 							<f:selectItem itemValue="A-" itemLabel="A-" />
@@ -161,11 +153,11 @@
 
 				<h:panelGroup layout="block" styleClass="col-xs-12 col-md-4">
 					<h:panelGroup layout="block" styleClass="form-group">
-						<h:outputLabel for="healthInsurance" value="Health Insurance" />
+						<h:outputLabel for="healthInsurance" value="#{dashboardMsgs['patient.healthInsurance']}" />
 						<h:inputText id="healthInsurance"
 							value="#{patientController.patient.healthInsurance}" size="30"
 							required="true" styleClass="form-control"
-							requiredMessage="You can't leave this field empty.">
+							requiredMessage="#{msgs['form.required']}">
 							<f:ajax event="blur" render="healthInsuranceMessage" />
 						</h:inputText>
 						<h:message styleClass="error-message" for="healthInsurance"
@@ -176,11 +168,11 @@
 				<h:panelGroup layout="block" styleClass="col-xs-12 col-md-4">
 					<h:panelGroup layout="block" styleClass="form-group">
 						<h:outputLabel for="healthInsuranceNumber"
-							value="Health Insurance Number" />
+							value="#{dashboardMsgs['patient.healthInsuranceNumber']}" />
 						<h:inputText id="healthInsuranceNumber"
 							value="#{patientController.patient.healthInsuranceNumber}"
 							size="30" required="true" styleClass="form-control"
-							requiredMessage="You can't leave this field empty.">
+							requiredMessage="#{msgs['form.required']}">
 							<f:ajax event="blur" render="healthInsuranceNumberMessage" />
 						</h:inputText>
 						<h:message styleClass="error-message" for="healthInsuranceNumber"
@@ -190,9 +182,9 @@
 
 				<h:panelGroup layout="block" styleClass="col-xs-12 col-md-6">
 					<h:panelGroup layout="block" styleClass="form-group">
-						<h:outputLabel for="allergies" value="Allergies">
+						<h:outputLabel for="allergies" value="#{dashboardMsgs['patient.allergies']}">
 							<h:panelGroup styleClass="sublabel">
-								<h:outputText value="Insert a comma-separated list." />
+								<h:outputText value="#{msgs['form.commaList']}" />
 							</h:panelGroup>
 						</h:outputLabel>
 						<h:inputText id="allergies"
@@ -207,9 +199,9 @@
 
 				<h:panelGroup layout="block" styleClass="col-xs-12 col-md-6">
 					<h:panelGroup layout="block" styleClass="form-group">
-						<h:outputLabel for="specialNeeds" value="Special Needs">
+						<h:outputLabel for="specialNeeds" value="#{dashboardMsgs['patient.specialNeeds']}">
 							<h:panelGroup styleClass="sublabel">
-								<h:outputText value="Insert a comma-separated list." />
+								<h:outputText value="#{msgs['form.commaList']}" />
 							</h:panelGroup>
 						</h:outputLabel>
 						<h:inputText id="specialNeeds"
@@ -225,7 +217,7 @@
 
 				<h:panelGroup layout="block" styleClass="col-xs-12 col-md-12">
 					<h:panelGroup layout="block" styleClass="form-group">
-						<h:outputLabel for="notes" value="Notes" />
+						<h:outputLabel for="notes" value="#{dashboardMsgs['patient.notes']}" />
 						<h:inputTextarea id="notes"
 							value="#{patientController.patient.notes}"
 							styleClass="form-control" />
@@ -237,7 +229,7 @@
 				<h:panelGroup layout="block" styleClass="col-xs-12 text-right">
 					<h:panelGroup layout="block" styleClass="form-group">
 						<h:commandButton action="#{patientController.register}"
-							value="Register" styleClass="btn btn-vital" />
+							value="#{msgs['form.register']}" styleClass="btn btn-vital" />
 					</h:panelGroup>
 				</h:panelGroup>
 			</h:panelGroup>

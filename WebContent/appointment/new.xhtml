@@ -8,7 +8,7 @@
 	xmlns:components="http://java.sun.com/jsf/composite/components"
 	template="/resources/decorator.xhtml">
 
-	<ui:define name="title">Schedule Appointment</ui:define>
+	<ui:define name="title">#{dashboardMsgs['appointment.schedule']}</ui:define>
 
 	<ui:define name="menu">
 
@@ -29,7 +29,7 @@
 
 				<h:panelGroup layout="block" styleClass="col-xs-12 col-md-6">
 					<h:panelGroup layout="block" styleClass="form-group">
-						<h:outputLabel for="datetime" value="Date / Time" />
+						<h:outputLabel for="datetime" value="#{dashboardMsgs['appointment.datetime']}" />
 						<h:inputText id="datetime"
 							value="#{appointmentController.appointment.datetime}" size="10"
 							required="true" styleClass="form-control field-datetime"
@@ -45,7 +45,7 @@
 
 				<h:panelGroup layout="block" styleClass="col-xs-12 col-md-6">
 					<h:panelGroup layout="block" styleClass="form-group">
-						<h:outputLabel for="doctor" value="Doctor" />
+						<h:outputLabel for="doctor" value="#{dashboardMsgs['appointment.doctor']}" />
 						<h:selectOneMenu value="#{appointmentController.appointment.doctor}" id="doctor"
 							converter="#{appointmentController.doctorConverter}" styleClass="form-control" required="true"
 							requiredMessage="You can't leave this field empty.">
@@ -63,7 +63,7 @@
 				<h:panelGroup layout="block" styleClass="col-xs-12 text-right">
 					<h:panelGroup layout="block" styleClass="form-group">
 						<h:commandButton action="#{appointmentController.schedule}"
-							value="Schedule" styleClass="btn btn-vital" />
+							value="#{dashboardMsgs['appointment.schedule']}" styleClass="btn btn-vital" />
 					</h:panelGroup>
 				</h:panelGroup>
 			</h:panelGroup>
