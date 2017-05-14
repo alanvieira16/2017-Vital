@@ -11,8 +11,8 @@
 
 	<ui:define name="content">
 
-		<h:dataTable value="#{appointmentController.appointments}" var="appointment" 
-			styleClass="table table-stripped table-bordered">
+		<h:dataTable value="#{appointmentController.appointments}"
+			var="appointment" styleClass="table table-stripped table-bordered">
 
 			<h:column>
 				<f:facet name="header">#{dashboardMsgs['appointment.patient']}</f:facet>    				
@@ -31,11 +31,26 @@
 
 			<h:column>
 				<f:facet name="header">#{dashboardMsgs['actions.title']}</f:facet>
-				<h:panelGroup layout="block" styleClass="text-center crud-actions">
-					<a href="" data-toggle="tooltip" title="#{dashboardMsgs['actions.details']}"><i class="fa fa-info-circle" /></a>
-					<a href="" data-toggle="tooltip" title="#{dashboardMsgs['actions.edit']}"><i class="fa fa-edit" /></a>
-					<a href="" data-toggle="tooltip" title="#{dashboardMsgs['actions.delete']}"><i class="fa fa-remove" /></a>
-				</h:panelGroup>
+				<h:form>
+					<h:panelGroup layout="block" styleClass="text-center crud-actions">
+						<h:commandLink
+							action="#{appointmentController.details(appointment.id)}">
+							<i data-toggle="tooltip"
+								title="#{dashboardMsgs['actions.details']}"
+								class="fa fa-info-circle" />
+						</h:commandLink>
+						<h:commandLink
+							action="#{appointmentController.details(appointment.id)}">
+							<i data-toggle="tooltip" title="#{dashboardMsgs['actions.edit']}"
+								class="fa fa-edit" />
+						</h:commandLink>
+						<h:commandLink
+							action="#{appointmentController.details(appointment.id)}">
+							<i data-toggle="tooltip"
+								title="#{dashboardMsgs['actions.delete']}" class="fa fa-remove" />
+						</h:commandLink>
+					</h:panelGroup>
+				</h:form>
 
 			</h:column>
 

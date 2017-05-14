@@ -6,7 +6,7 @@
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:c="http://java.sun.com/jsp/jstl/core"
 	xmlns:components="http://java.sun.com/jsf/composite/components">
-<f:view locale="#{sessionController.language}" />  
+<f:view locale="#{sessionController.language}" />
 <h:head>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 	<link rel="shortcut icon" type="image/ico"
@@ -38,17 +38,21 @@
 			</a>
 		</div><!--
       	--><div class="menu">
-      		<h:form>
-      		<h:commandButton action="#{sessionController.changeLanguage('pt-BR')}" styleClass="btn-lang pt-br" />
-      		<h:commandButton action="#{sessionController.changeLanguage('en-US')}" styleClass="btn-lang en-us" />
-      		</h:form>
+			<h:form>
+				<h:commandButton
+					action="#{sessionController.changeLanguage('pt-BR')}"
+					styleClass="btn-lang pt-br" />
+				<h:commandButton
+					action="#{sessionController.changeLanguage('en-US')}"
+					styleClass="btn-lang en-us" />
+			</h:form>
 			<ul>
 				<h:panelGroup
 					rendered="#{sessionController.hasLoggedUser() == false}">
-					<li><h:button value="#{msgs['menu.main.signup']}" outcome="/signup/index.html"
-							styleClass="btn" /></li>
-					<li><h:button value="#{msgs['menu.main.login']}" outcome="/login/index.html"
-							styleClass="btn btn-vital" /></li>
+					<li><h:button value="#{msgs['menu.main.signup']}"
+							outcome="/signup/index.html" styleClass="btn" /></li>
+					<li><h:button value="#{msgs['menu.main.login']}"
+							outcome="/login/index.html" styleClass="btn btn-vital" /></li>
 				</h:panelGroup>
 				<h:panelGroup rendered="#{sessionController.hasLoggedUser()}">
 					<li><h:form>
@@ -65,24 +69,36 @@
 		<div class="row">
 			<div class="sidebar col-sm-3 col-md-2">
 				<ul>
-					<h:panelGroup rendered="#{sessionController.currentUser.role == 'doctor'}">
-						<li>
-							<a href="#"><i class="fa fa-user"></i><span>#{msgs['menu.sidebar.patients']}</span></a>
-						</li>
-						<li>
-							<a href="#"><i class="fa fa-calendar-check-o"></i><span>#{msgs['menu.sidebar.appointments']}</span></a>
-						</li>
-						<li>
-							<a href="#"><i class="fa fa-envelope-open"></i><span>#{msgs['menu.sidebar.message']}</span></a>
-						</li>
+					<h:panelGroup
+						rendered="#{sessionController.currentUser.role == 'doctor'}">
+						<li><h:outputLink
+								value="#{facesContext.externalContext.requestContextPath}/patient/index.faces">
+								<i class="fa fa-user"></i>
+								<span>#{msgs['menu.sidebar.patients']}</span>
+							</h:outputLink></li>
+						<li><h:outputLink
+								value="#{facesContext.externalContext.requestContextPath}/appointment/index.faces">
+								<i class="fa fa-calendar-check-o"></i>
+								<span>#{msgs['menu.sidebar.appointments']}</span>
+							</h:outputLink></li>
+						<li><h:outputLink
+								value="#{facesContext.externalContext.requestContextPath}">
+								<i class="fa fa-envelope-open"></i>
+								<span>#{msgs['menu.sidebar.message']}</span>
+							</h:outputLink></li>
 					</h:panelGroup>
-					<h:panelGroup rendered="#{sessionController.currentUser.role == 'patient'}">
-						<li>
-							<a href="#"><i class="fa fa-calendar-check-o"></i><span>#{msgs['menu.sidebar.appointments']}</span></a>
-						</li>
-						<li>
-							<a href="#"><i class="fa fa-thermometer"></i><span>#{msgs['menu.sidebar.treatments']}</span></a>
-						</li>
+					<h:panelGroup
+						rendered="#{sessionController.currentUser.role == 'patient'}">
+						<li><h:outputLink
+								value="#{facesContext.externalContext.requestContextPath}/appointment/index.faces">
+								<i class="fa fa-calendar-check-o"></i>
+								<span>#{msgs['menu.sidebar.appointments']}</span>
+							</h:outputLink></li>
+						<li><h:outputLink
+								value="#{facesContext.externalContext.requestContextPath}/treatment/index.faces">
+								<i class="fa fa-thermometer"></i>
+								<span>#{msgs['menu.sidebar.treatments']}</span>
+							</h:outputLink></li>
 					</h:panelGroup>
 				</ul>
 			</div>

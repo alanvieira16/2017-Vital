@@ -33,14 +33,19 @@
 				<f:facet name="header">#{dashboardMsgs['actions.title']}</f:facet>
 				<h:form>
 					<h:panelGroup layout="block" styleClass="text-center crud-actions">
-						<h:commandButton action="#{patientController.details(patient.id)}"
-							value="Details" />
-						<a href="" data-toggle="tooltip" title="#{dashboardMsgs['actions.details']}"><i
-							class="fa fa-info-circle" /></a>
-						<a href="" data-toggle="tooltip" title="#{dashboardMsgs['actions.edit']}"><i
-							class="fa fa-edit" /></a>
-						<a href="" data-toggle="tooltip" title="#{dashboardMsgs['actions.delete']}"><i
-							class="fa fa-remove" /></a>
+					
+						<h:commandLink action="#{patientController.details(patient.id)}" >
+							<i data-toggle="tooltip" title="#{dashboardMsgs['actions.details']}"
+							class="fa fa-info-circle" />
+						</h:commandLink>
+						<h:commandLink action="#{patientController.details(patient.id)}" >
+							<i data-toggle="tooltip" title="#{dashboardMsgs['actions.edit']}"
+							class="fa fa-edit" />
+						</h:commandLink>
+						<h:commandLink action="#{patientController.details(patient.id)}" >
+							<i data-toggle="tooltip" title="#{dashboardMsgs['actions.delete']}"
+							class="fa fa-remove" />
+						</h:commandLink>
 					</h:panelGroup>
 				</h:form>
 

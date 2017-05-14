@@ -6,7 +6,7 @@ import java.security.NoSuchAlgorithmException;
 import java.util.List;
 
 import javax.ejb.EJB;
-import javax.enterprise.context.RequestScoped;
+import javax.enterprise.context.SessionScoped;
 import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -15,12 +15,13 @@ import javax.servlet.http.HttpServletRequest;
 import br.ufes.dwws.util.Role;
 import br.ufes.dwws.vital.converters.StringToListConverter;
 import br.ufes.dwws.vital.domain.Patient;
+import br.ufes.dwws.vital.login.SessionController;
 import br.ufes.inf.nemo.jbutler.TextUtils;
 import br.ufes.inf.nemo.jbutler.ejb.application.CrudService;
 import br.ufes.inf.nemo.jbutler.ejb.controller.CrudController;
 
 @Named
-@RequestScoped
+@SessionScoped
 public class PatientController extends CrudController<Patient> implements Serializable {
 
 	private static final long serialVersionUID = 1L;
@@ -28,6 +29,9 @@ public class PatientController extends CrudController<Patient> implements Serial
 	@EJB
 	private ManagePatientsService managePatientsService;
 
+	@Inject
+	private SessionController sessionController;
+	
 	@Inject
 	private HttpServletRequest request;
 
@@ -38,7 +42,7 @@ public class PatientController extends CrudController<Patient> implements Serial
 
 	@Inject
 	public void init() {
-		patients = managePatientsService.getDAO().retrieveAll();
+		patients = managePatientsService.list(sessionController.getCurrentUser().getId());
 	}
 
 	public String register() {
@@ -109,6 +113,14 @@ public class PatientController extends CrudController<Patient> implements Serial
 	@Override
 	protected void initFilters() {
 		// TODO Auto-generated method stub
+	}
+
+	public SessionController getSessionController() {
+		return sessionController;
+	}
+
+	public void setSessionController(SessionController sessionController) {
+		this.sessionController = sessionController;
 	}
 
 }

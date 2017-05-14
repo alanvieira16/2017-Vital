@@ -30,12 +30,10 @@ public class AppointmentJPADAO extends BaseJPADAO<Appointment> implements Appoin
 	@Override
 	public List<Appointment> retrieveByCurrentUser(User currentUser){
 
-		// Constructs the query over the Academic class.
 		CriteriaBuilder cb = entityManager.getCriteriaBuilder();
 		CriteriaQuery<Appointment> cq = cb.createQuery(Appointment.class);
 		Root<Appointment> root = cq.from(Appointment.class);
 
-		// Filters the query with the email.
 		if(currentUser.getRole().equals("doctor")){
 			cq.where(cb.equal(root.get("doctor"), currentUser.getId()));
 		} else {

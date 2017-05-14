@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	template="/resources/decorator.xhtml">
+
+	<ui:define name="title">#{dashboardMsgs['appointment.singular']} - #{appointmentController.appointment.patient.name}</ui:define>
+
+	<ui:define name="content">
+
+		<h:panelGroup layout="block" styleClass="mb-5">
+			<h:outputLabel value="#{dashboardMsgs['doctor.singular']}:" />
+			<h:outputText value="#{appointmentController.appointment.doctor.name}" /> 
+		</h:panelGroup>
+		
+		<h:panelGroup layout="block" styleClass="mb-5">
+			<h:outputLabel value="#{dashboardMsgs['patient.singular']}:" />
+			<h:outputText value="#{appointmentController.appointment.patient.name}" />
+		</h:panelGroup>
+		
+		<h:panelGroup layout="block" styleClass="mb-5">
+			<h:outputLabel value="#{dashboardMsgs['appointment.datetime']}:" />
+			<h:outputText value="#{appointmentController.appointment.datetime}">
+				<f:convertDateTime pattern="dd-MM-yyyy HH:mm"/>
+			</h:outputText>
+		</h:panelGroup>
+
+	</ui:define>
+
+
+
+</ui:composition>

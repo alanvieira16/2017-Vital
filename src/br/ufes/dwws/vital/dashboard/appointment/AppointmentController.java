@@ -4,7 +4,7 @@ import java.io.Serializable;
 import java.util.List;
 
 import javax.ejb.EJB;
-import javax.enterprise.context.RequestScoped;
+import javax.enterprise.context.SessionScoped;
 import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -21,7 +21,7 @@ import br.ufes.inf.nemo.jbutler.ejb.controller.CrudController;
 import br.ufes.inf.nemo.jbutler.ejb.controller.PersistentObjectConverterFromId;
 
 @Named
-@RequestScoped
+@SessionScoped
 public class AppointmentController extends CrudController<Appointment> implements Serializable{
 
 	private static final long serialVersionUID = 1L;
@@ -69,6 +69,11 @@ public class AppointmentController extends CrudController<Appointment> implement
 		}
 	}
 
+	public String details(String id) {
+		appointment = manageAppointmentsService.retrieve(Long.parseLong(id));
+		return "/appointment/details?faces-redirect=true";
+	}
+	
 	public ManageAppointmentsService getAppointmentsService() {
 		return manageAppointmentsService;
 	}

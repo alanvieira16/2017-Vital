@@ -7,12 +7,78 @@
 	xmlns:c="http://java.sun.com/jsp/jstl/core"
 	template="/resources/decorator.xhtml">
 
-	<ui:define name="title">Patients</ui:define>
+	<ui:define name="title">#{patientController.patient.name}</ui:define>
 
 	<ui:define name="content">
 
-		<h:outputText value="AA" />
-		<h:outputText value="#{patientController.patient.phone}" />
+		<h:panelGroup layout="block" styleClass="mb-5">
+			<h:outputLabel value="#{dashboardMsgs['user.name']}:" />
+			<h:outputText value="#{patientController.patient.name}" />
+		</h:panelGroup>
+
+		<h:panelGroup layout="block" styleClass="mb-5">
+			<h:outputLabel value="#{dashboardMsgs['user.phone']}:" />
+			<h:outputText value="#{patientController.patient.phone}" />
+		</h:panelGroup>
+
+		<h:panelGroup layout="block" styleClass="mb-5">
+			<h:outputLabel value="#{dashboardMsgs['user.birthday']}:" />
+			<h:outputText value="#{patientController.patient.birthday}" />
+		</h:panelGroup>
+
+		<h:panelGroup layout="block" styleClass="mb-5">
+			<h:outputLabel value="#{dashboardMsgs['user.gender']}:" />
+			<h:outputText value="#{patientController.patient.gender}" />
+		</h:panelGroup>
+
+		<h:panelGroup layout="block" styleClass="mb-5">
+			<h:outputLabel value="#{dashboardMsgs['user.email']}:" />
+			<h:outputText value="#{patientController.patient.email}" />
+		</h:panelGroup>
+
+		<h:panelGroup layout="block" styleClass="mb-5">
+			<h:outputLabel value="#{dashboardMsgs['patient.bloodType']}:" />
+			<h:outputText value="#{patientController.patient.bloodType}" />
+		</h:panelGroup>
+
+		<h:panelGroup layout="block" styleClass="mb-5">
+			<h:outputLabel value="#{dashboardMsgs['patient.healthInsurance']}:" />
+			<h:outputText value="#{patientController.patient.healthInsurance}" />
+		</h:panelGroup>
+
+		<h:panelGroup layout="block" styleClass="mb-5">
+			<h:outputLabel
+				value="#{dashboardMsgs['patient.healthInsuranceNumber']}:" />
+			<h:outputText
+				value="#{patientController.patient.healthInsuranceNumber}" />
+		</h:panelGroup>
+
+		<h:panelGroup layout="block" styleClass="mb-5" 
+			rendered="#{patientController.patient.allergies.iterator().next().toString() != ''}">
+			<h:outputLabel value="#{dashboardMsgs['patient.allergies']}:" />
+			<ul>
+				<ui:repeat var="allergy"
+					value="#{patientController.patient.allergies.toArray()}">
+					<li>#{allergy}</li>
+				</ui:repeat>
+			</ul>
+		</h:panelGroup>
+
+		<h:panelGroup layout="block" styleClass="mb-5" 
+			rendered="#{patientController.patient.specialNeeds.iterator().next().toString() != ''}">
+			<h:outputLabel value="#{dashboardMsgs['patient.specialNeeds']}:" />
+			<ul>
+				<ui:repeat var="specialNeed"
+					value="#{patientController.patient.specialNeeds.toArray()}">
+					<li>#{specialNeed}</li>
+				</ui:repeat>
+			</ul>
+		</h:panelGroup>
+
+		<h:panelGroup layout="block" styleClass="mb-5">
+			<h:outputLabel value="#{dashboardMsgs['patient.notes']}:" />
+			<h:outputText value="#{patientController.patient.notes}" />
+		</h:panelGroup>
 
 	</ui:define>
 

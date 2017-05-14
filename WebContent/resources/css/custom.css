@@ -23,6 +23,13 @@ p {
 	text-align: center;
 }
 
+.mb-5{
+	margin-bottom: 5px;
+}
+
+.mb-5 label{
+	margin-right: 10px;
+}
 
 /********** HEADER **********/
 .header {

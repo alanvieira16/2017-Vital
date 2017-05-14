@@ -1,10 +1,13 @@
 package br.ufes.dwws.vital.domain;
 
 import java.util.List;
+import java.util.Set;
 
 import javax.persistence.CollectionTable;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.OneToMany;
 
 @Entity
 public class Patient extends User{
@@ -19,27 +22,30 @@ public class Patient extends User{
 	
 	private String healthInsuranceNumber;
 
-	@ElementCollection
+	@ElementCollection(fetch=FetchType.EAGER)
 	@CollectionTable(name = "allergies")
-	private List<String> allergies;
+	private Set<String> allergies;
 	
-	@ElementCollection
+	@ElementCollection(fetch=FetchType.EAGER)
 	@CollectionTable(name = "specialNeeds")
-	private List<String> specialNeeds;
+	private Set<String> specialNeeds;
 	
-	public List<String> getAllergies() {
+	@OneToMany
+	private List<Appointment> appointments;
+	
+	public Set<String> getAllergies() {
 		return allergies;
 	}
 
-	public void setAllergies(List<String> allergies) {
+	public void setAllergies(Set<String> allergies) {
 		this.allergies = allergies;
 	}
 
-	public List<String> getSpecialNeeds() {
+	public Set<String> getSpecialNeeds() {
 		return specialNeeds;
 	}
 
-	public void setSpecialNeeds(List<String> specialNeeds) {
+	public void setSpecialNeeds(Set<String> specialNeeds) {
 		this.specialNeeds = specialNeeds;
 	}
 
@@ -73,6 +79,14 @@ public class Patient extends User{
 
 	public void setHealthInsuranceNumber(String healthInsuranceNumber) {
 		this.healthInsuranceNumber = healthInsuranceNumber;
+	}
+
+	public List<Appointment> getAppointments() {
+		return appointments;
+	}
+
+	public void setAppointments(List<Appointment> appointments) {
+		this.appointments = appointments;
 	}
 	
 	

@@ -1,5 +1,7 @@
 package br.ufes.dwws.vital.dashboard.patient;
 
+import java.util.List;
+
 import javax.annotation.security.PermitAll;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
@@ -21,6 +23,11 @@ public class ManagePatientsServiceBean extends CrudServiceBean<Patient> implemen
 	@Override
 	public BaseDAO<Patient> getDAO() {
 		return patientDAO;
+	}
+	
+	@Override
+	public List<Patient> list(long doctor_id) {
+		return patientDAO.retrieveByDoctor(doctor_id);
 	}
 
 }
