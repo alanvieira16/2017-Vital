@@ -4,7 +4,6 @@ import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
-import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
@@ -18,8 +17,8 @@ public class Diagnosis extends PersistentObjectSupport {
 	@ManyToOne
 	private Appointment appointment;
 	
-	@ManyToMany(mappedBy="diagnostics")
-	private Set<Pathology> pathologies;
+	@ManyToOne
+	private Pathology pathology;
 
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "diagnosis")
 	private Set<Treatment> treatments;
@@ -32,12 +31,12 @@ public class Diagnosis extends PersistentObjectSupport {
 		this.appointment = appointment;
 	}
 
-	public Set<Pathology> getPathologies() {
-		return pathologies;
+	public Pathology getPathology() {
+		return pathology;
 	}
 
-	public void setPathologies(Set<Pathology> pathologies) {
-		this.pathologies = pathologies;
+	public void setPathology(Pathology pathology) {
+		this.pathology = pathology;
 	}
 
 	public Set<Treatment> getTreatments() {

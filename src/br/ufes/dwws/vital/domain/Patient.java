@@ -1,13 +1,11 @@
 package br.ufes.dwws.vital.domain;
 
-import java.util.List;
 import java.util.Set;
 
 import javax.persistence.CollectionTable;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
-import javax.persistence.OneToMany;
 
 @Entity
 public class Patient extends User{
@@ -29,9 +27,6 @@ public class Patient extends User{
 	@ElementCollection(fetch=FetchType.EAGER)
 	@CollectionTable(name = "specialNeeds")
 	private Set<String> specialNeeds;
-	
-	@OneToMany
-	private List<Appointment> appointments;
 	
 	public Set<String> getAllergies() {
 		return allergies;
@@ -79,14 +74,6 @@ public class Patient extends User{
 
 	public void setHealthInsuranceNumber(String healthInsuranceNumber) {
 		this.healthInsuranceNumber = healthInsuranceNumber;
-	}
-
-	public List<Appointment> getAppointments() {
-		return appointments;
-	}
-
-	public void setAppointments(List<Appointment> appointments) {
-		this.appointments = appointments;
 	}
 	
 	

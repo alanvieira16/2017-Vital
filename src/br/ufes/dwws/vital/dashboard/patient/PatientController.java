@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.io.UnsupportedEncodingException;
 import java.security.NoSuchAlgorithmException;
 import java.util.List;
+import java.util.ResourceBundle;
 
 import javax.ejb.EJB;
 import javax.enterprise.context.SessionScoped;
@@ -12,8 +13,9 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import javax.servlet.http.HttpServletRequest;
 
+import br.ufes.dwws.util.Mail;
 import br.ufes.dwws.util.Role;
-import br.ufes.dwws.vital.converters.StringToListConverter;
+import br.ufes.dwws.vital.converters.StringToSetConverter;
 import br.ufes.dwws.vital.domain.Patient;
 import br.ufes.dwws.vital.login.SessionController;
 import br.ufes.inf.nemo.jbutler.TextUtils;
@@ -38,39 +40,67 @@ public class PatientController extends CrudController<Patient> implements Serial
 	private List<Patient> patients;
 	private Patient patient = new Patient();
 
-	private StringToListConverter str2listConverter = new StringToListConverter();
+	private StringToSetConverter str2listConverter = new StringToSetConverter();
 
 	@Inject
 	public void init() {
-		patients = managePatientsService.list(sessionController.getCurrentUser().getId());
+		if(sessionController.hasLoggedUser()){
+			patients = managePatientsService.list(sessionController.getCurrentUser().getId());
+		}
 	}
 
-	public String register() {
+	public String register() {			
+		ResourceBundle bundle = FacesContext.getCurrentInstance() .getApplication().getResourceBundle(FacesContext.getCurrentInstance(), "msgs"); 
 		try {
-			String md5pwd = TextUtils.produceBase64EncodedMd5Hash(patient.getPassword());
+			String rawPwd = patient.getPassword();
+			String md5pwd = TextUtils.produceBase64EncodedMd5Hash(rawPwd);
 			patient.setPassword(md5pwd);
 			patient.setRole(Role.PATIENT);
 			managePatientsService.create(patient);
+			Mail mail = new Mail();
+			String message = String.format(
+					"<h2>%s</h2>"
+					+ "<p>%s %s</p>"
+					+ "<p>%s %s",
+					bundle.getString("mail.created"), bundle.getString("mail.login"),
+					patient.getEmail(), bundle.getString("mail.password"), rawPwd);
+			mail.send(patient.getEmail(), bundle.getString("mail.subject"), message);
 		} catch (NoSuchAlgorithmException e) {
 			FacesContext.getCurrentInstance().getExternalContext().getFlash().put("alertType", "danger");
 			FacesContext.getCurrentInstance().getExternalContext().getFlash().put("alertMessage",
-					"Something wrong happened. Try again.");
+					bundle.getString("alert.error"));
 			return "/appointment/new";
 		} catch (UnsupportedEncodingException e) {
 			FacesContext.getCurrentInstance().getExternalContext().getFlash().put("alertType", "danger");
 			FacesContext.getCurrentInstance().getExternalContext().getFlash().put("alertMessage",
-					"Something wrong happened. Try again.");
+					bundle.getString("alert.error"));
 			return "/appointment/new";
 		}
 		FacesContext.getCurrentInstance().getExternalContext().getFlash().put("alertType", "success");
 		FacesContext.getCurrentInstance().getExternalContext().getFlash().put("alertMessage",
-				"The patient has been registered successfully");
+				bundle.getString("alert.patientCreated"));
 		return "/index?faces-redirect=true";
 	}
-
+	
 	public String details(String id) {
 		patient = managePatientsService.retrieve(Long.parseLong(id));
 		return "/patient/details?faces-redirect=true";
+	}
+	
+	public String update(){
+		managePatientsService.getDAO().merge(patient);
+		return "/patient/index?faces-redirect=true";
+	}
+
+	public String edit(String id){
+		patient = managePatientsService.retrieve(Long.parseLong(id));
+		return "/patient/edit?faces-redirect=true";
+	}
+	
+	public String delete(String id){
+		patient = managePatientsService.retrieve(Long.parseLong(id));
+		managePatientsService.delete(patient);
+		return "/patient/index?faces-redirect=true";
 	}
 
 	public HttpServletRequest getRequest() {
@@ -97,11 +127,11 @@ public class PatientController extends CrudController<Patient> implements Serial
 		this.patient = patient;
 	}
 
-	public StringToListConverter getStr2listConverter() {
+	public StringToSetConverter getStr2listConverter() {
 		return str2listConverter;
 	}
 
-	public void setStr2listConverter(StringToListConverter str2listConverter) {
+	public void setStr2listConverter(StringToSetConverter str2listConverter) {
 		this.str2listConverter = str2listConverter;
 	}
 

@@ -81,11 +81,6 @@
 								<i class="fa fa-calendar-check-o"></i>
 								<span>#{msgs['menu.sidebar.appointments']}</span>
 							</h:outputLink></li>
-						<li><h:outputLink
-								value="#{facesContext.externalContext.requestContextPath}">
-								<i class="fa fa-envelope-open"></i>
-								<span>#{msgs['menu.sidebar.message']}</span>
-							</h:outputLink></li>
 					</h:panelGroup>
 					<h:panelGroup
 						rendered="#{sessionController.currentUser.role == 'patient'}">

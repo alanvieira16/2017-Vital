@@ -38,11 +38,11 @@
 							<i data-toggle="tooltip" title="#{dashboardMsgs['actions.details']}"
 							class="fa fa-info-circle" />
 						</h:commandLink>
-						<h:commandLink action="#{patientController.details(patient.id)}" >
+						<h:commandLink action="#{patientController.edit(patient.id)}" >
 							<i data-toggle="tooltip" title="#{dashboardMsgs['actions.edit']}"
 							class="fa fa-edit" />
 						</h:commandLink>
-						<h:commandLink action="#{patientController.details(patient.id)}" >
+						<h:commandLink action="#{patientController.delete(patient.id)}" >
 							<i data-toggle="tooltip" title="#{dashboardMsgs['actions.delete']}"
 							class="fa fa-remove" />
 						</h:commandLink>

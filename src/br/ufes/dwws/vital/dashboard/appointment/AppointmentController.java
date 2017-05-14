@@ -2,6 +2,7 @@ package br.ufes.dwws.vital.dashboard.appointment;
 
 import java.io.Serializable;
 import java.util.List;
+import java.util.ResourceBundle;
 
 import javax.ejb.EJB;
 import javax.enterprise.context.SessionScoped;
@@ -56,22 +57,45 @@ public class AppointmentController extends CrudController<Appointment> implement
 	}
 	
 	public String schedule() {
+		ResourceBundle bundle = FacesContext.getCurrentInstance() .getApplication().getResourceBundle(FacesContext.getCurrentInstance(), "msgs"); 
 		try {
 			appointment.setPatient(managePatientsService.getDAO().retrieveById(sessionController.getCurrentUser().getId()));
 			manageAppointmentsService.create(appointment);
 			FacesContext.getCurrentInstance().getExternalContext().getFlash().put("alertType", "success");
-			FacesContext.getCurrentInstance().getExternalContext().getFlash().put("alertMessage", "Your appointment has been scheduled successfully");
-			return "/index?faces-redirect=true";
+			FacesContext.getCurrentInstance().getExternalContext().getFlash().put("alertMessage", bundle.getString("alert.appointmentCreated"));
+			return "/appointment/index?faces-redirect=true";
 		} catch (Exception e) {
 			FacesContext.getCurrentInstance().getExternalContext().getFlash().put("alertType", "danger");
-			FacesContext.getCurrentInstance().getExternalContext().getFlash().put("alertMessage", "Something wrong happened. Try again.");
-			return "/appointment/new";
+			FacesContext.getCurrentInstance().getExternalContext().getFlash().put("alertMessage", bundle.getString("alert.error"));
+			return "/appointment/new?faces-redirect=true";
 		}
 	}
 
 	public String details(String id) {
 		appointment = manageAppointmentsService.retrieve(Long.parseLong(id));
 		return "/appointment/details?faces-redirect=true";
+	}
+	
+	public String update(){
+		manageAppointmentsService.getDAO().merge(appointment);
+		ResourceBundle bundle = FacesContext.getCurrentInstance() .getApplication().getResourceBundle(FacesContext.getCurrentInstance(), "msgs"); 
+		FacesContext.getCurrentInstance().getExternalContext().getFlash().put("alertType", "success");
+		FacesContext.getCurrentInstance().getExternalContext().getFlash().put("alertMessage", bundle.getString("alert.appointmentEdited"));
+		return "/appointment/index?faces-redirect=true";
+	}
+
+	public String edit(String id){
+		appointment = manageAppointmentsService.retrieve(Long.parseLong(id));
+		return "/appointment/edit?faces-redirect=true";
+	}
+	
+	public String delete(String id){
+		appointment = manageAppointmentsService.retrieve(Long.parseLong(id));
+		manageAppointmentsService.delete(appointment);
+		ResourceBundle bundle = FacesContext.getCurrentInstance() .getApplication().getResourceBundle(FacesContext.getCurrentInstance(), "msgs"); 
+		FacesContext.getCurrentInstance().getExternalContext().getFlash().put("alertType", "success");
+		FacesContext.getCurrentInstance().getExternalContext().getFlash().put("alertMessage", bundle.getString("alert.appointmentDeleted"));
+		return "/appointment/index?faces-redirect=true";
 	}
 	
 	public ManageAppointmentsService getAppointmentsService() {

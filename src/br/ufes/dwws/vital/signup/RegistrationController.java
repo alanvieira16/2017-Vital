@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.io.UnsupportedEncodingException;
 import java.security.NoSuchAlgorithmException;
 import java.util.List;
+import java.util.ResourceBundle;
 
 import javax.ejb.EJB;
 import javax.enterprise.context.RequestScoped;
@@ -13,6 +14,7 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import javax.servlet.http.HttpServletRequest;
 
+import br.ufes.dwws.util.Mail;
 import br.ufes.dwws.vital.domain.Doctor;
 import br.ufes.dwws.vital.domain.Hospital;
 import br.ufes.dwws.vital.login.LoginService;
@@ -56,21 +58,32 @@ public class RegistrationController implements Serializable {
 	public String register() {
 
 		String rawPwd = doctor.getPassword();
+		ResourceBundle bundle = FacesContext.getCurrentInstance() .getApplication().getResourceBundle(FacesContext.getCurrentInstance(), "msgs"); 
 
 		try {
 			String md5pwd = TextUtils.produceBase64EncodedMd5Hash(rawPwd);
 			doctor.setPassword(md5pwd);
 			registrationService.register(doctor);
+
+			Mail mail = new Mail();
+			String message = String.format(
+					"<h2>%s</h2>"
+					+ "<p>%s %s</p>"
+					+ "<p>%s %s",
+					bundle.getString("mail.created"), bundle.getString("mail.login"),
+					doctor.getEmail(), bundle.getString("mail.password"), rawPwd);
+			mail.send(doctor.getEmail(), bundle.getString("mail.subject"), message);
+			
 		} catch (NoSuchAlgorithmException | UnsupportedEncodingException e) {
 			request.setAttribute("alertType", "danger");
-			request.setAttribute("message", "Oops! Something wrong happened. Try again.");
+			request.setAttribute("message", bundle.getString("alert.error"));
 			return "/signup/index.xhtml";
 		}
 
 		sessionController.login(doctor.getEmail(), rawPwd);
 
 		getFlash().put("alertType", "success");
-		getFlash().put("alertMessage", "Your account has been created. Welcome to Vital!");
+		getFlash().put("alertMessage", bundle.getString("alert.doctorCreated"));
 
 		return "/index.xhtml?faces-redirect=true";
 

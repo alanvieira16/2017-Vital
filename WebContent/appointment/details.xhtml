@@ -24,9 +24,10 @@
 		<h:panelGroup layout="block" styleClass="mb-5">
 			<h:outputLabel value="#{dashboardMsgs['appointment.datetime']}:" />
 			<h:outputText value="#{appointmentController.appointment.datetime}">
-				<f:convertDateTime pattern="dd-MM-yyyy HH:mm"/>
+				<f:convertDateTime pattern="dd/MM/yyyy HH:mm"/>
 			</h:outputText>
 		</h:panelGroup>
+
 
 	</ui:define>
 
