@@ -14,22 +14,24 @@
 		<h:dataTable value="#{appointmentController.appointments}"
 			var="appointment" styleClass="table table-stripped table-bordered">
 
-			<h:column rendered="#{sessionController.currentUser.role == 'doctor'}">
+			<h:column
+				rendered="#{sessionController.currentUser.role == 'doctor'}">
 				<f:facet name="header">#{dashboardMsgs['appointment.patient']}</f:facet>    				
 		   		#{appointment.patient.name}
 		   </h:column>
 
-			<h:column rendered="#{sessionController.currentUser.role == 'patient'}">
+			<h:column
+				rendered="#{sessionController.currentUser.role == 'patient'}">
 				<f:facet name="header">#{dashboardMsgs['appointment.doctor']}</f:facet>    				
 		   		#{appointment.doctor.name}
 		   </h:column>
 
 			<h:column>
-				<f:facet name="header">#{dashboardMsgs['appointment.datetime']}</f:facet>    				
-		   		<h:outputText value="#{appointment.datetime}">
-		   			<f:convertDateTime pattern="dd/MM/yyyy HH:mm"/>
-		   		</h:outputText>
-		   </h:column>
+				<f:facet name="header">#{dashboardMsgs['appointment.datetime']}</f:facet>
+				<h:outputText value="#{appointment.datetime}">
+					<f:convertDateTime pattern="dd/MM/yyyy HH:mm" />
+				</h:outputText>
+			</h:column>
 
 			<h:column>
 				<f:facet name="header">#{dashboardMsgs['actions.title']}</f:facet>
@@ -41,13 +43,23 @@
 								title="#{dashboardMsgs['actions.details']}"
 								class="fa fa-info-circle" />
 						</h:commandLink>
+						
 						<h:commandLink
-							action="#{appointmentController.edit(appointment.id)}" rendered="#{sessionController.currentUser.role == 'doctor'}">
+							action="#{diagnosisController.create(appointment)}">
+							<i data-toggle="tooltip"
+								title="#{dashboardMsgs['actions.addTreatment']}"
+								class="fa fa-medkit" />
+						</h:commandLink>
+						
+						<h:commandLink
+							action="#{appointmentController.edit(appointment.id)}"
+							rendered="#{sessionController.currentUser.role == 'doctor'}">
 							<i data-toggle="tooltip" title="#{dashboardMsgs['actions.edit']}"
 								class="fa fa-edit" />
 						</h:commandLink>
 						<h:commandLink
-							action="#{appointmentController.delete(appointment.id)}" rendered="#{sessionController.currentUser.role == 'doctor'}">
+							action="#{appointmentController.delete(appointment.id)}"
+							rendered="#{sessionController.currentUser.role == 'doctor'}">
 							<i data-toggle="tooltip"
 								title="#{dashboardMsgs['actions.delete']}" class="fa fa-remove" />
 						</h:commandLink>
@@ -58,9 +70,10 @@
 
 
 		</h:dataTable>
-		<h:panelGroup layout="block" styleClass="text-right" rendered="#{sessionController.currentUser.role == 'patient'}">
-			<h:button value="#{dashboardMsgs['appointment.schedule']}" outcome="/appointment/new.html"
-				styleClass="btn btn-vital" />
+		<h:panelGroup layout="block" styleClass="text-right"
+			rendered="#{sessionController.currentUser.role == 'patient'}">
+			<h:button value="#{dashboardMsgs['appointment.schedule']}"
+				outcome="/appointment/new.html" styleClass="btn btn-vital" />
 		</h:panelGroup>
 	</ui:define>
 

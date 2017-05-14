@@ -3,7 +3,7 @@ package br.ufes.dwws.vital.domain;
 import java.util.Set;
 
 import javax.persistence.Entity;
-import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 
 import br.ufes.inf.nemo.jbutler.ejb.persistence.PersistentObjectSupport;
 
@@ -16,7 +16,7 @@ public class Pathology extends PersistentObjectSupport{
 	
 	private String description;
 	
-	@ManyToMany
+	@OneToMany(mappedBy = "pathology")
 	private Set<Diagnosis> diagnostics;
 
 

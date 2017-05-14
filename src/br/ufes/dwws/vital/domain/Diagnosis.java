@@ -1,11 +1,9 @@
 package br.ufes.dwws.vital.domain;
 
-import java.util.Set;
-
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 
 import br.ufes.inf.nemo.jbutler.ejb.persistence.PersistentObjectSupport;
 
@@ -20,8 +18,8 @@ public class Diagnosis extends PersistentObjectSupport {
 	@ManyToOne
 	private Pathology pathology;
 
-	@OneToMany(cascade = CascadeType.ALL, mappedBy = "diagnosis")
-	private Set<Treatment> treatments;
+	@OneToOne(cascade = CascadeType.ALL, mappedBy = "diagnosis")
+	private Treatment treatment;
 
 	public Appointment getAppointment() {
 		return appointment;
@@ -39,13 +37,15 @@ public class Diagnosis extends PersistentObjectSupport {
 		this.pathology = pathology;
 	}
 
-	public Set<Treatment> getTreatments() {
-		return treatments;
+	public Treatment getTreatment() {
+		return treatment;
 	}
 
-	public void setTreatments(Set<Treatment> treatments) {
-		this.treatments = treatments;
+	public void setTreatment(Treatment treatment) {
+		this.treatment = treatment;
 	}
+
+
 	
 	
 }

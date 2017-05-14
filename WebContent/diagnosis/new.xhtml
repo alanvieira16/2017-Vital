@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:components="http://java.sun.com/jsf/composite/components"
+	template="/resources/decorator.xhtml">
+
+	<ui:define name="title">#{dashboardMsgs['diagnosis.new']}</ui:define>
+
+	<ui:define name="menu">
+
+		<ui:repeat var="item" value="#{menuController.menuItems}">
+			<li><a href="#{item.url}"><i class="#{item.icon}"></i><span>#{item.title}</span></a></li>
+		</ui:repeat>
+
+	</ui:define>
+
+	<ui:define name="content">
+
+		<h:form id="regPatientForm"
+			styleClass="col-xs-12 col-md-8 col-md-offset-2">
+
+			<h:panelGroup layout="block" styleClass="row">
+			
+				<h:panelGroup layout="block" styleClass="col-xs-12">
+					<h:panelGroup layout="block" styleClass="form-group">
+						<h:outputLabel for="pathology" value="#{dashboardMsgs['diagnosis.pathology']}" />
+						<h:selectOneMenu value="#{diagnosisController.diagnosis.pathology}" id="pathology"
+							converter="#{diagnosisController.pathologyConverter}" styleClass="form-control" required="true"
+							requiredMessage="#{msgs['form.required']}">
+							<f:ajax event="blur" render="pathologyMessage" />
+							<f:selectItem itemValue="" itemLabel="" />
+							<f:selectItems value="#{diagnosisController.pathologies}"
+								var="pathology" itemValue="#{pathology}"
+								itemLabel="#{pathology.name}" />
+						</h:selectOneMenu>
+						<h:message styleClass="error-message" for="pathology"
+							id="pathologyMessage" />
+					</h:panelGroup>
+				</h:panelGroup>
+				
+				<h:panelGroup layout="block" styleClass="col-xs-12 col-md-4">
+					<h:panelGroup layout="block" styleClass="form-group">
+						<h:outputLabel for="medicineName" value="#{dashboardMsgs['medicine.name']}" />
+						<h:inputText id="medicineName"
+							value="#{diagnosisController.medicine.name}" size="30"
+							required="true" styleClass="form-control"
+							requiredMessage="#{msgs['form.required']}">
+							<f:ajax event="blur" render="medicineNameMessage" />
+						</h:inputText>
+						<h:message styleClass="error-message" for="medicineName"
+							id="medicineNameMessage" />
+					</h:panelGroup>
+				</h:panelGroup>
+				
+				<h:panelGroup layout="block" styleClass="col-xs-12 col-md-4">
+					<h:panelGroup layout="block" styleClass="form-group">
+						<h:outputLabel for="medicineActCmpd" value="#{dashboardMsgs['medicine.activeCompound']}" />
+						<h:inputText id="medicineActCmpd"
+							value="#{diagnosisController.medicine.activeCompound}" size="30"
+							required="true" styleClass="form-control"
+							requiredMessage="#{msgs['form.required']}">
+							<f:ajax event="blur" render="medicineActCmpdMessage" />
+						</h:inputText>
+						<h:message styleClass="error-message" for="medicineActCmpd"
+							id="medicineActCmpdMessage" />
+					</h:panelGroup>
+				</h:panelGroup>
+				
+				<h:panelGroup layout="block" styleClass="col-xs-12 col-md-4">
+					<h:panelGroup layout="block" styleClass="form-group">
+						<h:outputLabel for="medicineUse" value="#{dashboardMsgs['medicine.use']}" />
+						<h:inputText id="medicineUse"
+							value="#{diagnosisController.medicine.utilization}" size="30"
+							required="true" styleClass="form-control"
+							requiredMessage="#{msgs['form.required']}">
+							<f:ajax event="blur" render="medicineUseMessage" />
+						</h:inputText>
+						<h:message styleClass="error-message" for="medicineUse"
+							id="medicineUseMessage" />
+					</h:panelGroup>
+				</h:panelGroup>
+				
+				<h:panelGroup layout="block" styleClass="col-xs-12 col-md-6">
+					<h:panelGroup layout="block" styleClass="form-group">
+						<h:outputLabel for="prescriptionDosage" value="#{dashboardMsgs['prescription.dosage']}" />
+						<h:inputText id="prescriptionDosage"
+							value="#{diagnosisController.prescription.dosage}" size="30"
+							required="true" styleClass="form-control"
+							requiredMessage="#{msgs['form.required']}">
+							<f:ajax event="blur" render="prescriptionDosageMessage" />
+						</h:inputText>
+						<h:message styleClass="error-message" for="prescriptionDosage"
+							id="prescriptionDosageMessage" />
+					</h:panelGroup>
+				</h:panelGroup>
+				
+				<h:panelGroup layout="block" styleClass="col-xs-12 col-md-6">
+					<h:panelGroup layout="block" styleClass="form-group">
+						<h:outputLabel for="prescriptionDuration" value="#{dashboardMsgs['prescription.duration']}" />
+						<h:inputText id="prescriptionDuration"
+							value="#{diagnosisController.prescription.duration}" size="30"
+							required="true" styleClass="form-control"
+							requiredMessage="#{msgs['form.required']}">
+							<f:ajax event="blur" render="prescriptionDurationMessage" />
+						</h:inputText>
+						<h:message styleClass="error-message" for="prescriptionDuration"
+							id="prescriptionDurationMessage" />
+					</h:panelGroup>
+				</h:panelGroup>
+				
+				<h:panelGroup layout="block" styleClass="col-xs-12">
+					<h:panelGroup layout="block" styleClass="form-group">
+						<h:outputLabel for="treatmentDescription" value="#{dashboardMsgs['treatment.description']}" />
+						<h:inputTextarea id="treatmentDescription"
+							value="#{diagnosisController.treatment.description}"
+							styleClass="form-control" />
+						<h:message styleClass="error-message" for="treatmentDescription"
+							id="treatmentDescriptionMessage" />
+					</h:panelGroup>
+				</h:panelGroup>
+			
+				<h:panelGroup layout="block" styleClass="col-xs-12 text-right">
+					<h:panelGroup layout="block" styleClass="form-group">
+						<h:commandButton action="#{diagnosisController.diagnose}"
+							value="#{dashboardMsgs['diagnosis.diagnose']}" styleClass="btn btn-vital" />
+					</h:panelGroup>
+				</h:panelGroup>
+				
+			</h:panelGroup>
+
+		</h:form>
+	</ui:define>
+
+
+
+</ui:composition>

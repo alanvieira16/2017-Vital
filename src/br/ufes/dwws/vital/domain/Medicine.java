@@ -1,9 +1,8 @@
 package br.ufes.dwws.vital.domain;
 
-import java.util.Set;
 
 import javax.persistence.Entity;
-import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 
 import br.ufes.inf.nemo.jbutler.ejb.persistence.PersistentObjectSupport;
 
@@ -16,8 +15,8 @@ public class Medicine extends PersistentObjectSupport{
 	private String activeCompound;
 	private String utilization;
 	
-	@OneToMany(mappedBy = "medicine")
-	private Set<Prescription> prescriptions;
+	@OneToOne
+	private Prescription prescription;
 
 	public String getName() {
 		return name;
@@ -39,17 +38,19 @@ public class Medicine extends PersistentObjectSupport{
 		return utilization;
 	}
 
-	public void setUtuilization(String utilization) {
+	public void setUtilization(String utilization) {
 		this.utilization = utilization;
 	}
 
-	public Set<Prescription> getPrescriptions() {
-		return prescriptions;
+	public Prescription getPrescription() {
+		return prescription;
 	}
 
-	public void setPrescriptions(Set<Prescription> prescriptions) {
-		this.prescriptions = prescriptions;
+	public void setPrescription(Prescription prescription) {
+		this.prescription = prescription;
 	}
+
+
 	
 	
 }

@@ -11,9 +11,11 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import javax.servlet.http.HttpServletRequest;
 
+import br.ufes.dwws.vital.dashboard.diagnosis.ManageDiagnosisService;
 import br.ufes.dwws.vital.dashboard.doctor.ListDoctorsService;
 import br.ufes.dwws.vital.dashboard.patient.ManagePatientsService;
 import br.ufes.dwws.vital.domain.Appointment;
+import br.ufes.dwws.vital.domain.Diagnosis;
 import br.ufes.dwws.vital.domain.Doctor;
 import br.ufes.dwws.vital.login.SessionController;
 import br.ufes.dwws.vital.persistence.DoctorDAO;
@@ -29,7 +31,8 @@ public class AppointmentController extends CrudController<Appointment> implement
 	
 	@EJB
 	private ManageAppointmentsService manageAppointmentsService;
-	
+	@EJB
+	private ManageDiagnosisService manageDiagnosisService;
 	@EJB
 	private ListDoctorsService listDoctorsService;
 	
@@ -46,6 +49,7 @@ public class AppointmentController extends CrudController<Appointment> implement
 	
 	private List<Appointment> appointments;
 	private List<Doctor> doctors;
+	private List<Diagnosis> diagnosis;
 	private Appointment appointment = new Appointment();
 	
 	@Inject
@@ -73,6 +77,7 @@ public class AppointmentController extends CrudController<Appointment> implement
 
 	public String details(String id) {
 		appointment = manageAppointmentsService.retrieve(Long.parseLong(id));
+		diagnosis = manageDiagnosisService.list(appointment);
 		return "/appointment/details?faces-redirect=true";
 	}
 	
@@ -160,6 +165,22 @@ public class AppointmentController extends CrudController<Appointment> implement
 
 	public void setSessionController(SessionController sessionController) {
 		this.sessionController = sessionController;
+	}
+
+	public List<Diagnosis> getDiagnosis() {
+		return diagnosis;
+	}
+
+	public void setDiagnosis(List<Diagnosis> diagnosis) {
+		this.diagnosis = diagnosis;
+	}
+
+	public ManageDiagnosisService getManageDiagnosisService() {
+		return manageDiagnosisService;
+	}
+
+	public void setManageDiagnosisService(ManageDiagnosisService manageDiagnosisService) {
+		this.manageDiagnosisService = manageDiagnosisService;
 	}
 	
 }
