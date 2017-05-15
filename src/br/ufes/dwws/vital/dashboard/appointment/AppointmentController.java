@@ -31,12 +31,10 @@ public class AppointmentController extends CrudController<Appointment> implement
 
 	@EJB
 	private ManageAppointmentsService manageAppointmentsService;
-<<<<<<< HEAD
-
-=======
+	
 	@EJB
 	private ManageDiagnosisService manageDiagnosisService;
->>>>>>> origin/master
+
 	@EJB
 	private ListDoctorsService listDoctorsService;
 
@@ -53,12 +51,7 @@ public class AppointmentController extends CrudController<Appointment> implement
 
 	private List<Appointment> appointments;
 	private List<Doctor> doctors;
-<<<<<<< HEAD
-=======
 	private List<Diagnosis> diagnosis;
-	private Appointment appointment = new Appointment();
->>>>>>> origin/master
-	
 	private Appointment newAppointment = new Appointment();
 	private Appointment selectedAppointment;
 
@@ -94,12 +87,8 @@ public class AppointmentController extends CrudController<Appointment> implement
 	}
 
 	public String details(String id) {
-<<<<<<< HEAD
 		selectedAppointment = manageAppointmentsService.retrieve(Long.parseLong(id));
-=======
-		appointment = manageAppointmentsService.retrieve(Long.parseLong(id));
-		diagnosis = manageDiagnosisService.list(appointment);
->>>>>>> origin/master
+		diagnosis = manageDiagnosisService.list(selectedAppointment);
 		return "/appointment/details?faces-redirect=true";
 	}
 
@@ -205,8 +194,6 @@ public class AppointmentController extends CrudController<Appointment> implement
 		this.sessionController = sessionController;
 	}
 
-<<<<<<< HEAD
-=======
 	public List<Diagnosis> getDiagnosis() {
 		return diagnosis;
 	}
@@ -223,5 +210,4 @@ public class AppointmentController extends CrudController<Appointment> implement
 		this.manageDiagnosisService = manageDiagnosisService;
 	}
 	
->>>>>>> origin/master
 }
