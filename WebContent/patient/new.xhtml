@@ -21,7 +21,7 @@
 				<h:panelGroup layout="block" styleClass="col-xs-12 col-md-6">
 					<h:panelGroup layout="block" styleClass="form-group">
 						<h:outputLabel for="name" value="#{dashboardMsgs['user.name']}" />
-						<h:inputText id="name" value="#{patientController.patient.name}"
+						<h:inputText id="name" value="#{patientController.newPatient.name}"
 							size="20" styleClass="form-control" required="true"
 							requiredMessage="#{msgs['form.required']}">
 							<f:ajax event="blur" render="nameMessage" />
@@ -34,13 +34,11 @@
 				<h:panelGroup layout="block" styleClass="col-xs-12 col-md-6">
 					<h:panelGroup layout="block" styleClass="form-group">
 						<h:outputLabel for="email" value="#{dashboardMsgs['user.email']}" />
-						<h:inputText id="email" value="#{patientController.patient.email}"
+						<h:inputText id="email" value="#{patientController.newPatient.email}"
 							size="20" styleClass="form-control"
+							validator="#{emailValidator.validate}"
 							binding="#{passwordComponent}" required="true"
-							validatorMessage="#{msgs['form.invalidEmail']}"
 							requiredMessage="#{msgs['form.required']}">
-							<f:validateRegex
-								pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$" />
 							<f:ajax event="blur" render="emailMessage" />
 						</h:inputText>
 						<h:message styleClass="error-message" for="email"
@@ -53,7 +51,7 @@
 					<h:panelGroup layout="block" styleClass="form-group">
 						<h:outputLabel for="password" value="#{dashboardMsgs['user.password']}" />
 						<h:inputSecret id="password"
-							value="#{patientController.patient.password}" size="20"
+							value="#{patientController.newPatient.password}" size="20"
 							styleClass="form-control" required="true"
 							requiredMessage="#{msgs['form.required']}">
 							<f:validator validatorId="confirmPasswordValidator" />
@@ -72,7 +70,7 @@
 						<h:outputLabel for="confirm-password"
 							value="#{dashboardMsgs['user.confirmPassword']}" />
 						<h:inputSecret id="confirm-password"
-							value="#{patientController.patient.password}" size="20"
+							value="#{patientController.newPatient.password}" size="20"
 							styleClass="form-control" required="true"
 							requiredMessage="#{msgs['form.required']}"
 							binding="#{confirmPassword}">
@@ -88,7 +86,7 @@
 					<h:panelGroup layout="block" styleClass="form-group">
 						<h:outputLabel for="gender" value="#{dashboardMsgs['user.gender']}" />
 						<h:selectOneMenu id="gender" styleClass="form-control"
-							value="#{patientController.patient.gender}" required="true"
+							value="#{patientController.newPatient.gender}" required="true"
 							requiredMessage="#{msgs['form.required']}">
 							<f:selectItem itemValue="" itemLabel="" />
 							<f:selectItem itemValue="M" itemLabel="Male" />
@@ -103,7 +101,7 @@
 				<h:panelGroup layout="block" styleClass="col-xs-12 col-md-4">
 					<h:panelGroup layout="block" styleClass="form-group">
 						<h:outputLabel for="phone" value="#{dashboardMsgs['user.phone']}" />
-						<h:inputText id="phone" value="#{patientController.patient.phone}"
+						<h:inputText id="phone" value="#{patientController.newPatient.phone}"
 							size="30" required="true" styleClass="form-control field-phone"
 							requiredMessage="#{msgs['form.required']}">
 							<f:ajax event="blur" render="phoneMessage" />
@@ -117,7 +115,7 @@
 					<h:panelGroup layout="block" styleClass="form-group">
 						<h:outputLabel for="birthday" value="#{dashboardMsgs['user.birthday']}" />
 						<h:inputText id="birthday"
-							value="#{patientController.patient.birthday}" size="10"
+							value="#{patientController.newPatient.birthday}" size="10"
 							required="true" styleClass="form-control field-date"
 							requiredMessage="#{msgs['form.required']}"
 							converterMessage="#{msgs['form.invalidDate']}">
@@ -133,7 +131,7 @@
 					<h:panelGroup layout="block" styleClass="form-group">
 						<h:outputLabel for="bloodtype" value="#{dashboardMsgs['patient.bloodType']}" />
 						<h:selectOneMenu id="bloodtype" styleClass="form-control"
-							value="#{patientController.patient.bloodType}" required="true"
+							value="#{patientController.newPatient.bloodType}" required="true"
 							requiredMessage="#{msgs['form.required']}">
 							<f:selectItem itemValue="" itemLabel="" />
 							<f:selectItem itemValue="A+" itemLabel="A+" />
@@ -155,7 +153,7 @@
 					<h:panelGroup layout="block" styleClass="form-group">
 						<h:outputLabel for="healthInsurance" value="#{dashboardMsgs['patient.healthInsurance']}" />
 						<h:inputText id="healthInsurance"
-							value="#{patientController.patient.healthInsurance}" size="30"
+							value="#{patientController.newPatient.healthInsurance}" size="30"
 							required="true" styleClass="form-control"
 							requiredMessage="#{msgs['form.required']}">
 							<f:ajax event="blur" render="healthInsuranceMessage" />
@@ -170,7 +168,7 @@
 						<h:outputLabel for="healthInsuranceNumber"
 							value="#{dashboardMsgs['patient.healthInsuranceNumber']}" />
 						<h:inputText id="healthInsuranceNumber"
-							value="#{patientController.patient.healthInsuranceNumber}"
+							value="#{patientController.newPatient.healthInsuranceNumber}"
 							size="30" required="true" styleClass="form-control"
 							requiredMessage="#{msgs['form.required']}">
 							<f:ajax event="blur" render="healthInsuranceNumberMessage" />
@@ -188,7 +186,7 @@
 							</h:panelGroup>
 						</h:outputLabel>
 						<h:inputText id="allergies"
-							value="#{patientController.patient.allergies}"
+							value="#{patientController.newPatient.allergies}"
 							styleClass="form-control"
 							converter="#{patientController.str2listConverter}">
 						</h:inputText>
@@ -205,7 +203,7 @@
 							</h:panelGroup>
 						</h:outputLabel>
 						<h:inputText id="specialNeeds"
-							value="#{patientController.patient.specialNeeds}"
+							value="#{patientController.newPatient.specialNeeds}"
 							styleClass="form-control"
 							converter="#{patientController.str2listConverter}">
 						</h:inputText>
@@ -219,7 +217,7 @@
 					<h:panelGroup layout="block" styleClass="form-group">
 						<h:outputLabel for="notes" value="#{dashboardMsgs['patient.notes']}" />
 						<h:inputTextarea id="notes"
-							value="#{patientController.patient.notes}"
+							value="#{patientController.newPatient.notes}"
 							styleClass="form-control" />
 						<h:message styleClass="error-message" for="notes"
 							id="notesMessage" />

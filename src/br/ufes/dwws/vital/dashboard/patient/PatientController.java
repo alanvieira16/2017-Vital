@@ -38,7 +38,8 @@ public class PatientController extends CrudController<Patient> implements Serial
 	private HttpServletRequest request;
 
 	private List<Patient> patients;
-	private Patient patient = new Patient();
+	private Patient newPatient = new Patient();
+	private Patient selectedPatient;
 
 	private StringToSetConverter str2listConverter = new StringToSetConverter();
 
@@ -52,55 +53,84 @@ public class PatientController extends CrudController<Patient> implements Serial
 	public String register() {			
 		ResourceBundle bundle = FacesContext.getCurrentInstance() .getApplication().getResourceBundle(FacesContext.getCurrentInstance(), "msgs"); 
 		try {
-			String rawPwd = patient.getPassword();
+			String rawPwd = newPatient.getPassword();
 			String md5pwd = TextUtils.produceBase64EncodedMd5Hash(rawPwd);
-			patient.setPassword(md5pwd);
-			patient.setRole(Role.PATIENT);
-			managePatientsService.create(patient);
+			newPatient.setPassword(md5pwd);
+			newPatient.setRole(Role.PATIENT);
+			managePatientsService.create(newPatient);
 			Mail mail = new Mail();
 			String message = String.format(
 					"<h2>%s</h2>"
 					+ "<p>%s %s</p>"
 					+ "<p>%s %s",
 					bundle.getString("mail.created"), bundle.getString("mail.login"),
-					patient.getEmail(), bundle.getString("mail.password"), rawPwd);
-			mail.send(patient.getEmail(), bundle.getString("mail.subject"), message);
-		} catch (NoSuchAlgorithmException e) {
-			FacesContext.getCurrentInstance().getExternalContext().getFlash().put("alertType", "danger");
-			FacesContext.getCurrentInstance().getExternalContext().getFlash().put("alertMessage",
-					bundle.getString("alert.error"));
-			return "/appointment/new";
-		} catch (UnsupportedEncodingException e) {
+					newPatient.getEmail(), bundle.getString("mail.password"), rawPwd);
+			
+			mail.send(newPatient.getEmail(), bundle.getString("mail.subject"), message);
+			
+		} catch (NoSuchAlgorithmException|UnsupportedEncodingException e) {
 			FacesContext.getCurrentInstance().getExternalContext().getFlash().put("alertType", "danger");
 			FacesContext.getCurrentInstance().getExternalContext().getFlash().put("alertMessage",
 					bundle.getString("alert.error"));
 			return "/appointment/new";
 		}
+		
 		FacesContext.getCurrentInstance().getExternalContext().getFlash().put("alertType", "success");
 		FacesContext.getCurrentInstance().getExternalContext().getFlash().put("alertMessage",
 				bundle.getString("alert.patientCreated"));
-		return "/index?faces-redirect=true";
+		
+		newPatient = new Patient();
+		refreshListPatients();
+		
+		return "/patient/index?faces-redirect=true";
 	}
 	
+	private void refreshListPatients(){
+		if(sessionController.hasLoggedUser()){
+			patients = managePatientsService.list(sessionController.getCurrentUser().getId());
+		}
+	}
+
+	
 	public String details(String id) {
-		patient = managePatientsService.retrieve(Long.parseLong(id));
+		selectedPatient = managePatientsService.retrieve(Long.parseLong(id));
 		return "/patient/details?faces-redirect=true";
 	}
 	
 	public String update(){
-		managePatientsService.getDAO().merge(patient);
+		managePatientsService.getDAO().merge(selectedPatient);
+		refreshListPatients();
 		return "/patient/index?faces-redirect=true";
 	}
 
 	public String edit(String id){
-		patient = managePatientsService.retrieve(Long.parseLong(id));
+		selectedPatient = managePatientsService.retrieve(Long.parseLong(id));
+		refreshListPatients();
 		return "/patient/edit?faces-redirect=true";
 	}
 	
 	public String delete(String id){
-		patient = managePatientsService.retrieve(Long.parseLong(id));
-		managePatientsService.delete(patient);
+		selectedPatient = managePatientsService.retrieve(Long.parseLong(id));
+		managePatientsService.delete(selectedPatient);
+		refreshListPatients();
 		return "/patient/index?faces-redirect=true";
+	}
+	
+
+	public Patient getNewPatient() {
+		return newPatient;
+	}
+
+	public void setNewPatient(Patient newPatient) {
+		this.newPatient = newPatient;
+	}
+
+	public Patient getSelectedPatient() {
+		return selectedPatient;
+	}
+
+	public void setSelectedPatient(Patient selectedPatient) {
+		this.selectedPatient = selectedPatient;
 	}
 
 	public HttpServletRequest getRequest() {
@@ -117,14 +147,6 @@ public class PatientController extends CrudController<Patient> implements Serial
 
 	public void setPatients(List<Patient> patients) {
 		this.patients = patients;
-	}
-
-	public Patient getPatient() {
-		return patient;
-	}
-
-	public void setPatient(Patient patient) {
-		this.patient = patient;
 	}
 
 	public StringToSetConverter getStr2listConverter() {

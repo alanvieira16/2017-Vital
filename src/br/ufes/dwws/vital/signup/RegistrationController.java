@@ -29,7 +29,6 @@ public class RegistrationController implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
-
 	@EJB
 	private RegistrationService registrationService;
 
@@ -59,8 +58,9 @@ public class RegistrationController implements Serializable {
 
 		String rawPwd = doctor.getPassword();
 		ResourceBundle bundle = FacesContext.getCurrentInstance() .getApplication().getResourceBundle(FacesContext.getCurrentInstance(), "msgs"); 
-
+		
 		try {
+			
 			String md5pwd = TextUtils.produceBase64EncodedMd5Hash(rawPwd);
 			doctor.setPassword(md5pwd);
 			registrationService.register(doctor);
@@ -72,6 +72,7 @@ public class RegistrationController implements Serializable {
 					+ "<p>%s %s",
 					bundle.getString("mail.created"), bundle.getString("mail.login"),
 					doctor.getEmail(), bundle.getString("mail.password"), rawPwd);
+			
 			mail.send(doctor.getEmail(), bundle.getString("mail.subject"), message);
 			
 		} catch (NoSuchAlgorithmException | UnsupportedEncodingException e) {
@@ -86,22 +87,7 @@ public class RegistrationController implements Serializable {
 		getFlash().put("alertMessage", bundle.getString("alert.doctorCreated"));
 
 		return "/index.xhtml?faces-redirect=true";
-
-		/*
-		 * try { return sessionController.login(doctor.getEmail(),
-		 * doctor.getPassword()); } catch (LoginFailedException e) {
-		 * 
-		 * logger.log(Level.INFO, "error when login jaas" );
-		 * 
-		 * getFlash().put("alertType", "danger"); getFlash().put("alertMessage",
-		 * e.getReason()); return "/signup/index.xhtml?faces-redirect=true"; }
-		 * 
-		 * getFlash().put("alertType", "success");
-		 * getFlash().put("alertMessage",
-		 * "Your account has been created. Welcome to Vital!");
-		 * 
-		 * return "/index.xhtml?faces-redirect=true";
-		 */
+		
 	}
 
 	private Flash getFlash() {

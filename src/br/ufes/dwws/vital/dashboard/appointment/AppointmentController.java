@@ -23,81 +23,105 @@ import br.ufes.inf.nemo.jbutler.ejb.controller.PersistentObjectConverterFromId;
 
 @Named
 @SessionScoped
-public class AppointmentController extends CrudController<Appointment> implements Serializable{
+public class AppointmentController extends CrudController<Appointment> implements Serializable {
 
 	private static final long serialVersionUID = 1L;
-	
+
 	@EJB
 	private ManageAppointmentsService manageAppointmentsService;
-	
+
 	@EJB
 	private ListDoctorsService listDoctorsService;
-	
+
 	@EJB
 	private ManagePatientsService managePatientsService;
-	
+
 	@Inject
 	private SessionController sessionController;
-	
+
 	@Inject
 	private HttpServletRequest request;
 
 	private PersistentObjectConverterFromId<Doctor> doctorConverter;
-	
-	private List<Appointment> appointments;
+
+	private List<Appointment> appointmentList;
 	private List<Doctor> doctors;
-	private Appointment appointment = new Appointment();
 	
+	private Appointment newAppointment = new Appointment();
+	private Appointment selectedAppointment;
+
 	@Inject
 	public void init(DoctorDAO doctorDAO) {
 		doctorConverter = new PersistentObjectConverterFromId<>(doctorDAO);
 		doctors = listDoctorsService.listDoctors();
-		appointments = manageAppointmentsService.list(sessionController.getCurrentUser());
-		
+		appointmentList = manageAppointmentsService.list(sessionController.getCurrentUser());
 	}
-	
+
 	public String schedule() {
-		ResourceBundle bundle = FacesContext.getCurrentInstance() .getApplication().getResourceBundle(FacesContext.getCurrentInstance(), "msgs"); 
+		ResourceBundle bundle = FacesContext.getCurrentInstance()
+				.getApplication()
+				.getResourceBundle(FacesContext.getCurrentInstance(), "msgs");
 		try {
-			appointment.setPatient(managePatientsService.getDAO().retrieveById(sessionController.getCurrentUser().getId()));
-			manageAppointmentsService.create(appointment);
+			newAppointment.setPatient(managePatientsService.getDAO().retrieveById(sessionController.getCurrentUser().getId()));
+			manageAppointmentsService.create(newAppointment);
 			FacesContext.getCurrentInstance().getExternalContext().getFlash().put("alertType", "success");
-			FacesContext.getCurrentInstance().getExternalContext().getFlash().put("alertMessage", bundle.getString("alert.appointmentCreated"));
+			FacesContext.getCurrentInstance().getExternalContext().getFlash().put("alertMessage",bundle.getString("alert.appointmentCreated"));
+			newAppointment = new Appointment();
+			refreshListAppointment();
 			return "/appointment/index?faces-redirect=true";
 		} catch (Exception e) {
 			FacesContext.getCurrentInstance().getExternalContext().getFlash().put("alertType", "danger");
-			FacesContext.getCurrentInstance().getExternalContext().getFlash().put("alertMessage", bundle.getString("alert.error"));
+			FacesContext.getCurrentInstance().getExternalContext().getFlash().put("alertMessage",
+					bundle.getString("alert.error"));
 			return "/appointment/new?faces-redirect=true";
 		}
 	}
+	
+	private void refreshListAppointment(){
+		appointmentList = manageAppointmentsService.list(sessionController.getCurrentUser());
+	}
 
 	public String details(String id) {
-		appointment = manageAppointmentsService.retrieve(Long.parseLong(id));
+		selectedAppointment = manageAppointmentsService.retrieve(Long.parseLong(id));
 		return "/appointment/details?faces-redirect=true";
 	}
-	
-	public String update(){
-		manageAppointmentsService.getDAO().merge(appointment);
-		ResourceBundle bundle = FacesContext.getCurrentInstance() .getApplication().getResourceBundle(FacesContext.getCurrentInstance(), "msgs"); 
+
+	public String update() {
+		manageAppointmentsService.getDAO().merge(selectedAppointment);
+		ResourceBundle bundle = FacesContext.getCurrentInstance().getApplication().getResourceBundle(FacesContext.getCurrentInstance(), "msgs");
 		FacesContext.getCurrentInstance().getExternalContext().getFlash().put("alertType", "success");
-		FacesContext.getCurrentInstance().getExternalContext().getFlash().put("alertMessage", bundle.getString("alert.appointmentEdited"));
+		FacesContext.getCurrentInstance().getExternalContext().getFlash().put("alertMessage",bundle.getString("alert.appointmentEdited"));
+		refreshListAppointment();
 		return "/appointment/index?faces-redirect=true";
 	}
 
-	public String edit(String id){
-		appointment = manageAppointmentsService.retrieve(Long.parseLong(id));
+	public String edit(String id) {
+		selectedAppointment = manageAppointmentsService.retrieve(Long.parseLong(id));
 		return "/appointment/edit?faces-redirect=true";
 	}
-	
-	public String delete(String id){
-		appointment = manageAppointmentsService.retrieve(Long.parseLong(id));
-		manageAppointmentsService.delete(appointment);
-		ResourceBundle bundle = FacesContext.getCurrentInstance() .getApplication().getResourceBundle(FacesContext.getCurrentInstance(), "msgs"); 
+
+	public String delete(String id) {
+		selectedAppointment = manageAppointmentsService.retrieve(Long.parseLong(id));
+		manageAppointmentsService.delete(selectedAppointment);
+		ResourceBundle bundle = FacesContext.getCurrentInstance().getApplication()
+				.getResourceBundle(FacesContext.getCurrentInstance(), "msgs");
 		FacesContext.getCurrentInstance().getExternalContext().getFlash().put("alertType", "success");
-		FacesContext.getCurrentInstance().getExternalContext().getFlash().put("alertMessage", bundle.getString("alert.appointmentDeleted"));
+		FacesContext.getCurrentInstance().getExternalContext().getFlash().put("alertMessage",
+				bundle.getString("alert.appointmentDeleted"));
+		refreshListAppointment();
 		return "/appointment/index?faces-redirect=true";
 	}
 	
+	
+
+	public Appointment getNewAppointment() {
+		return newAppointment;
+	}
+
+	public void setNewAppointment(Appointment newAppointment) {
+		this.newAppointment = newAppointment;
+	}
+
 	public ManageAppointmentsService getAppointmentsService() {
 		return manageAppointmentsService;
 	}
@@ -114,20 +138,21 @@ public class AppointmentController extends CrudController<Appointment> implement
 		this.request = request;
 	}
 
-	public List<Appointment> getAppointments() {
-		return appointments;
+
+	public List<Appointment> getAppointmentList() {
+		return appointmentList;
 	}
 
-	public void setAppointments(List<Appointment> appointments) {
-		this.appointments = appointments;
+	public void setAppointmentList(List<Appointment> appointmentList) {
+		this.appointmentList = appointmentList;
 	}
 
-	public Appointment getAppointment() {
-		return appointment;
+	public Appointment getSelectedAppointment() {
+		return selectedAppointment;
 	}
 
-	public void setAppointment(Appointment appointment) {
-		this.appointment = appointment;
+	public void setSelectedAppointment(Appointment appointment) {
+		this.selectedAppointment = appointment;
 	}
 
 	public PersistentObjectConverterFromId<Doctor> getDoctorConverter() {
@@ -152,7 +177,8 @@ public class AppointmentController extends CrudController<Appointment> implement
 	}
 
 	@Override
-	protected void initFilters() {}
+	protected void initFilters() {
+	}
 
 	public SessionController getSessionController() {
 		return sessionController;
@@ -161,5 +187,5 @@ public class AppointmentController extends CrudController<Appointment> implement
 	public void setSessionController(SessionController sessionController) {
 		this.sessionController = sessionController;
 	}
-	
+
 }

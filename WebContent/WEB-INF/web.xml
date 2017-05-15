@@ -24,4 +24,57 @@
 		<param-name>javax.faces.DATETIMECONVERTER_DEFAULT_TIMEZONE_IS_SYSTEM_TIMEZONE</param-name>
 		<param-value>true</param-value>
 	</context-param>
+	
+	 <!-- Protected area definition -->
+	<security-constraint>
+	
+		<web-resource-collection>
+	  		<web-resource-name>Restricted Area - Doctor Only</web-resource-name>
+	  		<url-pattern>/patient/*</url-pattern>
+	 	</web-resource-collection>
+	 	
+	 	<web-resource-collection>
+  			<web-resource-name>Restricted Area - Patient and Doctor</web-resource-name>
+  			<url-pattern>/appointment/edit.faces</url-pattern>
+		</web-resource-collection>
+	 
+	 	<auth-constraint>
+	  		<role-name>doctor</role-name>
+	 	</auth-constraint>
+	 	
+	</security-constraint>
+	
+		
+	<security-constraint>
+		
+ 		<web-resource-collection>
+  			<web-resource-name>Restricted Area - Patient and Doctor</web-resource-name>
+  			<url-pattern>/appointment/new.faces</url-pattern>
+		</web-resource-collection>
+		
+		<web-resource-collection>
+  			<web-resource-name>Restricted Area - Patient and Doctor</web-resource-name>
+  			<url-pattern>/appointment/details.faces</url-pattern>
+		</web-resource-collection>
+		
+		<web-resource-collection>
+  			<web-resource-name>Restricted Area - Patient and Doctor</web-resource-name>
+  			<url-pattern>/diagnosis/*</url-pattern>
+		</web-resource-collection>
+		 
+		<auth-constraint>
+		 	<role-name>doctor</role-name>
+		 	<role-name>patient</role-name>
+		</auth-constraint>
+		
+	</security-constraint>
+	
+	<security-role>
+	 	<role-name>doctor</role-name>
+	</security-role>
+	
+	<security-role>
+	 	<role-name>patient</role-name>
+	</security-role>
+
 </web-app>

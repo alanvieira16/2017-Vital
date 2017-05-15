@@ -36,12 +36,12 @@
 					<h:panelGroup layout="block" styleClass="form-group">
 						<h:outputLabel for="email" value="#{dashboardMsgs['user.email']}" />
 						<h:inputText id="email"
+							validator="#{emailValidator.validate}"
 							value="#{registrationController.doctor.email}" size="20"
-							styleClass="form-control" binding="#{passwordComponent}"
-							required="true" validatorMessage="#{msgs['form.invalidEmail']}"
+							styleClass="form-control" 
+							binding="#{passwordComponent}"
+							required="true"
 							requiredMessage="#{msgs['form.required']}">
-							<f:validateRegex
-								pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$" />
 							<f:ajax event="blur" render="emailMessage" />
 						</h:inputText>
 						<h:message styleClass="error-message" for="email"

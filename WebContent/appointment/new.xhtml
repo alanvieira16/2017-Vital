@@ -25,14 +25,14 @@
 
 			<h:panelGroup layout="block" styleClass="row">
 
-				
-
 				<h:panelGroup layout="block" styleClass="col-xs-12 col-md-6">
 					<h:panelGroup layout="block" styleClass="form-group">
-						<h:outputLabel for="datetime" value="#{dashboardMsgs['appointment.datetime']}" />
+						<h:outputLabel for="datetime"
+							value="#{dashboardMsgs['appointment.datetime']}" />
 						<h:inputText id="datetime"
-							value="#{appointmentController.appointment.datetime}" size="10"
-							required="true" styleClass="form-control field-datetime"
+							value="#{appointmentController.newAppointment.datetime}"
+							size="10" required="true"
+							styleClass="form-control field-datetime"
 							requiredMessage="You can't leave this field empty."
 							converterMessage="Invalid date.">
 							<f:convertDateTime pattern="dd/MM/yyyy HH:mm" />
@@ -45,15 +45,17 @@
 
 				<h:panelGroup layout="block" styleClass="col-xs-12 col-md-6">
 					<h:panelGroup layout="block" styleClass="form-group">
-						<h:outputLabel for="doctor" value="#{dashboardMsgs['appointment.doctor']}" />
-						<h:selectOneMenu value="#{appointmentController.appointment.doctor}" id="doctor"
-							converter="#{appointmentController.doctorConverter}" styleClass="form-control" required="true"
+						<h:outputLabel for="doctor"
+							value="#{dashboardMsgs['appointment.doctor']}" />
+						<h:selectOneMenu
+							value="#{appointmentController.newAppointment.doctor}"
+							id="doctor" converter="#{appointmentController.doctorConverter}"
+							styleClass="form-control" required="true"
 							requiredMessage="You can't leave this field empty.">
 							<f:ajax event="blur" render="doctorMessage" />
 							<f:selectItem itemValue="" itemLabel="" />
 							<f:selectItems value="#{appointmentController.doctors}"
-								var="doctor" itemValue="#{doctor}"
-								itemLabel="#{doctor.name}" />
+								var="doctor" itemValue="#{doctor}" itemLabel="#{doctor.name}" />
 						</h:selectOneMenu>
 						<h:message styleClass="error-message" for="doctor"
 							id="doctorMessage" />
@@ -63,7 +65,8 @@
 				<h:panelGroup layout="block" styleClass="col-xs-12 text-right">
 					<h:panelGroup layout="block" styleClass="form-group">
 						<h:commandButton action="#{appointmentController.schedule}"
-							value="#{dashboardMsgs['appointment.schedule']}" styleClass="btn btn-vital" />
+							value="#{dashboardMsgs['appointment.schedule']}"
+							styleClass="btn btn-vital" />
 					</h:panelGroup>
 				</h:panelGroup>
 			</h:panelGroup>

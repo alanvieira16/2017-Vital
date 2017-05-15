@@ -21,7 +21,7 @@
 				<h:panelGroup layout="block" styleClass="col-xs-12 col-md-6">
 					<h:panelGroup layout="block" styleClass="form-group">
 						<h:outputLabel for="name" value="#{dashboardMsgs['user.name']}" />
-						<h:inputText id="name" value="#{patientController.patient.name}"
+						<h:inputText id="name" value="#{patientController.selectedPatient.name}"
 							size="20" styleClass="form-control" required="true"
 							requiredMessage="#{msgs['form.required']}">
 							<f:ajax event="blur" render="nameMessage" />
@@ -34,7 +34,7 @@
 				<h:panelGroup layout="block" styleClass="col-xs-12 col-md-6">
 					<h:panelGroup layout="block" styleClass="form-group">
 						<h:outputLabel for="email" value="#{dashboardMsgs['user.email']}" />
-						<h:inputText id="email" value="#{patientController.patient.email}"
+						<h:inputText id="email" value="#{patientController.selectedPatient.email}"
 							size="20" styleClass="form-control"
 							binding="#{passwordComponent}" required="true"
 							validatorMessage="#{msgs['form.invalidEmail']}"
@@ -54,7 +54,7 @@
 					<h:panelGroup layout="block" styleClass="form-group">
 						<h:outputLabel for="gender" value="#{dashboardMsgs['user.gender']}" />
 						<h:selectOneMenu id="gender" styleClass="form-control"
-							value="#{patientController.patient.gender}" required="true"
+							value="#{patientController.selectedPatient.gender}" required="true"
 							requiredMessage="#{msgs['form.required']}">
 							<f:selectItem itemValue="" itemLabel="" />
 							<f:selectItem itemValue="M" itemLabel="Male" />
@@ -69,7 +69,7 @@
 				<h:panelGroup layout="block" styleClass="col-xs-12 col-md-4">
 					<h:panelGroup layout="block" styleClass="form-group">
 						<h:outputLabel for="phone" value="#{dashboardMsgs['user.phone']}" />
-						<h:inputText id="phone" value="#{patientController.patient.phone}"
+						<h:inputText id="phone" value="#{patientController.selectedPatient.phone}"
 							size="30" required="true" styleClass="form-control field-phone"
 							requiredMessage="#{msgs['form.required']}">
 							<f:ajax event="blur" render="phoneMessage" />
@@ -83,7 +83,7 @@
 					<h:panelGroup layout="block" styleClass="form-group">
 						<h:outputLabel for="birthday" value="#{dashboardMsgs['user.birthday']}" />
 						<h:inputText id="birthday"
-							value="#{patientController.patient.birthday}" size="10"
+							value="#{patientController.selectedPatient.birthday}" size="10"
 							required="true" styleClass="form-control field-date"
 							requiredMessage="#{msgs['form.required']}"
 							converterMessage="#{msgs['form.invalidDate']}">
@@ -99,7 +99,7 @@
 					<h:panelGroup layout="block" styleClass="form-group">
 						<h:outputLabel for="bloodtype" value="#{dashboardMsgs['patient.bloodType']}" />
 						<h:selectOneMenu id="bloodtype" styleClass="form-control"
-							value="#{patientController.patient.bloodType}" required="true"
+							value="#{patientController.selectedPatient.bloodType}" required="true"
 							requiredMessage="#{msgs['form.required']}">
 							<f:selectItem itemValue="" itemLabel="" />
 							<f:selectItem itemValue="A+" itemLabel="A+" />
@@ -121,7 +121,7 @@
 					<h:panelGroup layout="block" styleClass="form-group">
 						<h:outputLabel for="healthInsurance" value="#{dashboardMsgs['patient.healthInsurance']}" />
 						<h:inputText id="healthInsurance"
-							value="#{patientController.patient.healthInsurance}" size="30"
+							value="#{patientController.selectedPatient.healthInsurance}" size="30"
 							required="true" styleClass="form-control"
 							requiredMessage="#{msgs['form.required']}">
 							<f:ajax event="blur" render="healthInsuranceMessage" />
@@ -136,7 +136,7 @@
 						<h:outputLabel for="healthInsuranceNumber"
 							value="#{dashboardMsgs['patient.healthInsuranceNumber']}" />
 						<h:inputText id="healthInsuranceNumber"
-							value="#{patientController.patient.healthInsuranceNumber}"
+							value="#{patientController.selectedPatient.healthInsuranceNumber}"
 							size="30" required="true" styleClass="form-control"
 							requiredMessage="#{msgs['form.required']}">
 							<f:ajax event="blur" render="healthInsuranceNumberMessage" />
@@ -154,7 +154,7 @@
 							</h:panelGroup>
 						</h:outputLabel>
 						<h:inputText id="allergies"
-							value="#{patientController.patient.allergies}"
+							value="#{patientController.selectedPatient.allergies}"
 							styleClass="form-control"
 							converter="#{patientController.str2listConverter}">
 						</h:inputText>
@@ -171,7 +171,7 @@
 							</h:panelGroup>
 						</h:outputLabel>
 						<h:inputText id="specialNeeds"
-							value="#{patientController.patient.specialNeeds}"
+							value="#{patientController.selectedPatient.specialNeeds}"
 							styleClass="form-control"
 							converter="#{patientController.str2listConverter}">
 						</h:inputText>
@@ -185,7 +185,7 @@
 					<h:panelGroup layout="block" styleClass="form-group">
 						<h:outputLabel for="notes" value="#{dashboardMsgs['patient.notes']}" />
 						<h:inputTextarea id="notes"
-							value="#{patientController.patient.notes}"
+							value="#{patientController.selectedPatient.notes}"
 							styleClass="form-control" />
 						<h:message styleClass="error-message" for="notes"
 							id="notesMessage" />

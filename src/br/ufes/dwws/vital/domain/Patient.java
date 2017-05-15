@@ -7,6 +7,8 @@ import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 
+import br.ufes.dwws.util.Role;
+
 @Entity
 public class Patient extends User{
 	
@@ -27,6 +29,10 @@ public class Patient extends User{
 	@ElementCollection(fetch=FetchType.EAGER)
 	@CollectionTable(name = "specialNeeds")
 	private Set<String> specialNeeds;
+	
+	public Patient() {
+		this.setRole(Role.PATIENT);
+	}
 	
 	public Set<String> getAllergies() {
 		return allergies;
