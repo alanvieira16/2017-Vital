@@ -1,7 +1,8 @@
 package br.ufes.dwws.vital.domain;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
-import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 
 import br.ufes.inf.nemo.jbutler.ejb.persistence.PersistentObjectSupport;
 
@@ -13,10 +14,10 @@ public class Prescription extends PersistentObjectSupport {
 	private String dosage;
 	private String duration;
 	
-	@ManyToOne
+	@OneToOne
 	private Treatment treatment;
 	
-	@ManyToOne
+	@OneToOne(mappedBy = "prescription", cascade = CascadeType.ALL)
 	private Medicine medicine;
 
 	public String getDosage() {

@@ -11,9 +11,11 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import javax.servlet.http.HttpServletRequest;
 
+import br.ufes.dwws.vital.dashboard.diagnosis.ManageDiagnosisService;
 import br.ufes.dwws.vital.dashboard.doctor.ListDoctorsService;
 import br.ufes.dwws.vital.dashboard.patient.ManagePatientsService;
 import br.ufes.dwws.vital.domain.Appointment;
+import br.ufes.dwws.vital.domain.Diagnosis;
 import br.ufes.dwws.vital.domain.Doctor;
 import br.ufes.dwws.vital.login.SessionController;
 import br.ufes.dwws.vital.persistence.DoctorDAO;
@@ -29,7 +31,12 @@ public class AppointmentController extends CrudController<Appointment> implement
 
 	@EJB
 	private ManageAppointmentsService manageAppointmentsService;
+<<<<<<< HEAD
 
+=======
+	@EJB
+	private ManageDiagnosisService manageDiagnosisService;
+>>>>>>> origin/master
 	@EJB
 	private ListDoctorsService listDoctorsService;
 
@@ -46,6 +53,11 @@ public class AppointmentController extends CrudController<Appointment> implement
 
 	private List<Appointment> appointments;
 	private List<Doctor> doctors;
+<<<<<<< HEAD
+=======
+	private List<Diagnosis> diagnosis;
+	private Appointment appointment = new Appointment();
+>>>>>>> origin/master
 	
 	private Appointment newAppointment = new Appointment();
 	private Appointment selectedAppointment;
@@ -82,7 +94,12 @@ public class AppointmentController extends CrudController<Appointment> implement
 	}
 
 	public String details(String id) {
+<<<<<<< HEAD
 		selectedAppointment = manageAppointmentsService.retrieve(Long.parseLong(id));
+=======
+		appointment = manageAppointmentsService.retrieve(Long.parseLong(id));
+		diagnosis = manageDiagnosisService.list(appointment);
+>>>>>>> origin/master
 		return "/appointment/details?faces-redirect=true";
 	}
 
@@ -188,4 +205,23 @@ public class AppointmentController extends CrudController<Appointment> implement
 		this.sessionController = sessionController;
 	}
 
+<<<<<<< HEAD
+=======
+	public List<Diagnosis> getDiagnosis() {
+		return diagnosis;
+	}
+
+	public void setDiagnosis(List<Diagnosis> diagnosis) {
+		this.diagnosis = diagnosis;
+	}
+
+	public ManageDiagnosisService getManageDiagnosisService() {
+		return manageDiagnosisService;
+	}
+
+	public void setManageDiagnosisService(ManageDiagnosisService manageDiagnosisService) {
+		this.manageDiagnosisService = manageDiagnosisService;
+	}
+	
+>>>>>>> origin/master
 }
