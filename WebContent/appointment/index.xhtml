@@ -11,7 +11,7 @@
 
 	<ui:define name="content">
 
-		<h:dataTable value="#{appointmentController.appointmentList}"
+		<h:dataTable value="#{appointmentController.appointments}"
 			var="appointment" styleClass="table table-stripped table-bordered">
 
 			<h:column rendered="#{sessionController.currentUser.role == 'doctor'}">

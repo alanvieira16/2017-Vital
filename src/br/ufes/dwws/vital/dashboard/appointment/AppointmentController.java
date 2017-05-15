@@ -44,7 +44,7 @@ public class AppointmentController extends CrudController<Appointment> implement
 
 	private PersistentObjectConverterFromId<Doctor> doctorConverter;
 
-	private List<Appointment> appointmentList;
+	private List<Appointment> appointments;
 	private List<Doctor> doctors;
 	
 	private Appointment newAppointment = new Appointment();
@@ -54,7 +54,7 @@ public class AppointmentController extends CrudController<Appointment> implement
 	public void init(DoctorDAO doctorDAO) {
 		doctorConverter = new PersistentObjectConverterFromId<>(doctorDAO);
 		doctors = listDoctorsService.listDoctors();
-		appointmentList = manageAppointmentsService.list(sessionController.getCurrentUser());
+		appointments = manageAppointmentsService.list(sessionController.getCurrentUser());
 	}
 
 	public String schedule() {
@@ -78,7 +78,7 @@ public class AppointmentController extends CrudController<Appointment> implement
 	}
 	
 	private void refreshListAppointment(){
-		appointmentList = manageAppointmentsService.list(sessionController.getCurrentUser());
+		appointments = manageAppointmentsService.list(sessionController.getCurrentUser());
 	}
 
 	public String details(String id) {
@@ -139,12 +139,12 @@ public class AppointmentController extends CrudController<Appointment> implement
 	}
 
 
-	public List<Appointment> getAppointmentList() {
-		return appointmentList;
+	public List<Appointment> getAppointments() {
+		return appointments;
 	}
 
-	public void setAppointmentList(List<Appointment> appointmentList) {
-		this.appointmentList = appointmentList;
+	public void setAppointments(List<Appointment> appointments) {
+		this.appointments = appointments;
 	}
 
 	public Appointment getSelectedAppointment() {

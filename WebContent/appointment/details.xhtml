@@ -27,6 +27,60 @@
 				<f:convertDateTime pattern="dd/MM/yyyy HH:mm"/>
 			</h:outputText>
 		</h:panelGroup>
+		
+		<hr />
+
+		<ui:repeat var="diagnosis" value="#{appointmentController.diagnosis}">
+
+			<h:panelGroup styleClass="well" layout="block">
+				<h:panelGroup layout="block" styleClass="mb-5">
+					<h:outputLabel value="#{dashboardMsgs['pathology.name']}:" />
+					<h:outputText value="#{diagnosis.pathology.name}" />
+				</h:panelGroup>
+				<h:panelGroup layout="block" styleClass="mb-5">
+					<h:outputLabel value="#{dashboardMsgs['pathology.description']}:" />
+					<h:outputText value="#{diagnosis.pathology.description}" />
+				</h:panelGroup>
+			</h:panelGroup>
+
+			<h:panelGroup styleClass="row" layout="block">
+				<h:panelGroup styleClass="col-xs-6" layout="block">
+					<h:panelGroup layout="block" styleClass="mb-5">
+						<h:outputLabel value="#{dashboardMsgs['medicine.name']}:" />
+						<h:outputText
+							value="#{diagnosis.treatment.prescription.medicine.name}" />
+					</h:panelGroup>
+					<h:panelGroup layout="block" styleClass="mb-5">
+						<h:outputLabel
+							value="#{dashboardMsgs['medicine.activeCompound']}:" />
+						<h:outputText
+							value="#{diagnosis.treatment.prescription.medicine.activeCompound}" />
+					</h:panelGroup>
+					<h:panelGroup layout="block" styleClass="mb-5">
+						<h:outputLabel value="#{dashboardMsgs['medicine.use']}:" />
+						<h:outputText
+							value="#{diagnosis.treatment.prescription.medicine.utilization}" />
+					</h:panelGroup>
+				</h:panelGroup>
+
+				<h:panelGroup styleClass="col-xs-6" layout="block">
+					<h:panelGroup layout="block" styleClass="mb-5">
+						<h:outputLabel value="#{dashboardMsgs['prescription.dosage']}:" />
+						<h:outputText value="#{diagnosis.treatment.prescription.dosage}" />
+					</h:panelGroup>
+					<h:panelGroup layout="block" styleClass="mb-5">
+						<h:outputLabel value="#{dashboardMsgs['prescription.duration']}:" />
+						<h:outputText value="#{diagnosis.treatment.prescription.duration}" />
+					</h:panelGroup>
+				</h:panelGroup>
+			</h:panelGroup>
+
+			<h:panelGroup layout="block" styleClass="mb-5">
+				<h:outputLabel value="#{dashboardMsgs['treatment.description']}:" />
+				<h:outputText value="#{diagnosis.treatment.description}" />
+			</h:panelGroup>
+
+		</ui:repeat>
 
 
 	</ui:define>
