@@ -6,6 +6,7 @@ import java.util.ResourceBundle;
 
 import javax.ejb.EJB;
 import javax.enterprise.context.SessionScoped;
+import javax.enterprise.event.Observes;
 import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -13,7 +14,9 @@ import javax.servlet.http.HttpServletRequest;
 
 import br.ufes.dwws.vital.dashboard.diagnosis.ManageDiagnosisService;
 import br.ufes.dwws.vital.dashboard.doctor.ListDoctorsService;
+import br.ufes.dwws.vital.dashboard.patient.DeleteEvent;
 import br.ufes.dwws.vital.dashboard.patient.ManagePatientsService;
+import br.ufes.dwws.vital.dashboard.patient.UpdateEvent;
 import br.ufes.dwws.vital.domain.Appointment;
 import br.ufes.dwws.vital.domain.Diagnosis;
 import br.ufes.dwws.vital.domain.Doctor;
@@ -82,7 +85,7 @@ public class AppointmentController extends CrudController<Appointment> implement
 		}
 	}
 	
-	private void refreshListAppointment(){
+	public void refreshListAppointment(){
 		appointments = manageAppointmentsService.list(sessionController.getCurrentUser());
 	}
 
@@ -90,6 +93,14 @@ public class AppointmentController extends CrudController<Appointment> implement
 		selectedAppointment = manageAppointmentsService.retrieve(Long.parseLong(id));
 		diagnosis = manageDiagnosisService.list(selectedAppointment);
 		return "/appointment/details?faces-redirect=true";
+	}
+	
+	public void onDeleteUser(@Observes DeleteEvent deleteEvent) {
+		refreshListAppointment();
+	}
+	
+	public void onUpdateUser(@Observes UpdateEvent updateEvent) {
+		refreshListAppointment();
 	}
 
 	public String update() {

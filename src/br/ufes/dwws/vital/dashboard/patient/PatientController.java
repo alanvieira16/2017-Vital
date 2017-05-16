@@ -8,6 +8,8 @@ import java.util.ResourceBundle;
 
 import javax.ejb.EJB;
 import javax.enterprise.context.SessionScoped;
+import javax.enterprise.event.Event;
+import javax.enterprise.inject.Any;
 import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -16,7 +18,9 @@ import javax.servlet.http.HttpServletRequest;
 import br.ufes.dwws.util.Mail;
 import br.ufes.dwws.util.Role;
 import br.ufes.dwws.vital.converters.StringToSetConverter;
+import br.ufes.dwws.vital.dashboard.appointment.AppointmentController;
 import br.ufes.dwws.vital.domain.Patient;
+import br.ufes.dwws.vital.login.LoginEvent;
 import br.ufes.dwws.vital.login.SessionController;
 import br.ufes.inf.nemo.jbutler.TextUtils;
 import br.ufes.inf.nemo.jbutler.ejb.application.CrudService;
@@ -33,6 +37,14 @@ public class PatientController extends CrudController<Patient> implements Serial
 
 	@Inject
 	private SessionController sessionController;
+	
+	@Inject
+	@Any
+	private Event<DeleteEvent> deleteEvent;
+	
+	@Inject
+	@Any
+	private Event<UpdateEvent> updateEvent;
 	
 	@Inject
 	private HttpServletRequest request;
@@ -100,6 +112,7 @@ public class PatientController extends CrudController<Patient> implements Serial
 	public String update(){
 		managePatientsService.getDAO().merge(selectedPatient);
 		refreshListPatients();
+		updateEvent.fire(new UpdateEvent());
 		return "/patient/index?faces-redirect=true";
 	}
 
@@ -113,6 +126,7 @@ public class PatientController extends CrudController<Patient> implements Serial
 		selectedPatient = managePatientsService.retrieve(Long.parseLong(id));
 		managePatientsService.delete(selectedPatient);
 		refreshListPatients();
+		deleteEvent.fire(new DeleteEvent());
 		return "/patient/index?faces-redirect=true";
 	}
 	
