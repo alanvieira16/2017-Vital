@@ -18,7 +18,7 @@ public class Diagnosis extends PersistentObjectSupport {
 	@ManyToOne
 	private Pathology pathology;
 
-	@OneToOne(cascade = CascadeType.ALL, mappedBy = "diagnosis")
+	@OneToOne(cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "diagnosis")
 	private Treatment treatment;
 
 	public Appointment getAppointment() {

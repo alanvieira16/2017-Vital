@@ -13,7 +13,6 @@ import javax.faces.validator.Validator;
 import javax.faces.validator.ValidatorException;
 
 import br.ufes.dwws.vital.persistence.UserDAO;
-import br.ufes.dwws.vital.persistence.UserJPADAO;
 import br.ufes.inf.nemo.jbutler.ejb.persistence.exceptions.MultiplePersistentObjectsFoundException;
 import br.ufes.inf.nemo.jbutler.ejb.persistence.exceptions.PersistentObjectNotFoundException;
 

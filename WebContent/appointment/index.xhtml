@@ -45,7 +45,8 @@
 						</h:commandLink>
 						
 						<h:commandLink
-							action="#{diagnosisController.create(appointment)}">
+							action="#{diagnosisController.create(appointment)}"
+							rendered="#{sessionController.currentUser.role == 'doctor'}">
 							<i data-toggle="tooltip"
 								title="#{dashboardMsgs['actions.addTreatment']}"
 								class="fa fa-medkit" />

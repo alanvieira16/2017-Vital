@@ -17,7 +17,7 @@ public class Prescription extends PersistentObjectSupport {
 	@OneToOne
 	private Treatment treatment;
 	
-	@OneToOne(mappedBy = "prescription", cascade = CascadeType.ALL)
+	@OneToOne(mappedBy = "prescription", cascade = CascadeType.ALL, orphanRemoval = true)
 	private Medicine medicine;
 
 	public String getDosage() {

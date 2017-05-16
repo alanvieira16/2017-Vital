@@ -2,10 +2,12 @@ package br.ufes.dwws.vital.domain;
 
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.CollectionTable;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.OneToMany;
 
 import br.ufes.dwws.util.Role;
 
@@ -21,6 +23,9 @@ public class Patient extends User{
 	private String healthInsurance;
 	
 	private String healthInsuranceNumber;
+	
+	@OneToMany(mappedBy = "patient", orphanRemoval = true, cascade = CascadeType.ALL)
+	private Set<Appointment> appointments;
 
 	@ElementCollection(fetch=FetchType.EAGER)
 	@CollectionTable(name = "allergies")

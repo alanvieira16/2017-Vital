@@ -46,7 +46,21 @@ Instructions on how to deploy from scratch are listed below. If you need detaile
     </authentication>
 </security-domain>
 ```
-7. Set `vital` to be the default security domain in WildFly's `standalone.xml` file:
+7. Configure the mail server in WildFly's `standalone.xml` file. Inside the
+`<subsystem xmlns="urn:jboss:domain:mail:2.0">` tag, add:
+```XML
+<mail-session name="Vital" debug="true" jndi-name="java:/jboss/mail/Vital" from="your@email.com">
+	<smtp-server outbound-socket-binding-ref="mail-smtp" ssl="true" username="your@email.com" password="yourpassword"/>
+</mail-session>
+```
+Also, inside the `socket-binding-group` tag, **replace** the default `outbound-socket-binding` by:
+```XML
+<outbound-socket-binding name="mail-smtp" source-port="0" fixed-source-port="false">
+	<remote-destination host="smtp.gmail.com" port="465"/>
+</outbound-socket-binding>
+```
+
+8. Set `vital` to be the default security domain in WildFly's `standalone.xml` file:
 ```XML
  <default-security-domain value="vital"/>
 ```
