@@ -13,7 +13,7 @@ import javax.inject.Named;
 import javax.servlet.http.HttpServletRequest;
 
 import br.ufes.dwws.vital.dashboard.diagnosis.ManageDiagnosisService;
-import br.ufes.dwws.vital.dashboard.doctor.ListDoctorsService;
+import br.ufes.dwws.vital.dashboard.doctor.ManageDoctorsService;
 import br.ufes.dwws.vital.dashboard.patient.DeleteEvent;
 import br.ufes.dwws.vital.dashboard.patient.ManagePatientsService;
 import br.ufes.dwws.vital.dashboard.patient.UpdateEvent;
@@ -39,7 +39,7 @@ public class AppointmentController extends CrudController<Appointment> implement
 	private ManageDiagnosisService manageDiagnosisService;
 
 	@EJB
-	private ListDoctorsService listDoctorsService;
+	private ManageDoctorsService manageDoctorsService;
 
 	@EJB
 	private ManagePatientsService managePatientsService;
@@ -61,7 +61,7 @@ public class AppointmentController extends CrudController<Appointment> implement
 	@Inject
 	public void init(DoctorDAO doctorDAO) {
 		doctorConverter = new PersistentObjectConverterFromId<>(doctorDAO);
-		doctors = listDoctorsService.listDoctors();
+		doctors = manageDoctorsService.list();
 		appointments = manageAppointmentsService.list(sessionController.getCurrentUser());
 	}
 
