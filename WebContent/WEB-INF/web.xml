@@ -1,80 +1,61 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xmlns="http://xmlns.jcp.org/xml/ns/javaee"
-	xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd"
-	id="WebApp_ID" version="3.1">
-	<display-name>Vital</display-name>
-	<welcome-file-list>
-		<welcome-file>index.html</welcome-file>
-	</welcome-file-list>
-	<servlet>
-		<servlet-name>Faces Servlet</servlet-name>
-		<servlet-class>javax.faces.webapp.FacesServlet</servlet-class>
-		<load-on-startup>1</load-on-startup>
-	</servlet>
-	<servlet-mapping>
-		<servlet-name>Faces Servlet</servlet-name>
-		<url-pattern>*.faces</url-pattern>
-	</servlet-mapping>
-	<context-param>
-		<param-name>primefaces.THEME</param-name>
-		<param-value>bootstrap</param-value>
-	</context-param>
-	<context-param>
-		<param-name>javax.faces.DATETIMECONVERTER_DEFAULT_TIMEZONE_IS_SYSTEM_TIMEZONE</param-name>
-		<param-value>true</param-value>
-	</context-param>
-	
-	 <!-- Protected area definition -->
-	<security-constraint>
-	
-		<web-resource-collection>
-	  		<web-resource-name>Restricted Area - Doctor Only</web-resource-name>
-	  		<url-pattern>/patient/*</url-pattern>
-	 	</web-resource-collection>
-	 	
-	 	<web-resource-collection>
-  			<web-resource-name>Restricted Area - Patient and Doctor</web-resource-name>
-  			<url-pattern>/appointment/edit.faces</url-pattern>
-		</web-resource-collection>
-	 
-	 	<auth-constraint>
-	  		<role-name>doctor</role-name>
-	 	</auth-constraint>
-	 	
-	</security-constraint>
-	
-		
-	<security-constraint>
-		
- 		<web-resource-collection>
-  			<web-resource-name>Restricted Area - Patient and Doctor</web-resource-name>
-  			<url-pattern>/appointment/new.faces</url-pattern>
-		</web-resource-collection>
-		
-		<web-resource-collection>
-  			<web-resource-name>Restricted Area - Patient and Doctor</web-resource-name>
-  			<url-pattern>/appointment/details.faces</url-pattern>
-		</web-resource-collection>
-		
-		<web-resource-collection>
-  			<web-resource-name>Restricted Area - Patient and Doctor</web-resource-name>
-  			<url-pattern>/diagnosis/*</url-pattern>
-		</web-resource-collection>
-		 
-		<auth-constraint>
-		 	<role-name>doctor</role-name>
-		 	<role-name>patient</role-name>
-		</auth-constraint>
-		
-	</security-constraint>
-	
-	<security-role>
-	 	<role-name>doctor</role-name>
-	</security-role>
-	
-	<security-role>
-	 	<role-name>patient</role-name>
-	</security-role>
-
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://xmlns.jcp.org/xml/ns/javaee" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd" id="WebApp_ID" version="3.1">
+  <display-name>Vital</display-name>
+  <welcome-file-list>
+    <welcome-file>index.html</welcome-file>
+  </welcome-file-list>
+  <servlet>
+    <servlet-name>Faces Servlet</servlet-name>
+    <servlet-class>javax.faces.webapp.FacesServlet</servlet-class>
+    <load-on-startup>1</load-on-startup>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>Faces Servlet</servlet-name>
+    <url-pattern>*.faces</url-pattern>
+  </servlet-mapping>
+  <context-param>
+    <param-name>primefaces.THEME</param-name>
+    <param-value>bootstrap</param-value>
+  </context-param>
+  <context-param>
+    <param-name>javax.faces.DATETIMECONVERTER_DEFAULT_TIMEZONE_IS_SYSTEM_TIMEZONE</param-name>
+    <param-value>true</param-value>
+  </context-param>
+  <security-constraint>
+    <web-resource-collection>
+      <web-resource-name>Restricted Area - Doctor Only</web-resource-name>
+      <url-pattern>/patient/*</url-pattern>
+    </web-resource-collection>
+    <web-resource-collection>
+      <web-resource-name>Restricted Area - Patient and Doctor</web-resource-name>
+      <url-pattern>/appointment/edit.faces</url-pattern>
+    </web-resource-collection>
+    <auth-constraint>
+      <role-name>doctor</role-name>
+    </auth-constraint>
+  </security-constraint>
+  <security-constraint>
+    <web-resource-collection>
+      <web-resource-name>Restricted Area - Patient and Doctor</web-resource-name>
+      <url-pattern>/appointment/new.faces</url-pattern>
+    </web-resource-collection>
+    <web-resource-collection>
+      <web-resource-name>Restricted Area - Patient and Doctor</web-resource-name>
+      <url-pattern>/appointment/details.faces</url-pattern>
+    </web-resource-collection>
+    <web-resource-collection>
+      <web-resource-name>Restricted Area - Patient and Doctor</web-resource-name>
+      <url-pattern>/diagnosis/*</url-pattern>
+    </web-resource-collection>
+    <auth-constraint>
+      <role-name>doctor</role-name>
+      <role-name>patient</role-name>
+    </auth-constraint>
+  </security-constraint>
+  <security-role>
+    <role-name>doctor</role-name>
+  </security-role>
+  <security-role>
+    <role-name>patient</role-name>
+  </security-role>
 </web-app>
