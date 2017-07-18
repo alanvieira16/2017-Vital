@@ -40,11 +40,18 @@ public class ListPathologiesService implements Serializable {
 		
 		List<Pathology> pathologiesList = new ArrayList<Pathology>();
 		
-		String query = "PREFIX dbpedia-owl: <http://dbpedia.org/ontology/>"
-				+ "PREFIX dbpprop: <http://dbpedia.org/property/>"
-				+ "PREFIX rdfs:  <http://www.w3.org/2000/01/rdf-schema#>" + "SELECT ?name ?desc WHERE {"
-				+ "?x a dbpedia-owl:Disease;" + "rdfs:label ?name;" + "rdfs:comment ?desc."
-				+ "FILTER(LANG(?name) = 'pt' && LANG(?desc) = 'pt')" + "} LIMIT 10";
+		String query = 	"PREFIX dbpedia-owl: <http://dbpedia.org/ontology/>\n" +
+						"PREFIX dbpprop: <http://dbpedia.org/property/>\n" +
+						"PREFIX rdfs:  <http://www.w3.org/2000/01/rdf-schema#>\n" + 
+						"SELECT ?name ?desc WHERE {\n" +
+						"?x a dbpedia-owl:Disease;\n" + 
+						"rdfs:label ?_name;\n" + 
+						"rdfs:comment ?_desc.\n" +
+						"FILTER(LANG(?_name) = 'pt' && LANG(?_desc) = 'pt')\n" + 
+						"BIND (STR(?_desc)  AS ?desc)\n" + 
+						"BIND (STR(?_name)  AS ?name)}\n" + 
+						"ORDER BY ASC(?name)\n" +
+						"LIMIT 1000";
 
 		QueryExecution queryExecution = QueryExecutionFactory.sparqlService("http://dbpedia.org/sparql", query);
 
@@ -53,10 +60,9 @@ public class ListPathologiesService implements Serializable {
 		while (results.hasNext()) {
 			QuerySolution querySolution = results.next();
 			Pathology pathology = new Pathology();
-			pathology.setName(querySolution.get("name").toString().replaceAll("@pt", ""));
+			pathology.setName(querySolution.get("name").toString());
 			String desc = querySolution.get("desc").toString();
-			pathology.setDescription(desc.substring(0, desc.length() > 254 ? 254 : desc.length()));
-			//pathology.setId((long) pathology.getName().hashCode());
+			pathology.setDescription(desc);
 			pathologiesList.add(pathology);
 		}
 

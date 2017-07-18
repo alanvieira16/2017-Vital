@@ -50,6 +50,13 @@ public class RegistrationController implements Serializable {
 
 	@Inject
 	public void init(HospitalDAO hospitalDAO) {
+		
+		if(hospitalDAO.retrieveCount() == 0){
+			for(Hospital hospital : registrationService.fetchHospitals())
+				hospitalDAO.save(hospital);
+			
+		}
+		
 		hospitals = registrationService.listHospitals();
 		hospitalConverter = new PersistentObjectConverterFromId<>(hospitalDAO);
 	}
