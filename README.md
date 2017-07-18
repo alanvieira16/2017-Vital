@@ -66,7 +66,7 @@ Also, inside the `socket-binding-group` tag, **replace** the default `outbound-s
 ```
 
 ## Built With
-* [Java EE](http://www.oracle.com/technetwork/java/javaee/overview/index.html) - Standard Java EE stack of frameworks (JSF, CDI, JPA, EJB 
+* [Java EE](http://www.oracle.com/technetwork/java/javaee/overview/index.html) - Standard Java EE stack of frameworks (JSF, CDI, JPA, EJB) 
 * [JButler](https://github.com/dwws-ufes/jbutler) - Web framework useful for projects that use the standard Java EE stack
 * [Maven](https://maven.apache.org/) - Dependency Management
 

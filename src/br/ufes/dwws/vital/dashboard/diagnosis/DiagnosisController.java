@@ -2,10 +2,14 @@ package br.ufes.dwws.vital.dashboard.diagnosis;
 
 import java.util.List;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javax.ejb.EJB;
 import javax.enterprise.context.SessionScoped;
+import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
+import javax.faces.convert.Converter;
 import javax.inject.Inject;
 import javax.inject.Named;
 
@@ -19,6 +23,7 @@ import br.ufes.dwws.vital.domain.Medicine;
 import br.ufes.dwws.vital.domain.Pathology;
 import br.ufes.dwws.vital.domain.Prescription;
 import br.ufes.dwws.vital.domain.Treatment;
+import br.ufes.dwws.vital.login.SessionController;
 import br.ufes.dwws.vital.persistence.PathologyDAO;
 import br.ufes.inf.nemo.jbutler.ejb.application.CrudService;
 import br.ufes.inf.nemo.jbutler.ejb.controller.CrudController;
@@ -26,10 +31,12 @@ import br.ufes.inf.nemo.jbutler.ejb.controller.PersistentObjectConverterFromId;
 
 @Named
 @SessionScoped
-public class DiagnosisController extends CrudController<Diagnosis>{
+public class DiagnosisController extends CrudController<Diagnosis> {
 
 	private static final long serialVersionUID = 1L;
-	
+
+	private static final Logger logger = Logger.getLogger(DiagnosisController.class.getCanonicalName());
+
 	@EJB
 	private ManageDiagnosisService manageDiagnosisService;
 	@EJB
@@ -38,43 +45,53 @@ public class DiagnosisController extends CrudController<Diagnosis>{
 	private ManagePrescriptionsService managePrescriptionsService;
 	@EJB
 	private ManageMedicinesService manageMedicinesService;
-	
+
 	@EJB
 	private ListPathologiesService listPathologiesService;
-	
+
 	private Appointment appointment;
 	private Diagnosis diagnosis = new Diagnosis();
 	private Treatment treatment = new Treatment();
 	private Prescription prescription = new Prescription();
 	private Medicine medicine = new Medicine();
 	private List<Pathology> pathologies;
-	
 
 	private PersistentObjectConverterFromId<Pathology> pathologyConverter;
-	
-	
+
 	@Inject
 	public void init(PathologyDAO pathologyDAO) {
-		pathologyConverter = new PersistentObjectConverterFromId<>(pathologyDAO);
+
+		//get pathologies from network
+		if (pathologyDAO.retrieveCount() == 0) {
+			
+			for (Pathology p : listPathologiesService.fetchDisease()) 
+				pathologyDAO.save(p);
+			
+		} 
+		
 		pathologies = listPathologiesService.listPathologies();
+		pathologyConverter = new PersistentObjectConverterFromId<Pathology>(pathologyDAO);
 	}
-	
+
 	@Override
 	protected CrudService<Diagnosis> getCrudService() {
 		return manageDiagnosisService;
 	}
 
 	@Override
-	protected void initFilters() {}
-	
-	public String create(Appointment appointment){
+	protected void initFilters() {
+	}
+
+	public String create(Appointment appointment) {
 		this.appointment = appointment;
 		return "/diagnosis/new?faces-redirect=true";
 	}
-	
+
 	public String diagnose() {
-		ResourceBundle bundle = FacesContext.getCurrentInstance() .getApplication().getResourceBundle(FacesContext.getCurrentInstance(), "msgs"); 
+		ResourceBundle bundle = FacesContext.getCurrentInstance().getApplication()
+				.getResourceBundle(FacesContext.getCurrentInstance(), "msgs");
 		try {
+			
 			medicine.setPrescription(prescription);
 			prescription.setTreatment(treatment);
 			treatment.setDiagnosis(diagnosis);
@@ -84,12 +101,23 @@ public class DiagnosisController extends CrudController<Diagnosis>{
 			managePrescriptionsService.create(prescription);
 			manageMedicinesService.create(medicine);
 			FacesContext.getCurrentInstance().getExternalContext().getFlash().put("alertType", "success");
-			FacesContext.getCurrentInstance().getExternalContext().getFlash().put("alertMessage", bundle.getString("alert.diagnosisCreated"));
+			FacesContext.getCurrentInstance().getExternalContext().getFlash().put("alertMessage",
+					bundle.getString("alert.diagnosisCreated"));
+			
+
+			/* created new instances for news diagnosis */
+			diagnosis = new Diagnosis();
+			treatment = new Treatment();
+			prescription = new Prescription();
+			medicine = new Medicine();
+		
 			return "/appointment/index?faces-redirect=true";
+			
 		} catch (Exception e) {
 			e.printStackTrace();
 			FacesContext.getCurrentInstance().getExternalContext().getFlash().put("alertType", "danger");
-			FacesContext.getCurrentInstance().getExternalContext().getFlash().put("alertMessage", bundle.getString("alert.error"));
+			FacesContext.getCurrentInstance().getExternalContext().getFlash().put("alertMessage",
+					bundle.getString("alert.error"));
 			return "/appointment/details?faces-redirect=true";
 		}
 	}
@@ -165,7 +193,5 @@ public class DiagnosisController extends CrudController<Diagnosis>{
 	public void setMedicine(Medicine medicine) {
 		this.medicine = medicine;
 	}
-
-
 
 }

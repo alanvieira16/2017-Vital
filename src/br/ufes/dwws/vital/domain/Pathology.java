@@ -8,17 +8,16 @@ import javax.persistence.OneToMany;
 import br.ufes.inf.nemo.jbutler.ejb.persistence.PersistentObjectSupport;
 
 @Entity
-public class Pathology extends PersistentObjectSupport{
+public class Pathology extends PersistentObjectSupport {
 
 	private static final long serialVersionUID = 1L;
 
 	private String name;
-	
+
 	private String description;
-	
+
 	@OneToMany(mappedBy = "pathology")
 	private Set<Diagnosis> diagnostics;
-
 
 	public String getName() {
 		return name;
@@ -43,6 +42,5 @@ public class Pathology extends PersistentObjectSupport{
 	public void setDiagnostics(Set<Diagnosis> diagnostics) {
 		this.diagnostics = diagnostics;
 	}
-	
-	
+
 }
