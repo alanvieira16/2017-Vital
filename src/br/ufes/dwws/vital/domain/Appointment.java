@@ -9,6 +9,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.validation.constraints.NotNull;
 
 import br.ufes.inf.nemo.jbutler.ejb.persistence.PersistentObjectSupport;
 
@@ -18,12 +19,15 @@ public class Appointment extends PersistentObjectSupport {
 	private static final long serialVersionUID = 1L;
 
 	@Temporal(TemporalType.TIMESTAMP)
+	@NotNull
 	private Date datetime;
 	
 	@ManyToOne
+	@NotNull
 	private Patient patient;
 	
 	@ManyToOne
+	@NotNull
 	private Doctor doctor;
 	
 	@OneToMany(mappedBy = "appointment", orphanRemoval = true, cascade = CascadeType.ALL)

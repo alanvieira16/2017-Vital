@@ -3,6 +3,7 @@ package br.ufes.dwws.vital.domain;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.OneToOne;
+import javax.validation.constraints.NotNull;
 
 import br.ufes.inf.nemo.jbutler.ejb.persistence.PersistentObjectSupport;
 
@@ -10,8 +11,10 @@ import br.ufes.inf.nemo.jbutler.ejb.persistence.PersistentObjectSupport;
 public class Prescription extends PersistentObjectSupport {
 
 	private static final long serialVersionUID = 1L;
-	
+
+	@NotNull
 	private String dosage;
+	@NotNull
 	private String duration;
 	
 	@OneToOne

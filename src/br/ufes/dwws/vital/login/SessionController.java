@@ -15,12 +15,6 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import javax.servlet.http.HttpServletRequest;
 
-import org.apache.jena.query.QueryExecution;
-import org.apache.jena.query.QueryExecutionFactory;
-import org.apache.jena.query.QuerySolution;
-import org.apache.jena.query.ResultSet;
-import org.apache.jena.rdf.model.Literal;
-
 import br.ufes.dwws.vital.domain.User;
 import br.ufes.dwws.vital.login.LoginFailedException.LoginFailedReason;
 import br.ufes.inf.nemo.jbutler.TextUtils;

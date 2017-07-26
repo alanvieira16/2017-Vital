@@ -2,8 +2,6 @@ package servlets;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -32,8 +30,6 @@ public class ListDiagnosisInRdfServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	private static final Logger logger = Logger.getLogger(ListDiagnosisInRdfServlet.class.getCanonicalName());
-
-	private static final DateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
 
 	@EJB
 	private DiagnosisDAO diagnosisDAO;

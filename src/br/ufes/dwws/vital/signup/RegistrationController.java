@@ -54,7 +54,6 @@ public class RegistrationController implements Serializable {
 		if(hospitalDAO.retrieveCount() == 0){
 			for(Hospital hospital : registrationService.fetchHospitals())
 				hospitalDAO.save(hospital);
-			
 		}
 		
 		hospitals = registrationService.listHospitals();

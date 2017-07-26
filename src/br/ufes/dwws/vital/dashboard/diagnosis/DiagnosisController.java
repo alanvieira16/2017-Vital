@@ -2,19 +2,15 @@ package br.ufes.dwws.vital.dashboard.diagnosis;
 
 import java.util.List;
 import java.util.ResourceBundle;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 import javax.ejb.EJB;
 import javax.enterprise.context.SessionScoped;
-import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
-import javax.faces.convert.Converter;
 import javax.inject.Inject;
 import javax.inject.Named;
 
 import br.ufes.dwws.vital.dashboard.medicine.ManageMedicinesService;
-import br.ufes.dwws.vital.dashboard.pathology.ListPathologiesService;
+import br.ufes.dwws.vital.dashboard.pathology.ManagePathologiesService;
 import br.ufes.dwws.vital.dashboard.prescription.ManagePrescriptionsService;
 import br.ufes.dwws.vital.dashboard.treatment.ManageTreatmentsService;
 import br.ufes.dwws.vital.domain.Appointment;
@@ -23,7 +19,6 @@ import br.ufes.dwws.vital.domain.Medicine;
 import br.ufes.dwws.vital.domain.Pathology;
 import br.ufes.dwws.vital.domain.Prescription;
 import br.ufes.dwws.vital.domain.Treatment;
-import br.ufes.dwws.vital.login.SessionController;
 import br.ufes.dwws.vital.persistence.PathologyDAO;
 import br.ufes.inf.nemo.jbutler.ejb.application.CrudService;
 import br.ufes.inf.nemo.jbutler.ejb.controller.CrudController;
@@ -35,8 +30,6 @@ public class DiagnosisController extends CrudController<Diagnosis> {
 
 	private static final long serialVersionUID = 1L;
 
-	private static final Logger logger = Logger.getLogger(DiagnosisController.class.getCanonicalName());
-
 	@EJB
 	private ManageDiagnosisService manageDiagnosisService;
 	@EJB
@@ -45,9 +38,8 @@ public class DiagnosisController extends CrudController<Diagnosis> {
 	private ManagePrescriptionsService managePrescriptionsService;
 	@EJB
 	private ManageMedicinesService manageMedicinesService;
-
 	@EJB
-	private ListPathologiesService listPathologiesService;
+	private ManagePathologiesService managePathologiesService;
 
 	private Appointment appointment;
 	private Diagnosis diagnosis = new Diagnosis();
@@ -64,12 +56,12 @@ public class DiagnosisController extends CrudController<Diagnosis> {
 		//get pathologies from network
 		if (pathologyDAO.retrieveCount() == 0) {
 			
-			for (Pathology p : listPathologiesService.fetchDisease()) 
+			for (Pathology p : managePathologiesService.fetchDisease()) 
 				pathologyDAO.save(p);
 			
 		} 
 		
-		pathologies = listPathologiesService.listPathologies();
+		pathologies = managePathologiesService.list();
 		pathologyConverter = new PersistentObjectConverterFromId<Pathology>(pathologyDAO);
 	}
 

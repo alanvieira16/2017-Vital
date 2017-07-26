@@ -5,6 +5,7 @@ import java.util.Set;
 import javax.persistence.Entity;
 import javax.persistence.Lob;
 import javax.persistence.OneToMany;
+import javax.validation.constraints.NotNull;
 
 import br.ufes.inf.nemo.jbutler.ejb.persistence.PersistentObjectSupport;
 
@@ -13,9 +14,11 @@ public class Pathology extends PersistentObjectSupport {
 
 	private static final long serialVersionUID = 1L;
 
+	@NotNull
 	private String name;
 
 	@Lob
+	@NotNull
 	private String description;
 
 	@OneToMany(mappedBy = "pathology")

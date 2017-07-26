@@ -7,6 +7,7 @@ import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.validation.constraints.NotNull;
 
 import br.ufes.inf.nemo.jbutler.ejb.persistence.PersistentObjectSupport;
 
@@ -16,14 +17,20 @@ public class User extends PersistentObjectSupport {
 
 	private static final long serialVersionUID = 1L;
 	
+	@NotNull
 	private String name;
+	@NotNull
 	private String phone;
 	
 	@Temporal(TemporalType.DATE)
+	@NotNull
 	private Date birthday;
-	
+
+	@NotNull
 	private String gender;
+	@NotNull
 	private String email;
+	@NotNull
 	private String password;
 	private String role;
 	

@@ -8,6 +8,7 @@ import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.OneToMany;
+import javax.validation.constraints.NotNull;
 
 import br.ufes.dwws.util.Role;
 
@@ -15,13 +16,15 @@ import br.ufes.dwws.util.Role;
 public class Patient extends User{
 	
 	private static final long serialVersionUID = 1L;
-	
+
+	@NotNull
 	private String bloodType;
 	
 	private String notes;
-	
+
+	@NotNull
 	private String healthInsurance;
-	
+	@NotNull
 	private String healthInsuranceNumber;
 	
 	@OneToMany(mappedBy = "patient", orphanRemoval = true, cascade = CascadeType.ALL)

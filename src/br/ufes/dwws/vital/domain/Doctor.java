@@ -3,6 +3,7 @@ package br.ufes.dwws.vital.domain;
 
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
+import javax.validation.constraints.NotNull;
 
 import br.ufes.dwws.util.Role;
 
@@ -10,8 +11,10 @@ import br.ufes.dwws.util.Role;
 public class Doctor extends User {
 	
 	private static final long serialVersionUID = 1L;
-	
+
+	@NotNull
 	private String specialization;
+	@NotNull
 	private String crm;
 
 	@ManyToOne

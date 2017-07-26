@@ -18,7 +18,6 @@ import org.apache.jena.query.ResultSet;
 import br.ufes.dwws.util.Role;
 import br.ufes.dwws.vital.domain.Doctor;
 import br.ufes.dwws.vital.domain.Hospital;
-import br.ufes.dwws.vital.domain.Pathology;
 import br.ufes.dwws.vital.persistence.HospitalDAO;
 
 @Stateless @LocalBean
@@ -49,14 +48,19 @@ public class RegistrationService implements Serializable {
 		String query = 	"PREFIX dbo: <http://dbpedia.org/ontology/>\n" +
 						"PREFIX dbr: <http://dbpedia.org/resource/>\n" +
 						"PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>\n" +
-						"SELECT ?name WHERE {\n" +
+						"PREFIX foaf: <http://xmlns.com/foaf/0.1/>\n" +
+						"SELECT ?name ?state ?site WHERE {\n" +
 						"?x a dbo:Hospital;\n" +
 						"rdfs:label ?_name;\n" +
+						"dbo:state ?res_state;\n" +
+						"foaf:homepage ?site;\n" +
 						"dbo:country dbr:United_States.\n" +
-						"FILTER (LANG(?_name) = 'en')\n" +
-						"BIND (STR(?_name)  AS ?name)}\n" + 
+						"?res_state rdfs:label ?_state.\n" +
+						"FILTER (LANG(?_name) = 'en' && LANG(?_state) = 'en')\n" +
+						"BIND (STR(?_name)  AS ?name)\n" + 
+						"BIND (STR(?_state)  AS ?state)}\n" + 
 						"ORDER BY ASC(?name)\n" +
-						"LIMIT 500";
+						"LIMIT 100";
 
 		QueryExecution queryExecution = QueryExecutionFactory.sparqlService("http://dbpedia.org/sparql", query);
 
@@ -66,6 +70,8 @@ public class RegistrationService implements Serializable {
 			QuerySolution querySolution = results.next();
 			Hospital hospital = new Hospital();
 			hospital.setName(querySolution.get("name").toString());
+			hospital.setState(querySolution.get("state").toString());
+			hospital.setHomepage(querySolution.get("site").toString());
 			hospitalsList.add(hospital);
 		}
 
